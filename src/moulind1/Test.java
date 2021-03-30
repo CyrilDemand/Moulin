@@ -6,7 +6,7 @@ public class Test {
 		System.out.println("test");
 		System.out.println("Salut les bros c'est LRB");
 		System.out.println("Wesh");
-		
-		System.out.println("Test depuis mon PC (c Noé btw)");
+		System.out.println("Test depuis mon PC (c Noe btw)");
+		System.out.println("Test depuis eclipse Ã  l'iut (c'est cyril)");
 	}
 }
