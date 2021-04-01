@@ -9,5 +9,6 @@ public class Test {
 		System.out.println("Test depuis mon PC (c Noe btw)");
 		System.out.println("Test depuis eclipse à l'iut (c'est cyril)");
 		System.out.println("test chez moi ( cyril )");
+		System.out.println("test depuis mon pc portable ( cyril )");
 	}
 }
