@@ -2,6 +2,7 @@ package moulin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Color {
     BLANC(0),NOIR(1),ROUGE(2),VERT(3),JAUNE(4), VIOLET(5),BLEU(6),ORANGE(7);
@@ -22,9 +23,16 @@ public enum Color {
         return new ArrayList<>(Arrays.asList(Color.values()));
     }
 
+    public static boolean isColor(String string){
+        for (Color color:Color.values()){
+            if (color.toString().equals(string.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
 
-
-    private String toString(Color color){
-        return color.name()+" ("+color.getValue()+")";
+    public String toString(){
+        return this.name();
     }
 }
