@@ -7,7 +7,7 @@ public class Jeu {
 
     private Board board;
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     public Jeu(Board board,ArrayList<Player> players){
         this.board=board;
