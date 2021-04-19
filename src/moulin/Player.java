@@ -1,21 +1,20 @@
 package moulin;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Player {
-    private String name;
+    private final String name;
 
-    private Color color;
+    private final Color color;
 
-    private ArrayList<Piece> pieces;
+    private final ArrayList<Piece> pieces;
 
-    public Player(Scanner scanner){
-        System.out.println("C'est quoi ton p'tit nom ? UwU");
-        this.name = scanner.nextLine();
-        Color.List();
-        System.out.println("Tu veux quelle couleur ? OwO");
-        this.color = Color.valueOf(scanner.nextLine());
+    public Player(String name, Color color){
+        if(name.equals("")){
+            throw new Error("Pas de nom de joueurs");
+        }
+        this.name = name;
+        this.color = color;
         this.pieces = new ArrayList<Piece>();
     }
 
