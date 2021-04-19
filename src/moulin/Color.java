@@ -14,4 +14,15 @@ public enum Color {
     private int getValue(){
         return this.value;
     }
+
+    public static void List(){ //liste toutes les couleurs disponibles
+        System.out.println("Voici toutes les couleurs disponibles :");
+        for (Color color:Color.values()){
+            System.out.println(color.toString());
+        }
+    }
+
+    private String toString(Color color){
+        return color.name()+" ("+color.getValue()+")";
+    }
 }
