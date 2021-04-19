@@ -1,7 +1,7 @@
 package moulin;
 
 public class Piece {
-    Color color;
+    private Color color;
 
     Piece(Color color){
         this.color = color;

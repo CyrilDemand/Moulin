@@ -1,6 +1,7 @@
 package moulin;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
     private String name;
@@ -9,9 +10,12 @@ public class Player {
 
     private ArrayList<Piece> pieces;
 
-    public Player(String name, Color color){
-        this.name = name;
-        this.color = color;
+    public Player(Scanner scanner){
+        System.out.println("C'est quoi ton p'tit nom ? UwU");
+        this.name = scanner.nextLine();
+        Color.List();
+        System.out.println("Tu veux quelle couleur ? OwO");
+        this.color = Color.valueOf(scanner.nextLine());
         this.pieces = new ArrayList<Piece>();
     }
 
