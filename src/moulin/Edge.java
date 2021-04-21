@@ -15,4 +15,12 @@ public class Edge {
     public Node getEnd(){
         return this.end;
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }

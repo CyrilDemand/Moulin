@@ -29,5 +29,12 @@ public class Node {
         return this.id;
     }
 
-
+    @Override
+    public String toString() {
+        return "Node{" +
+                "x=" + x +
+                ", y=" + y +
+                ", id=" + id +
+                '}';
+    }
 }
