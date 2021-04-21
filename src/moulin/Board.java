@@ -43,29 +43,35 @@ public class Board {
         throw new Error("Il n'y a pas de Node avec cet id sur ce board");
     }
 
-    public static void main(String[] args) {
-        Board test = new Board();
-        String first = "C:\\Users\\cyril\\IdeaProjects\\Moulin\\ressources\\map.json";
+    @Override
+    public String toString() {
+        return "Board{" +
+                "edges=" + edges +
+                ", nodes=" + nodes +
+                '}';
+    }
+    public void renderBoard(){
+
+    }
+
+    public static Board loadBoard(String chemin){
+        Board res = new Board();
         try {
-            String content = new String((Files.readAllBytes(Paths.get(first))));
+            String content = new String((Files.readAllBytes(Paths.get(chemin))));
             JSONObject o = new JSONObject(content);
             JSONArray nodes = o.getJSONArray("nodes");
             JSONArray edges = o.getJSONArray("edges");
             for (int i = 0;i<nodes.length();i++){
-                test.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
+                res.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
             }
             for (int i = 0;i<edges.length();i++){
-                test.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
+                res.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
             }
         }
-             catch (IOException | JSONException e) {
+        catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        for (Node n:test.nodes){
-            System.out.println(n);
-        }
-        for (Edge e:test.edges){
-            System.out.println(e);
-        }
+        return res;
     }
+
 }

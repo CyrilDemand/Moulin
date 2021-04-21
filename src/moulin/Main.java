@@ -8,10 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
         //test discord
-        Scanner scanner = new Scanner( System.in );
+
+        /*Scanner scanner = new Scanner( System.in );
         Board board = new Board();
         Jeu jeu = new Jeu(board,initPlayer());
-        jeu.displayPlayers();
+        jeu.displayPlayers();*/
+
+        //Main Noé !
+        Board board=Board.loadBoard("ressources\\map.json");
+        System.out.println(board);
     }
 
     private static ArrayList<Player> initPlayer(){
