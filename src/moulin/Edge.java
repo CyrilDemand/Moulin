@@ -19,8 +19,8 @@ public class Edge {
     @Override
     public String toString() {
         return "Edge{" +
-                "start=" + start +
-                ", end=" + end +
+                "start=" + start.getId() +
+                ", end=" + end.getId() +
                 '}';
     }
 }
