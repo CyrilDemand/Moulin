@@ -11,6 +11,23 @@ public class Node {
         this.x=x;
         this.y=y;
         this.id=Node.counter;
-        counter++;
+        Node.counter++;
     }
+
+    Node(int x,int y,int id){
+        this(x,y);
+        this.id=id;
+    }
+
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
+    }
+    public int getId(){
+        return this.id;
+    }
+
+
 }
