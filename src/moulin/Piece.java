@@ -15,10 +15,10 @@ public class Piece {
 
     public void put(Node node){
         this.node=node;
+        this.node.setPiece(this);
     }
 
     public Node getNode() {
         return node;
     }
-
 }

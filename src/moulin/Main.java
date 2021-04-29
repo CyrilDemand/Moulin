@@ -1,6 +1,7 @@
 package moulin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -18,13 +19,19 @@ public class Main {
         jeu.getPlayers().get(0).getPieces().get(1).put(jeu.getBoard().getNodeById(4));
         jeu.getPlayers().get(0).getPieces().get(2).put(jeu.getBoard().getNodeById(7));
 
+        HashMap<Vecteur,Boolean> test = new HashMap<>();
+
         for (int i = 0; i<jeu.getPlayers().get(0).getPieces().size()-1;i++){
-            v.add(new Vecteur(jeu.getPlayers().get(0).getPieces().get(i).getNode().getX(),
+            test.put(new Vecteur(jeu.getPlayers().get(0).getPieces().get(i).getNode().getX(),
                     jeu.getPlayers().get(0).getPieces().get(i).getNode().getY(),
                     jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX(),
-                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX()));
+                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX()),
+                    jeu.getBoard().isLinked(jeu.getPlayers().get(0).getPieces().get(i).getNode().getId(),
+                            jeu.getPlayers().get(0).getPieces().get(i).getNode().getId()
+                    )
+            );
         }
-        System.out.println(v.get(0).isCollinear(v.get(1)));
+        System.out.println(test.);
         //Main Noé !
 
         //System.out.println(board);

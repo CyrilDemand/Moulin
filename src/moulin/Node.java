@@ -22,6 +22,14 @@ public class Node {
         this.id=id;
     }
 
+    public Piece getPiece() {
+        return piece;
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
     public int getX(){
         return this.x;
     }
