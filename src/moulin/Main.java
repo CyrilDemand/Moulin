@@ -1,25 +1,11 @@
 package moulin;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        //test discord
 
-        /*Scanner scanner = new Scanner( System.in );
-        Board board = new Board();
-        Jeu jeu = new Jeu(board,initPlayer());
-        jeu.displayPlayers();*/
-
-        //Main Noé !
-        Board board=Board.loadBoard("ressources\\map.json");
-        System.out.println(board);
-    }
-
-    private static ArrayList<Player> initPlayer(){
+    public static ArrayList<Player> initPlayer(){
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i<2;i++){
             players.add(new Player(chooseName(),chooseColor()));

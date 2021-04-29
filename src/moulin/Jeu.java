@@ -26,6 +26,10 @@ public class Jeu {
         this.board = board;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public void displayPlayers(){
         for (Player player:this.players){
             System.out.println(player);

@@ -30,6 +30,10 @@ public class Player {
         this.pieces.add(piece);
     }
 
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
     public String toString(){
         return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
     }

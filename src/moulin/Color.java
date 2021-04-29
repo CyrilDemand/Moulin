@@ -5,18 +5,18 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public enum Color {
-    BLANC(0),NOIR(1),ROUGE(2),VERT(3),JAUNE(4), VIOLET(5),BLEU(6),ORANGE(7);
+    NOIR('N'),ROUGE('R'),VERT('V'),JAUNE('J'), MAGENTA('M'),BLEU('B'),ORANGE('O');
 
-    private int value;
+    private char letter;
 
     private Color(){}
 
-    private Color(int i){
-        this.value = i;
+    private Color(char i){
+        this.letter = i;
     }
 
-    private int getValue(){
-        return this.value;
+    public char getValue(){
+        return this.letter;
     }
 
     public static ArrayList<Color> List(){ //liste toutes les couleurs disponibles
