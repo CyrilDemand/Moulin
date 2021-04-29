@@ -13,6 +13,12 @@ public class Board {
     private ArrayList<Edge> edges;
     private ArrayList<Node> nodes;
 
+    public static void main(String[] args) {
+        Board board=Board.loadBoard("ressources\\map.json");
+        board.getNodeById(20).setPiece(new Piece(Color.BLEU));
+        board.render();
+    }
+
     Board() {
         this.edges = new ArrayList<Edge>();
         this.nodes = new ArrayList<Node>();
@@ -89,5 +95,59 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public void render() {
+        int nodeSize = 4;
+        int margeSize = 1;
+
+        int maxX = 7, maxY = 7;
+        int unit=(nodeSize+margeSize);
+        int width=unit*maxX;
+        int height=unit*maxY;
+
+        char[][] pixels = new char[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                pixels[x][y]=' ';
+            }
+        }
+
+        for (Node node : this.nodes){
+            for (int y = 0; y < nodeSize; y++) {
+                for (int x = 0; x < nodeSize; x++) {
+                    pixels[node.getX()*unit+x][node.getY()*unit+y]='+';
+                }
+            }
+            if (node.getPiece()!=null){
+                pixels[(node.getX() * unit + ((int) nodeSize / 2))][node.getY() * unit + ((int) nodeSize / 2)]=node.getPiece().getColor().getValue();
+            }else {
+                String id = String.valueOf(node.getId());
+                for (int i = 0; i < id.length(); i++) {
+                    pixels[(node.getX() * unit + ((int) nodeSize / 2)) + i][node.getY() * unit + ((int) nodeSize / 2)] = id.charAt(i);
+                }
+            }
+        }
+
+        for (Edge edge : this.edges){
+            Node n1=edge.getStart();
+            Node n2=edge.getEnd();
+
+            int n1CenterX=n1.getX()*unit+((int)nodeSize/2);
+            int n1CenterY=n1.getY()*unit+((int)nodeSize/2);
+            int n2CenterX=n2.getX()*unit+((int)nodeSize/2);
+            int n2CenterY=n2.getY()*unit+((int)nodeSize/2);
+
+            int xDist=Math.abs(n1CenterX-n2CenterX);
+            int yDist=Math.abs(n2CenterX-n2CenterY);
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.out.print(pixels[x][y]+" ");
+            }
+            System.out.println("");
+        }
     }
 }
