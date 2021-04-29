@@ -27,7 +27,7 @@ public class Piece {
 
     public static void main(String[] args) {
         //test discord
-        Board board=Board.loadBoard("ressources\\map.json");
+        Board board=Board.loadBoard("ressources\\mapSquare.json");
         Scanner scanner = new Scanner( System.in );
 
         Jeu jeu = new Jeu(board,Main.initPlayer());

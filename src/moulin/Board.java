@@ -14,8 +14,7 @@ public class Board {
     private ArrayList<Node> nodes;
 
     public static void main(String[] args) {
-        Board board=Board.loadBoard("ressources\\map.json");
-        board.getNodeById(20).setPiece(new Piece(Color.BLEU));
+        Board board=Board.loadBoard("ressources\\mapSquare.json");
         board.render(3,2);
     }
 
@@ -93,11 +92,27 @@ public class Board {
         return false;
     }
 
+    private int getMaxX(){
+        int maxX=0;
+        for (Node node : this.nodes){
+            if (node.getX()>maxX)maxX=node.getX();
+        }
+        return maxX;
+    }
+
+    private int getMaxY(){
+        int maxY=0;
+        for (Node node : this.nodes){
+            if (node.getY()>maxY)maxY=node.getY();
+        }
+        return maxY;
+    }
+
     public void render(int nodeSize,int margeSize) {
-        int maxX = 7, maxY = 7;
+        int maxX = this.getMaxX(), maxY = this.getMaxY();
         int unit=(nodeSize+margeSize);
-        int width=unit*maxX;
-        int height=unit*maxY;
+        int width=unit*(maxX+1)-margeSize;
+        int height=unit*(maxY+1)-margeSize;
 
         char[][] pixels = new char[width][height];
 
@@ -126,6 +141,7 @@ public class Board {
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
             Node n2=edge.getEnd();
+            //System.out.println("Node : n1="+n1.getId()+" n2="+n2.getId());
             //System.out.println("Start : x="+edge.getStart().getX()+" y="+edge.getStart().getY());
             //System.out.println("End : x="+edge.getEnd().getX()+" y="+edge.getEnd().getY());
 
@@ -149,9 +165,11 @@ public class Board {
                     if (xDist==0){
                         pixels[(int)x][(int)y]='|';
                     }else if (yDist==0){
-                        pixels[(int)x][(int)y]='-';
-                    }else {
-                        pixels[(int) x][(int) y] = '.';
+                        pixels[(int)x][(int)y]='─';
+                    }else if (xDist>0 && yDist>0 || xDist<0 && yDist<0){
+                        pixels[(int) x][(int) y] = '╲';
+                    }else{
+                        pixels[(int) x][(int) y] = '╱';
                     }
                 }
                 if (xDist!=0)x+=(int)(xDist/Math.abs(xDist));
