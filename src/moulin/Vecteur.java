@@ -23,6 +23,6 @@ public class Vecteur {
     }
 
     public boolean isCollinear(Vecteur v1){
-        return (this.getX()* v1.getY())-(v1.getX()*this.getY())==0;
+        return ((this.getX()* v1.getY())-(v1.getX()*this.getY()))==0;
     }
 }

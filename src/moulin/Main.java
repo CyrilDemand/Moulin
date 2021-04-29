@@ -1,9 +1,6 @@
 package moulin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -15,23 +12,32 @@ public class Main {
         Jeu jeu = new Jeu(board,initPlayer());
         jeu.displayPlayers();
         ArrayList<Vecteur> v = new ArrayList<Vecteur>();
+        ArrayList<Boolean> b = new ArrayList<Boolean>();
         jeu.getPlayers().get(0).getPieces().get(0).put(jeu.getBoard().getNodeById(1));
-        jeu.getPlayers().get(0).getPieces().get(1).put(jeu.getBoard().getNodeById(4));
-        jeu.getPlayers().get(0).getPieces().get(2).put(jeu.getBoard().getNodeById(7));
+        System.out.println(jeu.getBoard().getNodeById(1));
+        jeu.getPlayers().get(0).getPieces().get(1).put(jeu.getBoard().getNodeById(2));
+        System.out.println(jeu.getBoard().getNodeById(2));
+        jeu.getPlayers().get(0).getPieces().get(2).put(jeu.getBoard().getNodeById(4));
+        System.out.println(jeu.getBoard().getNodeById(24));
 
-        HashMap<Vecteur,Boolean> test = new HashMap<>();
 
         for (int i = 0; i<jeu.getPlayers().get(0).getPieces().size()-1;i++){
-            test.put(new Vecteur(jeu.getPlayers().get(0).getPieces().get(i).getNode().getX(),
-                    jeu.getPlayers().get(0).getPieces().get(i).getNode().getY(),
+            v.add(new Vecteur(jeu.getPlayers().get(0).getPieces().get(i).getNode().getX(),
                     jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX(),
-                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX()),
-                    jeu.getBoard().isLinked(jeu.getPlayers().get(0).getPieces().get(i).getNode().getId(),
-                            jeu.getPlayers().get(0).getPieces().get(i).getNode().getId()
-                    )
+                    jeu.getPlayers().get(0).getPieces().get(i).getNode().getY(),
+                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getY())
             );
         }
-        System.out.println(test.);
+
+        for (int i = 0; i<jeu.getPlayers().get(0).getPieces().size()-1;i++){
+            b.add(jeu.getBoard().isLinked(jeu.getPlayers().get(0).getPieces().get(i).getNode().getId(),
+                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getId()));
+        }
+
+        System.out.println(b.get(0));
+        System.out.println(b.get(0));
+        System.out.println(v.get(0).isCollinear(v.get(1))+" "+(b.get(0)&&b.get(1)));
+
         //Main Noé !
 
         //System.out.println(board);
