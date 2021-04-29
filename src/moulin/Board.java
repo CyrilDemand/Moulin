@@ -34,7 +34,15 @@ public class Board {
         this.edges.add(new Edge(start,end));
     }
 
-    private Node getNodeById(int id){
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public Node getNodeById(int id){
         for (Node n:this.nodes){
             if (n.getId()==id){
                 return n;
@@ -74,4 +82,12 @@ public class Board {
         return res;
     }
 
+    public boolean isLinked(int a, int b){
+        for (Edge e:this.getEdges()) {
+            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b))){
+                return true;
+            }
+        }
+        return false;
+    }
 }

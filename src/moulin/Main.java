@@ -8,15 +8,26 @@ public class Main {
 
     public static void main(String[] args) {
         //test discord
-
-        /*Scanner scanner = new Scanner( System.in );
-        Board board = new Board();
-        Jeu jeu = new Jeu(board,initPlayer());
-        jeu.displayPlayers();*/
-
-        //Main Noé !
         Board board=Board.loadBoard("ressources\\map.json");
-        System.out.println(board);
+        Scanner scanner = new Scanner( System.in );
+
+        Jeu jeu = new Jeu(board,initPlayer());
+        jeu.displayPlayers();
+        ArrayList<Vecteur> v = new ArrayList<Vecteur>();
+        jeu.getPlayers().get(0).getPieces().get(0).put(jeu.getBoard().getNodeById(1));
+        jeu.getPlayers().get(0).getPieces().get(1).put(jeu.getBoard().getNodeById(4));
+        jeu.getPlayers().get(0).getPieces().get(2).put(jeu.getBoard().getNodeById(7));
+
+        for (int i = 0; i<jeu.getPlayers().get(0).getPieces().size()-1;i++){
+            v.add(new Vecteur(jeu.getPlayers().get(0).getPieces().get(i).getNode().getX(),
+                    jeu.getPlayers().get(0).getPieces().get(i).getNode().getY(),
+                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX(),
+                    jeu.getPlayers().get(0).getPieces().get(i+1).getNode().getX()));
+        }
+        System.out.println(v.get(0).isCollinear(v.get(1)));
+        //Main Noé !
+
+        //System.out.println(board);
     }
 
     private static ArrayList<Player> initPlayer(){
