@@ -16,7 +16,7 @@ public class Board {
     public static void main(String[] args) {
         Board board=Board.loadBoard("ressources\\map.json");
         board.getNodeById(20).setPiece(new Piece(Color.BLEU));
-        board.render();
+        board.render(3,2);
     }
 
     Board() {
@@ -64,10 +64,6 @@ public class Board {
                 ", nodes=" + nodes +
                 '}';
     }
-    public void renderBoard(){
-
-    }
-
     public static Board loadBoard(String chemin){
         Board res = new Board();
         try {
@@ -97,10 +93,7 @@ public class Board {
         return false;
     }
 
-    public void render() {
-        int nodeSize = 4;
-        int margeSize = 1;
-
+    public void render(int nodeSize,int margeSize) {
         int maxX = 7, maxY = 7;
         int unit=(nodeSize+margeSize);
         int width=unit*maxX;
@@ -117,7 +110,7 @@ public class Board {
         for (Node node : this.nodes){
             for (int y = 0; y < nodeSize; y++) {
                 for (int x = 0; x < nodeSize; x++) {
-                    pixels[node.getX()*unit+x][node.getY()*unit+y]='+';
+                    pixels[node.getX()*unit+x][node.getY()*unit+y]='*';
                 }
             }
             if (node.getPiece()!=null){
@@ -130,17 +123,42 @@ public class Board {
             }
         }
 
-        for (Edge edge : this.edges){
+        for (Edge edge:this.edges){
             Node n1=edge.getStart();
             Node n2=edge.getEnd();
+            //System.out.println("Start : x="+edge.getStart().getX()+" y="+edge.getStart().getY());
+            //System.out.println("End : x="+edge.getEnd().getX()+" y="+edge.getEnd().getY());
 
             int n1CenterX=n1.getX()*unit+((int)nodeSize/2);
             int n1CenterY=n1.getY()*unit+((int)nodeSize/2);
             int n2CenterX=n2.getX()*unit+((int)nodeSize/2);
             int n2CenterY=n2.getY()*unit+((int)nodeSize/2);
+            //System.out.println("Start Char: x="+n1CenterX+" y="+n1CenterY);
+            //System.out.println("End Char : x="+n2CenterX+" y="+n2CenterY);
 
-            int xDist=Math.abs(n1CenterX-n2CenterX);
-            int yDist=Math.abs(n2CenterX-n2CenterY);
+            int xDist=n2CenterX-n1CenterX;
+            int yDist=n2CenterY-n1CenterY;
+            //System.out.println("Dist : x="+xDist+" y="+yDist);
+
+            int x=n1CenterX;
+            int y=n1CenterY;
+
+            do{
+                //System.out.println("x="+x+" y="+y);
+                if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y]==' '){
+                    if (xDist==0){
+                        pixels[(int)x][(int)y]='|';
+                    }else if (yDist==0){
+                        pixels[(int)x][(int)y]='-';
+                    }else {
+                        pixels[(int) x][(int) y] = '.';
+                    }
+                }
+                if (xDist!=0)x+=(int)(xDist/Math.abs(xDist));
+                if (yDist!=0)y+=(int)(yDist/Math.abs(yDist));
+            }while (x!=n2CenterX || y!=n2CenterY);
+
+            //System.out.println("Final Pos : x="+x+" y="+y);
         }
 
         for (int y = 0; y < height; y++) {
