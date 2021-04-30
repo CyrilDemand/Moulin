@@ -15,7 +15,7 @@ public class Board {
 
     public static void main(String[] args) {
         Board board=Board.loadBoard("ressources\\mapSquare.json");
-        board.render(3,2);
+        board.render(5,2);
     }
 
     Board() {
