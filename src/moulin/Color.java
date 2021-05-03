@@ -2,16 +2,16 @@ package moulin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 public enum Color {
     NOIR('N'),ROUGE('R'),VERT('V'),JAUNE('J'), MAGENTA('M'),BLEU('B'),ORANGE('O');
 
     private char letter;
 
-    private Color(){}
-
-    private Color(char i){
+    /**
+     * @param i
+     */
+    Color(char i){
         this.letter = i;
     }
 

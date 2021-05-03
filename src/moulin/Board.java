@@ -17,39 +17,109 @@ public class Board {
         Board board=Board.loadBoard("ressources\\mapSquare.json");
         board.render(3,2);
     }
-
+    /**
+     * Génère une class Board
+     *
+     * Attributs : ArrayList de Edges (Arrêtes, Lignes du Plateau)
+     * Attributs : ArrayList de Nodes (Noeuds, Sommets du plateau)
+     *
+     */
     public Board() {
         this.edges = new ArrayList<Edge>();
         this.nodes = new ArrayList<Node>();
     }
 
+    /**
+     * Ajoute une node à l'ArrayList du plateau
+     *
+     * @param x  : Position X de la node
+     * @param y  : Position Y de la node
+     *
+     * l'id de la node est générée avec la création d'une nouvelle node, par l'incrémentation d'un compteur
+     *
+     */
+
     public void addNode(int x,int y){
         this.nodes.add(new Node(x,y));
     }
+
+    /**
+     * Ajoute une node à l'ArrayList du plateau
+     *
+     * @param x  : Position X de la node
+     * @param y  : Position Y de la node
+     * @param id  : ID de la node
+     *
+     */
 
     public void addNode(int x,int y,int id){
         this.nodes.add(new Node(x,y,id));
     }
 
+    /**
+     * Ajoute une node à l'ArrayList du plateau
+     *
+     * @param node : Node ajoutée
+     *
+     */
+
     public void addNode(Node node){
         this.nodes.add(new Node(node.getX(),node.getY(),node.getId()));
     }
+
+    /**
+     * Ajoute une edge à l'ArrayList du plateau
+     *
+     * @param idStart : id de la node d'ID inférieure
+     * @param idEnd : id de la node d'ID supérieure
+     *
+     */
 
     public void addEdge(int idStart, int idEnd){
         this.addEdge(this.getNodeById(idStart),this.getNodeById(idEnd));
     }
 
+    /**
+     * Ajoute une edge à l'ArrayList du plateau
+     *
+     * @param start : première node
+     * @param end : seconde node
+     *
+     */
+
     public void addEdge(Node start,Node end){
         this.edges.add(new Edge(start,end));
     }
+
+    /**
+     * Retourne le tableau d'Edges du plateau
+     *
+     * @return ArrayList<Edge>
+     *
+     */
 
     public ArrayList<Edge> getEdges() {
         return edges;
     }
 
+    /**
+     * Retourne le tableau de Nodes du plateau
+     *
+     * @return ArrayList<Node>
+     *
+     */
+
     public ArrayList<Node> getNodes() {
         return nodes;
     }
+
+    /**
+     * Retourne la node d'une ID en paramètre
+     *
+     * @param id : id de la node à récupérer
+     * @return n
+     *
+     */
 
     public Node getNodeById(int id){
         for (Node n:this.nodes){
@@ -60,6 +130,15 @@ public class Board {
         throw new Error("Il n'y a pas de Node avec cet id sur ce board");
     }
 
+    /**
+     * Vérifie l'égalité entre deux plateaux
+     *
+     * @param other : un plateau de jeu 'Board'
+     * @return true : si bien égaux
+     * @return false : si l'un des plateaux est null, ou différent de l'autre
+     *
+     */
+
     public boolean equals(Board other){
         if(this==other)return true;
         if(this==null)return false;
@@ -69,6 +148,24 @@ public class Board {
         return true;
     }
 
+    /**
+     * Génère le plateau sous forme d'un String
+     *
+     * @return String
+     *
+     * Exemple :
+     *
+     * Node(0,0,1);
+     * Node(1,0,2);
+     * Node(2,0,3);
+     *
+     * Edge(1,2);
+     * Edge(2,3);
+     *
+     * Génération : Board{edges=[Edge{start=1, end=2}, Edge{start=2, end=3}], nodes=[Node{x=0, y=0, id=1}, Node{x=1, y=0, id=2}, Node{x=2, y=0, id=3}]}
+     *
+     */
+
     @Override
     public String toString() {
         return "Board{" +
@@ -76,6 +173,15 @@ public class Board {
                 ", nodes=" + nodes +
                 '}';
     }
+
+    /**
+     * Vérifie l'égalité entre deux plateaux
+     * Génère un plateau de jeu depuis un .json
+     *
+     * @param chemin : chemin d'accès au format d'un String
+     * @return Board
+     *
+     */
 
     public static Board loadBoard(String chemin){
         Board res = new Board();
@@ -97,6 +203,14 @@ public class Board {
         return res;
     }
 
+    /**
+     * Vérifie si des l'ID de deux Nodes sont bien liées par une Edge
+     *
+     * @return true : si les Nodes sont liées
+     * @return false : si elles ne le sont pas
+     *
+     */
+
     public boolean isLinked(int a, int b){
         for (Edge e:this.getEdges()) {
             if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b))){
@@ -106,6 +220,13 @@ public class Board {
         return false;
     }
 
+    /**
+     * Compare toutes les nodes et récupère le plus grand X connu parmi elles
+     *
+     * @return int
+     *
+     */
+
     private int getMaxX(){
         int maxX=0;
         for (Node node : this.nodes){
@@ -114,6 +235,13 @@ public class Board {
         return maxX;
     }
 
+    /**
+     * Compare toutes les nodes et récupère le plus grand Y connu parmi elles
+     *
+     * @return int
+     *
+     */
+
     private int getMaxY(){
         int maxY=0;
         for (Node node : this.nodes){
@@ -121,6 +249,14 @@ public class Board {
         }
         return maxY;
     }
+
+    /**
+     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
+     *
+     * @param nodeSize : Taille de node
+     * @param margeSize : Taide des arêtes
+     *
+     */
 
     public void render(int nodeSize,int margeSize) {
         int maxX = this.getMaxX(), maxY = this.getMaxY();

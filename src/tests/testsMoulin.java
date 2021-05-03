@@ -40,6 +40,7 @@ public class testsMoulin{
         return true;
     }
 
+    @Test
     public static boolean testEdges(){
         Node newNode1 = new Node(0,0,0);
         Node newNode2 = new Node(0,1,1);
@@ -56,6 +57,7 @@ public class testsMoulin{
         return true;
     }
 
+    @Test
     public static boolean testVector(){
         int x1= 2;
         int y1= 3;
@@ -72,6 +74,7 @@ public class testsMoulin{
         return true;
     }
 
+    @Test
     public static boolean testBoard(){
         Board boardTestAdd = new Board();
 
@@ -92,19 +95,22 @@ public class testsMoulin{
         boardBis.addNode(n3);
         boardBis.addEdge(1,2);
         boardBis.addEdge(2,3);
-
+        System.out.println(board.toString());
         if(!(board.equals(boardBis))) return false;
         return true;
     }
 
+    @Test
     public static boolean testPlayer(){
         String nomValid = "testNom";
         Color colorValid = Color.ROUGE;
-
+        Piece pieceValid = new Piece(colorValid);
         Player newTestP = new Player(nomValid,colorValid);
+        newTestP.addPiece(pieceValid);
 
         if(!(newTestP.getName().equals(nomValid)))return false;
         if(!(newTestP.getColor().equals(colorValid)))return false;
+        if(!(newTestP.getPieces().get(0).getColor().equals(colorValid)))return false;
 
         return true;
     }
