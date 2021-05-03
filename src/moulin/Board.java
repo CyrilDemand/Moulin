@@ -15,10 +15,10 @@ public class Board {
 
     public static void main(String[] args) {
         Board board=Board.loadBoard("ressources\\mapSquare.json");
-        board.render(5,2);
+        board.render(3,2);
     }
 
-    Board() {
+    public Board() {
         this.edges = new ArrayList<Edge>();
         this.nodes = new ArrayList<Node>();
     }
@@ -29,6 +29,10 @@ public class Board {
 
     public void addNode(int x,int y,int id){
         this.nodes.add(new Node(x,y,id));
+    }
+
+    public void addNode(Node node){
+        this.nodes.add(new Node(node.getX(),node.getY(),node.getId()));
     }
 
     public void addEdge(int idStart, int idEnd){
@@ -56,6 +60,21 @@ public class Board {
         throw new Error("Il n'y a pas de Node avec cet id sur ce board");
     }
 
+    public boolean equals(Board other){
+        if(this==other)return true;
+        if(this==null)return false;
+        if(other==null)return false;
+        for(Edge e : this.edges){
+            System.out.println(e.toString());
+            if(!(e.equals(other.getEdges())))return false;
+        }
+        for(Node n : this.nodes){
+            System.out.println(n.toString());
+            if(!(n.equals(other.getNodes())))return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
@@ -63,6 +82,7 @@ public class Board {
                 ", nodes=" + nodes +
                 '}';
     }
+
     public static Board loadBoard(String chemin){
         Board res = new Board();
         try {

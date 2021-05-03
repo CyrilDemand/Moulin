@@ -8,39 +8,18 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class testBoard {
+public class testsMoulin {
 
     @Test
     public static void main(String[] args){
 
         Board board=Board.loadBoard("ressources\\mapTest.json");
         board.render(3,2);
-        /*
-        A créer : méthode equals dans Board qui vérifie si 2 tableaux
-        sont égaux, pour créer un tableau "à la main" en utilisant addNodes etc
-        pour qu'il soit similaire à mapTest.json et vérifier leur égalité
-        via une assertion.
-        A la manière de :
-
-        assertTrue(testBoard());
-
-        public class testBoard(){
-        Board board=Board.loadBoard("ressources\\mapTest.json");
-
-        Board boardBis= new Board();
-        boardBis.addNodes(n1);
-        boardBis.addNodes(n2);
-        boardBis.addNodes(n3);
-
-        if(board.equals(boardBis))return true;
-        return false;
-
-        }
-
-         */
 
         assertTrue(testNodes());
         assertTrue(testEdges());
+        assertTrue(testVector());
+        assertTrue(testBoard());
     }
 
     @Test
@@ -89,7 +68,7 @@ public class testBoard {
         return true;
     }
 
-    public static boolean testVecteur(){
+    public static boolean testVector(){
         int x1= 2;
         int y1= 3;
         int x2= 4;
@@ -105,4 +84,43 @@ public class testBoard {
         return true;
     }
 
+    public static boolean testBoard(){
+        Board boardTestAdd = new Board();
+
+        Node nodeAdd = new Node(0,2,81);
+        boardTestAdd.addNode(0,0);
+        boardTestAdd.addNode(0,1,80);
+        boardTestAdd.addNode(nodeAdd);
+
+        Board board=Board.loadBoard("ressources\\mapTest.json");
+        for(Edge e : board.getEdges()){
+            System.out.println(e.toString());
+        }
+        for(Node n : board.getNodes()){
+            System.out.println(n.toString());
+        }
+        Board boardBis = new Board();
+
+        Node n1 = new Node(0,0,1);
+        Node n2 = new Node(1,0,2);
+        Node n3 = new Node(2,0,3);
+
+        boardBis.addNode(n1);
+        boardBis.addNode(n2);
+        boardBis.addNode(n3);
+        boardBis.addEdge(1,2);
+        boardBis.addEdge(2,3);
+        boardBis.render(3,2);
+
+        for(Edge e : boardBis.getEdges()){
+            System.out.println(e.toString());
+        }
+        for(Node n : boardBis.getNodes()){
+            System.out.println(n.toString());
+        }
+
+        //if(!(board.equals(boardBis))) return false;
+
+        return true;
+    }
 }
