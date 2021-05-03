@@ -15,6 +15,29 @@ public class testBoard {
 
         Board board=Board.loadBoard("ressources\\mapTest.json");
         board.render(3,2);
+        /*
+        A créer : méthode equals dans Board qui vérifie si 2 tableaux
+        sont égaux, pour créer un tableau "à la main" en utilisant addNodes etc
+        pour qu'il soit similaire à mapTest.json et vérifier leur égalité
+        via une assertion.
+        A la manière de :
+
+        assertTrue(testBoard());
+
+        public class testBoard(){
+        Board board=Board.loadBoard("ressources\\mapTest.json");
+
+        Board boardBis= new Board();
+        boardBis.addNodes(n1);
+        boardBis.addNodes(n2);
+        boardBis.addNodes(n3);
+
+        if(board.equals(boardBis))return true;
+        return false;
+
+        }
+
+         */
 
         assertTrue(testNodes());
         assertTrue(testEdges());
