@@ -3,6 +3,7 @@ package tests;
 import moulin.Board;
 import moulin.Edge;
 import moulin.Node;
+import moulin.Vecteur;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -26,14 +27,19 @@ public class testBoard {
         int id = 0;
 
         Node newNode1 = new Node(x,y,id);
+
         if(newNode1.getX()!=x)return false;
         if(newNode1.getY()!=y)return false;
         if(newNode1.getId()!=id)return false;
 
+        Node newNode1bis = new Node(x,y,id);
+
+        if(!(newNode1.equals(newNode1bis)))return false;
+        if(newNode1.equals(null))return false;
+
         Node  newNode2 = new Node(x,y);
         if(newNode2.getX()!=x)return false;
         if(newNode2.getY()!=y)return false;
-        if(newNode2.getId()!=id)return false;
 
         return true;
     }
@@ -58,8 +64,22 @@ public class testBoard {
         // aurait été inutile.
 
         return true;
-
     }
 
+    public static boolean testVecteur(){
+        int x1= 2;
+        int y1= 3;
+        int x2= 4;
+        int y2= 6;
+
+        Vecteur v1 = new Vecteur(x1,y1);
+        Vecteur v1bis = new Vecteur(x1,y1);
+        Vecteur v2 = new Vecteur(x2,y2);
+
+        if(!(v1.equals(v1bis)))return false;
+        if(v1.equals(v2))return false;
+        if(!(v1.isCollinear(v2)))return false;
+        return true;
+    }
 
 }
