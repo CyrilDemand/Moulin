@@ -48,4 +48,15 @@ public class Node {
                 ", id=" + id +
                 '}';
     }
+
+    public boolean equals(Node other){
+        if(this==other)return true;
+        if(this==null)return false;
+        if(other==null)return false;
+        if(this.getId()==other.getId() &&
+        this.getX()==other.getX() &&
+        this.getY()==other.getY())return true;
+        return false;
+    }
+
 }
