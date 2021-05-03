@@ -12,10 +12,6 @@ public class testsMoulin {
 
     @Test
     public static void main(String[] args){
-
-        Board board=Board.loadBoard("ressources\\mapTest.json");
-        board.render(3,2);
-
         assertTrue(testNodes());
         assertTrue(testEdges());
         assertTrue(testVector());
@@ -59,12 +55,6 @@ public class testsMoulin {
         if(!(e1.getEnd().equals(newNode2)))return false;
         if(!(e2.getEnd().equals(newNode3)))return false;
 
-        // Cela peut paraître ridicule,
-        // mais j'ai du faire de cette façon
-        // pour que ça return true et pour éviter
-        // la création d'une methode notEquals qui
-        // aurait été inutile.
-
         return true;
     }
 
@@ -93,7 +83,6 @@ public class testsMoulin {
         boardTestAdd.addNode(nodeAdd);
 
         Board board=Board.loadBoard("ressources\\mapTest.json");
-        System.out.println(board.toString());
         Board boardBis = new Board();
 
         Node n1 = new Node(0,0,1);
@@ -105,11 +94,8 @@ public class testsMoulin {
         boardBis.addNode(n3);
         boardBis.addEdge(1,2);
         boardBis.addEdge(2,3);
-        boardBis.render(3,2);
 
-        System.out.println(boardBis.toString());
-
-        //if(!(board.equals(boardBis))) return false;
+        if(!(board.equals(boardBis))) return false;
 
         return true;
     }

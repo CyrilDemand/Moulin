@@ -64,17 +64,8 @@ public class Board {
         if(this==other)return true;
         if(this==null)return false;
         if(other==null)return false;
-
-        System.out.println("sysout de Board : "+this.toString());
-        System.out.println("sysout de Board : "+other.toString());
-        for(Edge e : this.edges){
-            System.out.println("sysout de Board : "+e.toString());
-            if(!(e.equals(other.getEdges())))return false;
-        }
-        for(Node n : this.nodes){
-            System.out.println("sysout de Board : "+n.toString());
-            if(!(n.equals(other.getNodes())))return false;
-        }
+        this.getEdges().equals(other.getEdges());
+        this.getNodes().equals(other.getNodes());
         return true;
     }
 
