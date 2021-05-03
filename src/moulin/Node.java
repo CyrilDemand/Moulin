@@ -9,7 +9,7 @@ public class Node {
 
     private Piece piece;
 
-    Node(int x,int y){
+    public Node(int x,int y){
         this.x=x;
         this.y=y;
         this.id=Node.counter;
@@ -17,7 +17,7 @@ public class Node {
         this.piece=null;
     }
 
-    Node(int x,int y,int id){
+    public Node(int x, int y, int id){
         this(x,y);
         this.id=id;
     }
