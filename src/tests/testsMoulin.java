@@ -1,14 +1,11 @@
 package tests;
 
-import moulin.Board;
-import moulin.Edge;
-import moulin.Node;
-import moulin.Vecteur;
+import moulin.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class testsMoulin {
+public class testsMoulin{
 
     @Test
     public static void main(String[] args){
@@ -16,6 +13,7 @@ public class testsMoulin {
         assertTrue(testEdges());
         assertTrue(testVector());
         assertTrue(testBoard());
+        assertTrue(testPlayer());
     }
 
     @Test
@@ -96,6 +94,17 @@ public class testsMoulin {
         boardBis.addEdge(2,3);
 
         if(!(board.equals(boardBis))) return false;
+        return true;
+    }
+
+    public static boolean testPlayer(){
+        String nomValid = "testNom";
+        Color colorValid = Color.ROUGE;
+
+        Player newTestP = new Player(nomValid,colorValid);
+
+        if(!(newTestP.getName().equals(nomValid)))return false;
+        if(!(newTestP.getColor().equals(colorValid)))return false;
 
         return true;
     }
