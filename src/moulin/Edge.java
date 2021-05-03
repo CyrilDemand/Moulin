@@ -28,8 +28,8 @@ public class Edge {
         if(this==other)return true;
         if(this==null)return false;
         if(other==null)return false;
-        if(this.getStart()==other.getStart() &&
-                this.getEnd()==other.getEnd())return true;
+        if(this.getStart().equals(other.getStart()) &&
+                this.getEnd().equals(other.getEnd()))return true;
         return false;
     }
 }

@@ -93,12 +93,7 @@ public class testsMoulin {
         boardTestAdd.addNode(nodeAdd);
 
         Board board=Board.loadBoard("ressources\\mapTest.json");
-        for(Edge e : board.getEdges()){
-            System.out.println(e.toString());
-        }
-        for(Node n : board.getNodes()){
-            System.out.println(n.toString());
-        }
+        System.out.println(board.toString());
         Board boardBis = new Board();
 
         Node n1 = new Node(0,0,1);
@@ -112,12 +107,7 @@ public class testsMoulin {
         boardBis.addEdge(2,3);
         boardBis.render(3,2);
 
-        for(Edge e : boardBis.getEdges()){
-            System.out.println(e.toString());
-        }
-        for(Node n : boardBis.getNodes()){
-            System.out.println(n.toString());
-        }
+        System.out.println(boardBis.toString());
 
         //if(!(board.equals(boardBis))) return false;
 
