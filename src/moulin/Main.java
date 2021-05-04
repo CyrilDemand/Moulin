@@ -4,6 +4,13 @@ import java.util.*;
 
 public class Main {
 
+    public static void main(String[] args) {
+        Board board = Board.loadBoard("ressources\\mapSquare.json");
+        Jeu jeu = new Jeu(board,initPlayer());
+        while (!jeu.isFinished()){
+
+        }
+    }
 
     public static ArrayList<Player> initPlayer(){
         ArrayList<Player> players = new ArrayList<>();

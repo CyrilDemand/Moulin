@@ -35,4 +35,25 @@ public class Jeu {
             System.out.println(player);
         }
     }
+
+    public boolean isFinished(){
+        //test discord
+        ArrayList<Vecteur> v = new ArrayList<Vecteur>();
+        ArrayList<Boolean> b = new ArrayList<Boolean>();
+
+
+        for (int i = 0; i<this.getPlayers().get(0).getPieces().size()-1;i++){
+            v.add(new Vecteur(this.getPlayers().get(0).getPieces().get(i).getNode().getX(),
+                    this.getPlayers().get(0).getPieces().get(i+1).getNode().getX(),
+                    this.getPlayers().get(0).getPieces().get(i).getNode().getY(),
+                    this.getPlayers().get(0).getPieces().get(i+1).getNode().getY())
+            );
+        }
+
+        for (int i = 0; i<this.getPlayers().get(0).getPieces().size()-1;i++){
+            b.add(this.getBoard().isLinked(this.getPlayers().get(0).getPieces().get(i).getNode().getId(),
+                    this.getPlayers().get(0).getPieces().get(i+1).getNode().getId()));
+        }
+        return (v.get(0).isCollinear(v.get(1)) && (b.get(0)&&b.get(1)));
+    }
 }
