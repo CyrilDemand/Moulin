@@ -70,8 +70,8 @@ public class Board {
     /**
      * Ajoute une edge à l'ArrayList du plateau
      *
-     * @param idStart : id de la node d'ID inférieure
-     * @param idEnd : id de la node d'ID supérieure
+     * @param idStart : id de la première node
+     * @param idEnd : id de la seconde node
      *
      */
 
