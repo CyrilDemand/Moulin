@@ -9,7 +9,7 @@ public class Node {
 
     private Piece piece;
 
-    Node(int x,int y){
+    public Node(int x,int y){
         this.x=x;
         this.y=y;
         this.id=Node.counter;
@@ -17,7 +17,7 @@ public class Node {
         this.piece=null;
     }
 
-    Node(int x,int y,int id){
+    public Node(int x, int y, int id){
         this(x,y);
         this.id=id;
     }
@@ -48,4 +48,15 @@ public class Node {
                 ", id=" + id +
                 '}';
     }
+
+    public boolean equals(Node other){
+        if(this==other)return true;
+        if(this==null)return false;
+        if(other==null)return false;
+        if(this.getId()==other.getId() &&
+        this.getX()==other.getX() &&
+        this.getY()==other.getY())return true;
+        return false;
+    }
+
 }

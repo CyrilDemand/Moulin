@@ -8,7 +8,7 @@ public class Piece {
 
     private Node node;
 
-    Piece(Color color){
+    public Piece(Color color){
         this.color = color;
     }
 

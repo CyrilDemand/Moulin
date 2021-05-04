@@ -1,6 +1,6 @@
 package moulin;
 
-public class Vecteur {
+public class Vecteur{
     int x;
     int y;
 
@@ -25,4 +25,14 @@ public class Vecteur {
     public boolean isCollinear(Vecteur v1){
         return ((this.getX()* v1.getY())-(v1.getX()*this.getY()))==0;
     }
+
+    public boolean equals(Vecteur other){
+        if(this==other)return true;
+        if(this==null)return false;
+        if(other==null)return false;
+        if(this.getX()==other.getX() &&
+        this.getY()==other.getY()) return true;
+        return false;
+    }
+
 }
