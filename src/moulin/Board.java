@@ -213,7 +213,8 @@ public class Board {
 
     public boolean isLinked(int a, int b){
         for (Edge e:this.getEdges()) {
-            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b))){
+            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b)) ||
+                    e.getStart().equals(this.getNodeById(b))&&e.getEnd().equals(this.getNodeById(a))){
                 return true;
             }
         }

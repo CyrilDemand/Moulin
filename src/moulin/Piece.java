@@ -25,4 +25,16 @@ public class Piece {
         return node;
     }
 
+    public boolean move(Board board,int id){
+        if(board.isLinked(this.getNode().getId(),id) && board.getNodeById(id).getPiece()==null){
+            System.out.println(this.getNode().getPiece());
+            this.getNode().setPiece(null);
+            System.out.println(this.getNode().getPiece());
+            this.put(board.getNodeById(id));
+            this.getNode().setPiece(this);
+            return true;
+        }
+        System.out.println(false);
+        return false;
+    }
 }
