@@ -15,6 +15,10 @@ public enum Color {
         this.letter = i;
     }
 
+    /**
+     *
+     * @return letter
+     */
     public char getValue(){
         return this.letter;
     }
@@ -35,4 +39,7 @@ public enum Color {
     public String toString(){
         return this.name();
     }
+
+
+
 }

@@ -17,6 +17,7 @@ public class Board {
         Board board=Board.loadBoard("ressources\\mapSquare.json");
         board.render(3,2);
     }
+
     /**
      * Génère une class Board
      *
@@ -24,6 +25,7 @@ public class Board {
      * Attributs : ArrayList de Nodes (Noeuds, Sommets du plateau)
      *
      */
+
     public Board() {
         this.edges = new ArrayList<Edge>();
         this.nodes = new ArrayList<Node>();
