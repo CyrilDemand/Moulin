@@ -14,7 +14,7 @@ public class Board {
     private ArrayList<Node> nodes;
 
     public static void main(String[] args) {
-        Board board=Board.loadBoard("ressources\\mapSquare.json");
+        Board board=Board.loadBoard("ressources\\mapVerif.json");
         board.render(3,2);
     }
     /**
@@ -283,10 +283,15 @@ public class Board {
             }else {
                 String id = String.valueOf(node.getId());
                 for (int i = 0; i < id.length(); i++) {
+                    try {
                     pixels[(node.getX() * unit + ((int) nodeSize / 2)) + i][node.getY() * unit + ((int) nodeSize / 2)] = id.charAt(i);
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                    }
                 }
             }
         }
+
 
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
@@ -306,13 +311,20 @@ public class Board {
             int yDist=n2CenterY-n1CenterY;
             //System.out.println("Dist : x="+xDist+" y="+yDist);
 
+            int xStep,yStep;
+
+
+            //System.out.println("Steps : x="+xDist+" y="+yDist);
+
             int x=n1CenterX;
             int y=n1CenterY;
 
             do{
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y]==' '){
-                    if (xDist==0){
+                    pixels[(int)x][(int)y]='.';
+
+                    /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
                     }else if (yDist==0){
                         pixels[(int)x][(int)y]='─';
@@ -320,7 +332,7 @@ public class Board {
                         pixels[(int) x][(int) y] = '╲';
                     }else{
                         pixels[(int) x][(int) y] = '╱';
-                    }
+                    }*/
                 }
                 if (xDist!=0)x+=(int)(xDist/Math.abs(xDist));
                 if (yDist!=0)y+=(int)(yDist/Math.abs(yDist));
@@ -328,6 +340,7 @@ public class Board {
 
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
+
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
