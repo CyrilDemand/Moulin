@@ -14,7 +14,7 @@ public class Board {
     private ArrayList<Node> nodes;
 
     public static void main(String[] args) {
-        Board board=Board.loadBoard("ressources\\mapVerif.json");
+        Board board=Board.loadBoard("ressources//mapSquare.json");
         board.render(3,2);
     }
     /**
@@ -251,6 +251,36 @@ public class Board {
     }
 
     /**
+     * Compare toutes les nodes et récupère le plus petit X connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinX(){
+        int minX=999999;
+        for (Node node : this.nodes){
+            if (node.getX()<minX)minX=node.getX();
+        }
+        return minX;
+    }
+
+    /**
+     * Compare toutes les nodes et récupère le plus petit Y connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinY(){
+        int minY=99999;
+        for (Node node : this.nodes){
+            if (node.getY()<minY)minY=node.getY();
+        }
+        return minY;
+    }
+
+    /**
      * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
      *
      * @param nodeSize : Taille de node
@@ -272,19 +302,30 @@ public class Board {
             }
         }
 
+        //===================RENDU DES NODES===============================
+
         for (Node node : this.nodes){
+            int offset=(nodeSize%2==0 ? 1 : 0);
+            int centerX=node.getX()*unit+((int)(nodeSize/2))-offset;
+            int centerY=node.getY()*unit+((int)(nodeSize/2))-offset;
+
             for (int y = 0; y < nodeSize; y++) {
                 for (int x = 0; x < nodeSize; x++) {
-                    pixels[node.getX()*unit+x][node.getY()*unit+y]='*';
+                    pixels[node.getX()*unit+x][node.getY()*unit+y]='░';
                 }
             }
             if (node.getPiece()!=null){
-                pixels[(node.getX() * unit + ((int) nodeSize / 2))][node.getY() * unit + ((int) nodeSize / 2)]=node.getPiece().getColor().getValue();
+                try {
+                    pixels[centerX][centerY]=node.getPiece().getColor().getValue();
+                    pixels[centerX+1][centerY]='N';
+                } catch (ArrayIndexOutOfBoundsException e){
+                    //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                }
             }else {
                 String id = String.valueOf(node.getId());
                 for (int i = 0; i < id.length(); i++) {
                     try {
-                    pixels[(node.getX() * unit + ((int) nodeSize / 2)) + i][node.getY() * unit + ((int) nodeSize / 2)] = id.charAt(i);
+                    pixels[centerX + i][centerY] = id.charAt(i);
                     } catch (ArrayIndexOutOfBoundsException e){
                         //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                     }
@@ -292,6 +333,7 @@ public class Board {
             }
         }
 
+        //===================RENDU DES LIGNES===============================
 
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
@@ -300,29 +342,41 @@ public class Board {
             //System.out.println("Start : x="+edge.getStart().getX()+" y="+edge.getStart().getY());
             //System.out.println("End : x="+edge.getEnd().getX()+" y="+edge.getEnd().getY());
 
-            int n1CenterX=n1.getX()*unit+((int)nodeSize/2);
-            int n1CenterY=n1.getY()*unit+((int)nodeSize/2);
-            int n2CenterX=n2.getX()*unit+((int)nodeSize/2);
-            int n2CenterY=n2.getY()*unit+((int)nodeSize/2);
+            int n1CenterX=n1.getX()*unit+((int)(nodeSize/2));
+            int n1CenterY=n1.getY()*unit+((int)(nodeSize/2));
+            int n2CenterX=n2.getX()*unit+((int)(nodeSize/2));
+            int n2CenterY=n2.getY()*unit+((int)(nodeSize/2));
             //System.out.println("Start Char: x="+n1CenterX+" y="+n1CenterY);
             //System.out.println("End Char : x="+n2CenterX+" y="+n2CenterY);
 
-            int xDist=n2CenterX-n1CenterX;
-            int yDist=n2CenterY-n1CenterY;
+            float xDist=n2CenterX-n1CenterX;
+            float yDist=n2CenterY-n1CenterY;
             //System.out.println("Dist : x="+xDist+" y="+yDist);
 
-            int xStep,yStep;
+            float xStep,yStep;
+            if (xDist==0){
+                xStep=0;yStep=(yDist>=0 ? 1 : -1);
+            }else if (yDist==0){
+                yStep=0;xStep=(xDist>=0 ? 1 : -1);
+            }else{
+                xStep=Math.abs(xDist/yDist)*(xDist>=0 ? 1 : -1);
+                yStep=Math.abs(yDist/xDist)*(yDist>=0 ? 1 : -1);
+            }
+            xStep=Math.min(Math.max(xStep,-1),1);
+            yStep=Math.min(Math.max(yStep,-1),1);
 
+            //System.out.println("Steps : x="+xStep+" y="+yStep);
 
-            //System.out.println("Steps : x="+xDist+" y="+yDist);
+            float x=n1CenterX;
+            float y=n1CenterY;
 
-            int x=n1CenterX;
-            int y=n1CenterY;
-
+            //for (int i=0;i<10;i++)
             do{
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y]==' '){
-                    pixels[(int)x][(int)y]='.';
+
+
+                    pixels[(int)x][(int)y]='*';
 
                     /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
@@ -334,13 +388,16 @@ public class Board {
                         pixels[(int) x][(int) y] = '╱';
                     }*/
                 }
-                if (xDist!=0)x+=(int)(xDist/Math.abs(xDist));
-                if (yDist!=0)y+=(int)(yDist/Math.abs(yDist));
-            }while (x!=n2CenterX || y!=n2CenterY);
+                if (xDist!=0)x+=xStep;
+                if (yDist!=0)y+=yStep;
+            }
+
+            while ( !(x>n2CenterX-(float)nodeSize/2 && x<n2CenterX+(float)nodeSize/2 && y>n2CenterY-(float)nodeSize/2 && y<n2CenterY+(float)nodeSize/2) );
 
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
 
+        //===================AFFICHAGE FINAL===============================
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
