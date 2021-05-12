@@ -1,6 +1,7 @@
 package moulin;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
     private final String name;
@@ -36,5 +37,29 @@ public class Player {
 
     public String toString(){
         return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
+    }
+
+    public static String chooseName(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Quel est votre nom ?");
+        String user = "";
+        user = scan.nextLine();
+        while (user.equals("") || user.length()<3){
+            System.out.println("Choisissez un vrai nom");
+            user = scan.nextLine();
+        }
+        return user;
+    }
+
+    public static Color chooseColor(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Voici les couleurs que l'on a :\n"+Color.List());
+        String user = "";
+        user = scan.nextLine();
+        while (!Color.isColor(user.toLowerCase())){
+            System.out.println("Choisissez une vraie couleur");
+            user = scan.nextLine();
+        }
+        return Color.valueOf(user.toUpperCase());
     }
 }
