@@ -104,7 +104,7 @@ public class testsMoulin{
     public static boolean testPlayer(){
         String nomValid = "testNom";
         Color colorValid = Color.ROUGE;
-        Piece pieceValid = new Piece(colorValid);
+        Piece pieceValid = new Piece(colorValid,0);
         Player newTestP = new Player(nomValid,colorValid);
         newTestP.addPiece(pieceValid);
 

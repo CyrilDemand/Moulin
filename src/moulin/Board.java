@@ -295,11 +295,11 @@ public class Board {
         int width=unit*(maxX+1)-margeSize;
         int height=unit*(maxY+1)-margeSize;
 
-        char[][] pixels = new char[width][height];
+        String[][] pixels = new String[width][height];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                pixels[x][y]=' ';
+                pixels[x][y]=" ";
             }
         }
 
@@ -312,13 +312,12 @@ public class Board {
 
             for (int y = 0; y < nodeSize; y++) {
                 for (int x = 0; x < nodeSize; x++) {
-                    pixels[node.getX()*unit+x][node.getY()*unit+y]='░';
+                    pixels[node.getX()*unit+x][node.getY()*unit+y]="░";
                 }
             }
             if (node.getPiece()!=null){
                 try {
-                    pixels[centerX][centerY]=node.getPiece().getColor().getValue();
-                    pixels[centerX+1][centerY]='N';
+                    pixels[centerX][centerY]=node.getPiece().getColor().getString()+node.getPiece().getId()+Color.ANSI_RESET;
                 } catch (ArrayIndexOutOfBoundsException e){
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
@@ -326,7 +325,7 @@ public class Board {
                 String id = String.valueOf(node.getId());
                 for (int i = 0; i < id.length(); i++) {
                     try {
-                    pixels[centerX + i][centerY] = id.charAt(i);
+                    pixels[centerX + i][centerY] = ""+id.charAt(i);
                     } catch (ArrayIndexOutOfBoundsException e){
                         //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                     }
@@ -374,10 +373,10 @@ public class Board {
             //for (int i=0;i<10;i++)
             do{
                 //System.out.println("x="+x+" y="+y);
-                if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y]==' '){
+                if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
 
 
-                    pixels[(int)x][(int)y]='*';
+                    pixels[(int)x][(int)y]="*";
 
                     /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
