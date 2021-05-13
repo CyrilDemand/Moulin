@@ -14,7 +14,7 @@ public class Board {
     private ArrayList<Node> nodes;
 
     public static void main(String[] args) {
-        Board board=Board.loadBoard("ressources//mapSquare.json");
+        Board board=Board.generateBoard(3);
         board.render(3,2);
     }
     /**
@@ -64,7 +64,7 @@ public class Board {
      */
 
     public void addNode(Node node){
-        this.nodes.add(new Node(node.getX(),node.getY(),node.getId()));
+        this.nodes.add(node);
     }
 
     /**
@@ -282,9 +282,97 @@ public class Board {
     }
 
     /**
+     * Compare toutes les nodes et récupère le plus petit id connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinId(){
+        int minId=99999;
+        for (Node node : this.nodes){
+            if (node.getId()<minId)minId=node.getId();
+        }
+        return minId;
+    }
+
+    /**
+     * Compare toutes les nodes et récupère le plus grand id connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMaxId(){
+        int maxId=0;
+        for (Node node : this.nodes){
+            if (node.getId()>maxId)maxId=node.getId();
+        }
+        return maxId;
+    }
+
+    /**
      * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
      *
-     * @param nodeSize : Taille de node
+     * @param nbSides : nombre de cotés de la map
+     */
+
+    public static Board generateBoard(int nbSides){
+        Board board=new Board();
+        Node.resetCounter();
+
+        double angleStep=(2*Math.PI)/nbSides;
+
+        for (double layer=0;layer<3;layer++){
+            double radius=2+layer*2;
+
+            Node newNode=null;
+            Node newNodeMiddle=null;
+            Node startNode=null;
+
+            for (int i=0;i<nbSides;i++){
+
+
+                double x=(Math.cos(angleStep*i)*radius);
+                double y=(Math.sin(angleStep*i)*radius);
+
+                double nextX=(Math.cos(angleStep*(i+1))*radius);
+                double nextY=(Math.sin(angleStep*(i+1))*radius);
+
+                double middleX=(x+nextX)/2;
+                double middleY=(y+nextY)/2;
+
+                newNode=new Node((int)Math.round(x),(int)Math.round(y));
+                if (i==0)startNode=newNode;
+                if (newNodeMiddle!=null)board.addEdge(newNodeMiddle,newNode);
+                newNodeMiddle=new Node((int)Math.round(middleX),(int)Math.round(middleY));
+
+
+                board.addNode(newNode);
+                board.addNode(newNodeMiddle);
+                board.addEdge(newNode,newNodeMiddle);
+                if (i==nbSides-1)board.addEdge(startNode,newNodeMiddle);
+            }
+        }
+
+        for (int i=1;i<board.getMaxId();i+=2){
+            int nextId=i+2*nbSides;
+            if (nextId<board.getMaxId())board.addEdge(i,nextId);
+        }
+
+        int minX=board.getMinX();
+        int minY=board.getMinY();
+        for (Node node : board.getNodes()) {
+            if (minX < 0) node.setX(node.getX() + Math.abs(minX));
+            if (minY < 0) node.setY(node.getY() + Math.abs(minY));
+        }
+        return board;
+    }
+
+    /**
+     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
+     *
+     * @param nodeSize : Taille des nodes
      * @param margeSize : Taide des arêtes
      *
      */

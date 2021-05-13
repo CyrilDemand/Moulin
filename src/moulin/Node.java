@@ -5,7 +5,7 @@ public class Node {
     private int y;
 
     private int id;
-    private static int counter;
+    private static int counter=1;
 
     private Piece piece;
 
@@ -20,6 +20,10 @@ public class Node {
     public Node(int x, int y, int id){
         this(x,y);
         this.id=id;
+    }
+
+    public static void resetCounter(){
+        Node.counter=1;
     }
 
     public Piece getPiece() {
