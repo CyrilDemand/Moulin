@@ -53,7 +53,8 @@ public class Player {
 
     public static Color chooseColor(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Voici les couleurs que l'on a :\n"+Color.List());
+        System.out.println("Voici les couleurs que l'on a :");
+        Color.diplayColor();
         String user = "";
         user = scan.nextLine();
         while (!Color.isColor(user.toLowerCase())){
