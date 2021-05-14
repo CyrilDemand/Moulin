@@ -14,7 +14,7 @@ public class Board {
     private ArrayList<Node> nodes;
 
     public static void main(String[] args) {
-        Board board=Board.loadBoard("ressources\\mapSquare.json");
+        Board board=Board.generateBoard(3);
         board.render(3,2);
     }
     /**
@@ -64,7 +64,7 @@ public class Board {
      */
 
     public void addNode(Node node){
-        this.nodes.add(new Node(node.getX(),node.getY(),node.getId()));
+        this.nodes.add(node);
     }
 
     /**
@@ -213,7 +213,8 @@ public class Board {
 
     public boolean isLinked(int a, int b){
         for (Edge e:this.getEdges()) {
-            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b))){
+            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b)) ||
+                    e.getStart().equals(this.getNodeById(b))&&e.getEnd().equals(this.getNodeById(a))){
                 return true;
             }
         }
@@ -251,9 +252,127 @@ public class Board {
     }
 
     /**
+     * Compare toutes les nodes et récupère le plus petit X connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinX(){
+        int minX=999999;
+        for (Node node : this.nodes){
+            if (node.getX()<minX)minX=node.getX();
+        }
+        return minX;
+    }
+
+    /**
+     * Compare toutes les nodes et récupère le plus petit Y connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinY(){
+        int minY=99999;
+        for (Node node : this.nodes){
+            if (node.getY()<minY)minY=node.getY();
+        }
+        return minY;
+    }
+
+    /**
+     * Compare toutes les nodes et récupère le plus petit id connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMinId(){
+        int minId=99999;
+        for (Node node : this.nodes){
+            if (node.getId()<minId)minId=node.getId();
+        }
+        return minId;
+    }
+
+    /**
+     * Compare toutes les nodes et récupère le plus grand id connu parmi elles
+     *
+     * @return int
+     *
+     */
+
+    private int getMaxId(){
+        int maxId=0;
+        for (Node node : this.nodes){
+            if (node.getId()>maxId)maxId=node.getId();
+        }
+        return maxId;
+    }
+
+    /**
      * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
      *
-     * @param nodeSize : Taille de node
+     * @param nbSides : nombre de cotés de la map
+     */
+
+    public static Board generateBoard(int nbSides){
+        Board board=new Board();
+        Node.resetCounter();
+
+        double angleStep=(2*Math.PI)/nbSides;
+
+        for (double layer=0;layer<3;layer++){
+            double radius=2+layer*2;
+
+            Node newNode=null;
+            Node newNodeMiddle=null;
+            Node startNode=null;
+
+            for (int i=0;i<nbSides;i++){
+
+
+                double x=(Math.cos(angleStep*i)*radius);
+                double y=(Math.sin(angleStep*i)*radius);
+
+                double nextX=(Math.cos(angleStep*(i+1))*radius);
+                double nextY=(Math.sin(angleStep*(i+1))*radius);
+
+                double middleX=(x+nextX)/2;
+                double middleY=(y+nextY)/2;
+
+                newNode=new Node((int)Math.round(x),(int)Math.round(y));
+                if (i==0)startNode=newNode;
+                if (newNodeMiddle!=null)board.addEdge(newNodeMiddle,newNode);
+                newNodeMiddle=new Node((int)Math.round(middleX),(int)Math.round(middleY));
+
+
+                board.addNode(newNode);
+                board.addNode(newNodeMiddle);
+                board.addEdge(newNode,newNodeMiddle);
+                if (i==nbSides-1)board.addEdge(startNode,newNodeMiddle);
+            }
+        }
+
+        for (int i=1;i<board.getMaxId();i+=2){
+            int nextId=i+2*nbSides;
+            if (nextId<board.getMaxId())board.addEdge(i,nextId);
+        }
+
+        int minX=board.getMinX();
+        int minY=board.getMinY();
+        for (Node node : board.getNodes()) {
+            if (minX < 0) node.setX(node.getX() + Math.abs(minX));
+            if (minY < 0) node.setY(node.getY() + Math.abs(minY));
+        }
+        return board;
+    }
+
+    /**
+     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
+     *
+     * @param nodeSize : Taille des nodes
      * @param margeSize : Taide des arêtes
      *
      */
@@ -264,29 +383,45 @@ public class Board {
         int width=unit*(maxX+1)-margeSize;
         int height=unit*(maxY+1)-margeSize;
 
-        char[][] pixels = new char[width][height];
+        String[][] pixels = new String[width][height];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                pixels[x][y]=' ';
+                pixels[x][y]=" ";
             }
         }
 
+        //===================RENDU DES NODES===============================
+
         for (Node node : this.nodes){
+            int offset=(nodeSize%2==0 ? 1 : 0);
+            int centerX=node.getX()*unit+((int)(nodeSize/2))-offset;
+            int centerY=node.getY()*unit+((int)(nodeSize/2))-offset;
+
             for (int y = 0; y < nodeSize; y++) {
                 for (int x = 0; x < nodeSize; x++) {
-                    pixels[node.getX()*unit+x][node.getY()*unit+y]='*';
+                    pixels[node.getX()*unit+x][node.getY()*unit+y]="░";
                 }
             }
             if (node.getPiece()!=null){
-                pixels[(node.getX() * unit + ((int) nodeSize / 2))][node.getY() * unit + ((int) nodeSize / 2)]=node.getPiece().getColor().getValue();
+                try {
+                    pixels[centerX][centerY]=node.getPiece().getColor().getString()+node.getPiece().getId()+Color.ANSI_RESET;
+                } catch (ArrayIndexOutOfBoundsException e){
+                    //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                }
             }else {
                 String id = String.valueOf(node.getId());
                 for (int i = 0; i < id.length(); i++) {
-                    pixels[(node.getX() * unit + ((int) nodeSize / 2)) + i][node.getY() * unit + ((int) nodeSize / 2)] = id.charAt(i);
+                    try {
+                    pixels[centerX + i][centerY] = ""+id.charAt(i);
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                    }
                 }
             }
         }
+
+        //===================RENDU DES LIGNES===============================
 
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
@@ -295,24 +430,43 @@ public class Board {
             //System.out.println("Start : x="+edge.getStart().getX()+" y="+edge.getStart().getY());
             //System.out.println("End : x="+edge.getEnd().getX()+" y="+edge.getEnd().getY());
 
-            int n1CenterX=n1.getX()*unit+((int)nodeSize/2);
-            int n1CenterY=n1.getY()*unit+((int)nodeSize/2);
-            int n2CenterX=n2.getX()*unit+((int)nodeSize/2);
-            int n2CenterY=n2.getY()*unit+((int)nodeSize/2);
+            int n1CenterX=n1.getX()*unit+((int)(nodeSize/2));
+            int n1CenterY=n1.getY()*unit+((int)(nodeSize/2));
+            int n2CenterX=n2.getX()*unit+((int)(nodeSize/2));
+            int n2CenterY=n2.getY()*unit+((int)(nodeSize/2));
             //System.out.println("Start Char: x="+n1CenterX+" y="+n1CenterY);
             //System.out.println("End Char : x="+n2CenterX+" y="+n2CenterY);
 
-            int xDist=n2CenterX-n1CenterX;
-            int yDist=n2CenterY-n1CenterY;
+            float xDist=n2CenterX-n1CenterX;
+            float yDist=n2CenterY-n1CenterY;
             //System.out.println("Dist : x="+xDist+" y="+yDist);
 
-            int x=n1CenterX;
-            int y=n1CenterY;
+            float xStep,yStep;
+            if (xDist==0){
+                xStep=0;yStep=(yDist>=0 ? 1 : -1);
+            }else if (yDist==0){
+                yStep=0;xStep=(xDist>=0 ? 1 : -1);
+            }else{
+                xStep=Math.abs(xDist/yDist)*(xDist>=0 ? 1 : -1);
+                yStep=Math.abs(yDist/xDist)*(yDist>=0 ? 1 : -1);
+            }
+            xStep=Math.min(Math.max(xStep,-1),1);
+            yStep=Math.min(Math.max(yStep,-1),1);
 
+            //System.out.println("Steps : x="+xStep+" y="+yStep);
+
+            float x=n1CenterX;
+            float y=n1CenterY;
+
+            //for (int i=0;i<10;i++)
             do{
                 //System.out.println("x="+x+" y="+y);
-                if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y]==' '){
-                    if (xDist==0){
+                if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
+
+
+                    pixels[(int)x][(int)y]="*";
+
+                    /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
                     }else if (yDist==0){
                         pixels[(int)x][(int)y]='─';
@@ -320,14 +474,18 @@ public class Board {
                         pixels[(int) x][(int) y] = '╲';
                     }else{
                         pixels[(int) x][(int) y] = '╱';
-                    }
+                    }*/
                 }
-                if (xDist!=0)x+=(int)(xDist/Math.abs(xDist));
-                if (yDist!=0)y+=(int)(yDist/Math.abs(yDist));
-            }while (x!=n2CenterX || y!=n2CenterY);
+                if (xDist!=0)x+=xStep;
+                if (yDist!=0)y+=yStep;
+            }
+
+            while ( !(x>n2CenterX-(float)nodeSize/2 && x<n2CenterX+(float)nodeSize/2 && y>n2CenterY-(float)nodeSize/2 && y<n2CenterY+(float)nodeSize/2) );
 
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
+
+        //===================AFFICHAGE FINAL===============================
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
