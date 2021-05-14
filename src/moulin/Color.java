@@ -52,6 +52,13 @@ public enum Color {
         return false;
     }
 
+    public static void diplayColor(){
+        for (Color c: Color.List()) {
+            System.out.print('['+c.getString()+c.toString()+Color.ANSI_RESET+']');
+        }
+        System.out.println();
+    }
+
     public String toString(){
         return this.name();
     }

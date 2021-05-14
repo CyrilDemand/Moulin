@@ -6,15 +6,23 @@ public class Main {
 
     public static void main(String[] args){
         Board board = Board.loadBoard("ressources\\mapSquare.json");
-        Jeu jeu = new Jeu(board,initPlayer());
-        for (Piece p : jeu.getPlayers().get(0).getPieces()) {
-            System.out.println("Le pion est de couleur : "+p.getColor().getString()+p.getColor().toString()+Color.ANSI_RESET);
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Player("Patrick",Color.ROUGE));
+        players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
+        for (int i = 0;i<3;i++){
+            for (Player p:players) {
+                p.addPiece(new Piece(p.getColor(),i));
+            }
         }
+        Jeu jeu = new Jeu(board,players);
+        System.out.println(jeu.getPlayers());
         jeu.start();
+        System.out.println("zeezzeez");
         board.render(3,3);
         while (!jeu.isFinished()){
             jeu.endGame();
         }
+        board.render(3,3);
         System.out.println("fin");
     }
 
