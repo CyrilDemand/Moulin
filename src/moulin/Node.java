@@ -1,5 +1,7 @@
 package moulin;
 
+import java.util.ArrayList;
+
 public class Node {
     private int x;
     private int y;
@@ -68,5 +70,15 @@ public class Node {
 
     public boolean isEmpty(){
         return this.getPiece()==null;
+    }
+
+    public ArrayList<Node> isLinkedWith(Board board){
+        ArrayList<Node> res = new ArrayList<>();
+        for (Node n:board.getNodes()) {
+            if (board.isLinked(this.getId(),n.getId())){
+                res.add(n);
+            }
+        }
+        return res;
     }
 }

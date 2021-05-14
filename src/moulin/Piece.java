@@ -34,15 +34,30 @@ public class Piece {
 
     public boolean move(Board board,int id){
         if(board.isLinked(this.getNode().getId(),id) && board.isLinked(id,this.getNode().getId()) && board.getNodeById(id).getPiece()==null){
-            System.out.println(this.getNode().getPiece());
             this.getNode().setPiece(null);
-            System.out.println(this.getNode().getPiece());
             this.put(board.getNodeById(id));
             this.getNode().setPiece(this);
             return true;
         }
-        System.out.println(false);
         return false;
+    }
+
+    public boolean isMovable(Board board){
+        for (Node n:board.getNodes()) {
+            if (board.isLinked(this.getNode().getId(), n.getId()) && n.isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", node=" + node.toString() +
+                ", id=" + id +
+                '}';
     }
 }
 
