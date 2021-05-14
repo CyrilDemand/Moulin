@@ -78,9 +78,9 @@ public class Jeu {
     public void randomStart(){
         for(int i = 0; i<this.getPlayers().get(0).getPieces().size();i++){
             for (Player p: this.getPlayers()) {
-                int position = (int)(Math.random()*this.getBoard().getNodes().size());
+                int position = (int)(Math.random()*this.getBoard().getNodes().size())+1;
                 while (!this.getBoard().getNodeById(position).isEmpty()){
-                    position = (int)(Math.random()*this.getBoard().getNodes().size());
+                    position = (int)(Math.random()*this.getBoard().getNodes().size())+1;
                 }
                 p.getPieces().get(i).put(this.getBoard().getNodeById(position));
                 try {
