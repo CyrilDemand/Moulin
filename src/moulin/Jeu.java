@@ -75,6 +75,26 @@ public class Jeu {
         }
     }
 
+    public void randomStart(){
+        for(int i = 0; i<this.getPlayers().get(0).getPieces().size();i++){
+            for (Player p: this.getPlayers()) {
+                int position = (int)(Math.random()*this.getBoard().getNodes().size());
+                while (!this.getBoard().getNodeById(position).isEmpty()){
+                    position = (int)(Math.random()*this.getBoard().getNodes().size());
+                }
+                p.getPieces().get(i).put(this.getBoard().getNodeById(position));
+                try {
+                    if(this.isFinished()){
+                        System.out.println("jeu fini");
+                        break;
+                    }
+                }catch (Exception ignored){
+
+                }
+            }
+        }
+    }
+
     public void endGame(){
         Scanner scanner = new Scanner(System.in);
         for (Player player:this.getPlayers()) {

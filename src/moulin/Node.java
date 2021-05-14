@@ -66,4 +66,7 @@ public class Node {
         return false;
     }
 
+    public boolean isEmpty(){
+        return this.getPiece()==null;
+    }
 }

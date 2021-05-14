@@ -10,7 +10,7 @@ public class Main {
         for (Piece p : jeu.getPlayers().get(0).getPieces()) {
             System.out.println("Le pion est de couleur : "+p.getColor().getString()+p.getColor().toString()+Color.ANSI_RESET);
         }
-        jeu.start();
+        jeu.randomStart();
         board.render(3,3);
         while (!jeu.isFinished()){
             jeu.endGame();
