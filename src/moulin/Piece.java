@@ -5,9 +5,7 @@ import java.util.Scanner;
 
 public class Piece {
     private final Color color;
-
     private Node node;
-
     private int id;
 
     public Piece(Color color, int id){
@@ -19,17 +17,28 @@ public class Piece {
         return color;
     }
 
-    public void put(Node node){
-        this.node=node;
-        this.node.setPiece(this);
+    public Node getNode() {
+        return node;
     }
 
     public int getId() {
         return id;
     }
 
-    public Node getNode() {
-        return node;
+    public void put(Node node){
+        this.node=node;
+        this.node.setPiece(this);
+    }//(setter)
+
+    public void setId(int id){ this.id=id;}
+
+    public boolean isMovable(Board board){
+        for (Node n:board.getNodes()) {
+            if (board.isLinked(this.getNode().getId(), n.getId()) && n.isEmpty()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean move(Board board,int id){
@@ -38,15 +47,6 @@ public class Piece {
             this.put(board.getNodeById(id));
             this.getNode().setPiece(this);
             return true;
-        }
-        return false;
-    }
-
-    public boolean isMovable(Board board){
-        for (Node n:board.getNodes()) {
-            if (board.isLinked(this.getNode().getId(), n.getId()) && n.isEmpty()){
-                return true;
-            }
         }
         return false;
     }

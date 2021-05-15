@@ -27,6 +27,10 @@ public class Player {
         return this.color;
     }
 
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
     public void addPiece(Piece piece){
         this.pieces.add(piece);
     }
@@ -35,12 +39,15 @@ public class Player {
         piece.put(node);
     }
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
-    }
-
-    public String toString(){
-        return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
+    public boolean arePiecesLinked(Board board,int x){
+        int a = 0;
+        for (int i =0;i<this.getPieces().size();i++) {
+            for (int idx = 0; idx < this.getPieces().size(); idx++) {
+                if (board.isLinked(this.getPieces().get(i).getNode().getId(), this.getPieces().get(idx).getNode().getId()))
+                    a++;
+            }
+        }
+        return (int)(a/2)==x;
     }
 
     public static String chooseName(){
@@ -68,20 +75,13 @@ public class Player {
         return Color.valueOf(user.toUpperCase());
     }
 
+    public String toString(){
+        return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
+    }
+
     public void displayPieces() {
         for (Piece piece : this.getPieces()) {
             System.out.println(piece.toString());
         }
-    }
-
-    public boolean arePiecesLinked(Board board,int x){
-        int a = 0;
-        for (int i =0;i<this.getPieces().size();i++) {
-            for (int idx = 0; idx < this.getPieces().size(); idx++) {
-                if (board.isLinked(this.getPieces().get(i).getNode().getId(), this.getPieces().get(idx).getNode().getId()))
-                    a++;
-            }
-        }
-        return (int)(a/2)==x;
-    }
+    }//(debugage)
 }
