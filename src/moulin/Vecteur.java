@@ -35,4 +35,11 @@ public class Vecteur{
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Vecteur{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

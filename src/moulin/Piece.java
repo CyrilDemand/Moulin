@@ -8,8 +8,11 @@ public class Piece {
 
     private Node node;
 
-    public Piece(Color color){
+    private int id;
+
+    public Piece(Color color, int id){
         this.color = color;
+        this.id = id;
     }
 
     public Color getColor() {
@@ -21,8 +24,40 @@ public class Piece {
         this.node.setPiece(this);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Node getNode() {
         return node;
     }
 
+    public boolean move(Board board,int id){
+        if(board.isLinked(this.getNode().getId(),id) && board.isLinked(id,this.getNode().getId()) && board.getNodeById(id).getPiece()==null){
+            this.getNode().setPiece(null);
+            this.put(board.getNodeById(id));
+            this.getNode().setPiece(this);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isMovable(Board board){
+        for (Node n:board.getNodes()) {
+            if (board.isLinked(this.getNode().getId(), n.getId()) && n.isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", node=" + node.toString() +
+                ", id=" + id +
+                '}';
+    }
 }
+
