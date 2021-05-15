@@ -15,13 +15,11 @@ public class Edge {
     public Node getEnd(){
         return this.end;
     }
-
-    @Override
-    public String toString() {
-        return "Edge{" +
-                "start=" + start.getId() +
-                ", end=" + end.getId() +
-                '}';
+    public void setStart(Node start){
+        this.start=start;
+    }
+    public void setEnd(Node end){
+        this.end=end;
     }
 
     public boolean equals(Edge other){
@@ -32,4 +30,13 @@ public class Edge {
                 this.getEnd().equals(other.getEnd()))return true;
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "start=" + start.getId() +
+                ", end=" + end.getId() +
+                '}';
+    }
+
 }

@@ -5,10 +5,8 @@ import java.util.ArrayList;
 public class Node {
     private int x;
     private int y;
-
     private int id;
     private static int counter=1;
-
     private Piece piece;
 
     public Node(int x,int y){
@@ -24,29 +22,38 @@ public class Node {
         this.id=id;
     }
 
-    public static void resetCounter(){
-        Node.counter=1;
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY(){
+        return this.y;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public int getCounter() {
+        return Node.counter;
     }
 
     public Piece getPiece() {
         return piece;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
-    }
-
-    public int getX(){
-        return this.x;
-    }
-    public int getY(){
-        return this.y;
-    }
     public void setX(int x){ this.x=x;}
+
     public void setY(int y){ this.y=y;}
 
-    public int getId(){
-        return this.id;
+    public void setId(int id){ this.id=id;}
+
+    public static void resetCounter(){
+        Node.counter=1;
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
     }
 
     @Override

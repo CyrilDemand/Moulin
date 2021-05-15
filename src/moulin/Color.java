@@ -8,36 +8,24 @@ public enum Color {
     JAUNE('J',"\u001B[33m"), MAGENTA('M',"\u001B[35m"),BLEU('B',"\u001B[34m"),CYAN('C',"\u001B[36m");
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-
     private char letter;
-    private String string;
+    private String string;//ansi color
 
-    /**
-     * @param i
-     */
     Color(char i){
         this.letter = i;
     }
-    Color(char i,String s){
+    Color(char i,String s){//On l'utilise pas, mais si il existe pas, c'est la merde
         this(i);
         this.string=s;
     }
 
     public char getValue(){
         return this.letter;
-    }
+    }//getLetter
 
     public String getString() {
         return string;
-    }
+    }//get ansi color
 
     public static ArrayList<Color> List(){ //liste toutes les couleurs disponibles
         return new ArrayList<>(Arrays.asList(Color.values()));
@@ -52,14 +40,14 @@ public enum Color {
         return false;
     }
 
+    public String toString(){
+        return this.name();
+    }
+
     public static void diplayColor(){
         for (Color c: Color.List()) {
             System.out.print('['+c.getString()+c.toString()+Color.ANSI_RESET+']');
         }
         System.out.println();
-    }
-
-    public String toString(){
-        return this.name();
     }
 }

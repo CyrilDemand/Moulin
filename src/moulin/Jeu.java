@@ -4,9 +4,7 @@ import java.util.Scanner;
 
 public class Jeu {
     private static int turn = 0;
-
     private Board board;
-
     private final ArrayList<Player> players;
 
     public Jeu(Board board,ArrayList<Player> players){
@@ -14,41 +12,17 @@ public class Jeu {
         this.players=players;
     }
 
-    public void addTurn(){
-        Jeu.turn++;
-    }
-
     public Board getBoard(){
         return this.board;
     }
-
-    public void setBoard(Board board){
-        this.board = board;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
-
-    public void displayPlayers(){
-        for (Player player:this.players){
-            System.out.println(player);
-        }
+    public void addTurn(){
+        Jeu.turn++;
     }
-
-    public boolean isFinished(){
-        for (int idx=0;idx<2;idx++ ){
-            ArrayList<Vecteur> v = new ArrayList<Vecteur>();
-            for (int i = 0; i<this.getPlayers().get(idx).getPieces().size()-1;i++){
-                v.add(new Vecteur(this.getPlayers().get(idx).getPieces().get(i).getNode().getX(),
-                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getX(),
-                        this.getPlayers().get(idx).getPieces().get(i).getNode().getY(),
-                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getY())
-                );
-            }
-            if (v.get(0).isCollinear(v.get(1)) && this.getPlayers().get(idx).arePiecesLinked(board,2))return true;
-        }
-        return false;
+    public void setBoard(Board board){
+        this.board = board;
     }
 
     public void start(){
@@ -113,4 +87,25 @@ public class Jeu {
             if (isFinished())break;
         }
     }
+
+    public boolean isFinished(){
+        for (int idx=0;idx<2;idx++ ){
+            ArrayList<Vecteur> v = new ArrayList<Vecteur>();
+            for (int i = 0; i<this.getPlayers().get(idx).getPieces().size()-1;i++){
+                v.add(new Vecteur(this.getPlayers().get(idx).getPieces().get(i).getNode().getX(),
+                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getX(),
+                        this.getPlayers().get(idx).getPieces().get(i).getNode().getY(),
+                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getY())
+                );
+            }
+            if (v.get(0).isCollinear(v.get(1)) && this.getPlayers().get(idx).arePiecesLinked(board,2))return true;
+        }
+        return false;
+    }
+
+    public void displayPlayers(){
+        for (Player player:this.players){
+            System.out.println(player);
+        }
+    }//debugage
 }
