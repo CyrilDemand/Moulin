@@ -8,6 +8,9 @@ public class Edge {
         this.start=start;
         this.end=end;
     }
+    public Edge(Edge edge){
+        this(new Node(edge.getStart()), new Node(edge.getEnd()));
+    }
 
     public Node getStart(){
         return this.start;

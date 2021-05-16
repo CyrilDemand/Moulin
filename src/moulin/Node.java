@@ -2,7 +2,7 @@ package moulin;
 
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Cloneable{
     private int x;
     private int y;
     private int id;
@@ -15,6 +15,11 @@ public class Node {
         this.id=Node.counter;
         Node.counter++;
         this.piece=null;
+    }
+
+    public Node(Node node){
+        this(node.getX(),node.getY());
+        this.setPiece(node.getPiece());
     }
 
     public Node(int x, int y, int id){

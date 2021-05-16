@@ -3,7 +3,7 @@ package moulin;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Piece {
+public class Piece implements Cloneable{
     private final Color color;
     private Node node;
     private int id;
@@ -11,6 +11,17 @@ public class Piece {
     public Piece(Color color, int id){
         this.color = color;
         this.id = id;
+    }
+
+    public Piece(Piece piece){
+        this(piece.getColor(),piece.getId());
+        if (piece.getNode()!=null){
+            this.node = new Node(piece.getNode());
+            this.getNode().setPiece(this);
+        }else{
+            this.node = null;
+        }
+
     }
 
     public Color getColor() {

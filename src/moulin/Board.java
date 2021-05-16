@@ -31,6 +31,16 @@ public class Board {
         this.nodes = new ArrayList<Node>();
     }
 
+    public Board(Board board){
+        this();
+        for (Node n:board.getNodes()) {
+            this.nodes.add(new Node(n));
+        }
+        for (Edge e:board.getEdges()) {
+            this.edges.add(new Edge(e));
+        }
+    }
+
     /**
      * Ajoute une node à l'ArrayList du plateau
      *

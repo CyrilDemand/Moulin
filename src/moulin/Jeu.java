@@ -12,6 +12,18 @@ public class Jeu {
         this.players=players;
     }
 
+    public Jeu(Jeu jeu){
+        this(new Board(jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
+    }
+
+    public ArrayList<Player> copyPlayers(ArrayList<Player> p1){
+        ArrayList<Player> p = new ArrayList<>();
+        for (Player p2: p1) {
+            p.add(new Player(p2));
+        }
+        return p;
+    }
+
     public Board getBoard(){
         return this.board;
     }
