@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,8 +16,10 @@ public class Board {
     private ArrayList<Line> lines;
 
     public static void main(String[] args) {
-        Board board=Board.generateBoard(3);
+        Board board=Board.generateBoard(4);
         board.render(3,2);
+
+        System.out.println(board.toString());
     }
 
     /**
@@ -363,6 +366,8 @@ public class Board {
             Node newNodeMiddle=null;
             Node startNode=null;
 
+            //----------Creation Node et Edges------------------
+
             for (int i=0;i<nbSides;i++){
 
 
@@ -391,6 +396,36 @@ public class Board {
         for (int i=1;i<board.getMaxId();i+=2){
             int nextId=i+2*nbSides;
             if (nextId<board.getMaxId())board.addEdge(i,nextId);
+        }
+
+        //----------Creation Lines------------------
+        int nodesPerLayer=nbSides*2;
+        for (int layer=0;layer<3;layer++){
+            int startId=1+nodesPerLayer*layer;
+            for (int side=0;side<nbSides;side++){
+                ArrayList<Node> lineNodes=new ArrayList<Node>();
+
+
+                lineNodes.add(board.getNodeById(startId+side*2));
+                lineNodes.add(board.getNodeById(startId+side*2+1));
+                lineNodes.add(board.getNodeById(startId+side*2+2==startId+nodesPerLayer ? startId : startId+side*2+2) );
+
+                //System.out.println(lineNodes);
+
+                board.addLine(lineNodes);
+            }
+        }
+
+        for (int side=0;side<nbSides;side++){
+            ArrayList<Node> lineNodes=new ArrayList<Node>();
+
+            lineNodes.add(board.getNodeById(1+side*2 + 0*nodesPerLayer));
+            lineNodes.add(board.getNodeById(1+side*2 + 1*nodesPerLayer));
+            lineNodes.add(board.getNodeById(1+side*2 + 2*nodesPerLayer));
+
+            //System.out.println(lineNodes);
+
+            board.addLine(lineNodes);
         }
 
         int minX=board.getMinX();
