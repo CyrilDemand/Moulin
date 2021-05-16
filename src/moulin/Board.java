@@ -132,7 +132,7 @@ public class Board {
         return lines;
     }
 
-    public void addLines(ArrayList<Node> nodes){
+    public void addLine(ArrayList<Node> nodes){
         this.lines.add(new Line(nodes));
     }
 
@@ -215,11 +215,19 @@ public class Board {
             JSONObject o = new JSONObject(content);
             JSONArray nodes = o.getJSONArray("nodes");
             JSONArray edges = o.getJSONArray("edges");
+            JSONArray lines = o.getJSONArray("lines");
             for (int i = 0;i<nodes.length();i++){
                 res.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
             }
             for (int i = 0;i<edges.length();i++){
                 res.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
+            }
+            for (int i = 0;i<lines.length();i++){
+                ArrayList<Node> lineNodes=new ArrayList<Node>();
+                for (int j=0;j<lines.getJSONArray(i).length();j++) {
+                    lineNodes.add(res.getNodeById(lines.getJSONArray(i).getInt(j)));
+                }
+                res.addLine(lineNodes);
             }
         }
         catch (IOException | JSONException e) {
