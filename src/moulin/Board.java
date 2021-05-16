@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Board {
     private ArrayList<Edge> edges;
     private ArrayList<Node> nodes;
+    private ArrayList<Line> lines;
 
     public static void main(String[] args) {
         Board board=Board.generateBoard(3);
@@ -29,6 +30,7 @@ public class Board {
     public Board() {
         this.edges = new ArrayList<Edge>();
         this.nodes = new ArrayList<Node>();
+        this.lines = new ArrayList<Line>();
     }
 
     public Board(Board board){
@@ -39,6 +41,7 @@ public class Board {
         for (Edge e:board.getEdges()) {
             this.edges.add(new Edge(e));
         }
+        this.lines=board.lines;
     }
 
     /**
@@ -125,6 +128,14 @@ public class Board {
         return nodes;
     }
 
+    public ArrayList<Line> getLines() {
+        return lines;
+    }
+
+    public void addLines(ArrayList<Node> nodes){
+        this.lines.add(new Line(nodes));
+    }
+
     /**
      * Retourne la node d'une ID en paramètre
      *
@@ -132,6 +143,7 @@ public class Board {
      * @return n
      *
      */
+
 
     public Node getNodeById(int id){
         for (Node n:this.nodes){
@@ -183,6 +195,7 @@ public class Board {
         return "Board{" +
                 "edges=" + edges +
                 ", nodes=" + nodes +
+                ", lines=" + lines +
                 '}';
     }
 
