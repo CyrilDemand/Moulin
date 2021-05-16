@@ -19,6 +19,13 @@ public class Player {
         this.pieces = new ArrayList<Piece>();
     }
 
+    public Player(Player player){
+        this(player.getName(),player.getColor());
+        for (Piece p:player.getPieces()) {
+            this.pieces.add(new Piece(p));
+        }
+    }
+
     public String getName(){
         return this.name;
     }

@@ -12,6 +12,18 @@ public class Jeu {
         this.players=players;
     }
 
+    public Jeu(Jeu jeu){
+        this(new Board(jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
+    }
+
+    public ArrayList<Player> copyPlayers(ArrayList<Player> p1){
+        ArrayList<Player> p = new ArrayList<>();
+        for (Player p2: p1) {
+            p.add(new Player(p2));
+        }
+        return p;
+    }
+
     public Board getBoard(){
         return this.board;
     }
@@ -89,16 +101,14 @@ public class Jeu {
     }
 
     public boolean isFinished(){
-        for (int idx=0;idx<2;idx++ ){
-            ArrayList<Vecteur> v = new ArrayList<Vecteur>();
-            for (int i = 0; i<this.getPlayers().get(idx).getPieces().size()-1;i++){
-                v.add(new Vecteur(this.getPlayers().get(idx).getPieces().get(i).getNode().getX(),
-                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getX(),
-                        this.getPlayers().get(idx).getPieces().get(i).getNode().getY(),
-                        this.getPlayers().get(idx).getPieces().get(i+1).getNode().getY())
-                );
+        for (Player p: this.getPlayers()) {
+            for (Line l:this.getBoard().getLines()) {
+                int nbPiece = 0;
+                for (Piece p1: p.getPieces()) {
+                    if (l.getNodes().contains(p1.getNode()))nbPiece++;
+                }
+                if (nbPiece==l.getNodes().size())return true;
             }
-            if (v.get(0).isCollinear(v.get(1)) && this.getPlayers().get(idx).arePiecesLinked(board,2))return true;
         }
         return false;
     }

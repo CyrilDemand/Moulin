@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args){
-        Board board = Board.loadBoard("ressources\\mapSquare.json");
+        Board board = Board.generateBoard(3);
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));
         players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
@@ -19,8 +19,11 @@ public class Main {
         jeu.start();
         System.out.println("zeezzeez");
         board.render(3,3);
+        Jeu jeu1 = new Jeu(jeu);
+        jeu1.getBoard().render(3,3);
         while (!jeu.isFinished()){
             jeu.endGame();
+            jeu1.getBoard().render(3,3);
         }
         board.render(3,3);
         System.out.println("fin");
