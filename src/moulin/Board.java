@@ -163,6 +163,15 @@ public class Board {
         return true;
     }
 
+    public void nextTurn(){
+        for (Edge edge:this.edges){
+            if (edge.isTrapped())edge.getTrap().nextTurn();
+        }
+        for (Node node:this.nodes){
+            if (node.isTrapped())node.getTrap().nextTurn();
+        }
+    }
+
     /**
      * Retourne la node d'une ID en paramètre
      *
@@ -272,12 +281,20 @@ public class Board {
      */
 
     public boolean isLinked(int a, int b){
+        Node na=this.getNodeById(a);
+        Node nb=this.getNodeById(b);
+
         for (Edge e:this.getEdges()) {
             if (e.isTrapped())continue;
-            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b)) ||
-                    e.getStart().equals(this.getNodeById(b))&&e.getEnd().equals(this.getNodeById(a))){
+            if (e.getStart().equals(na)&&e.getEnd().equals(nb) ||
+                    e.getStart().equals(nb)&&e.getEnd().equals(na)){
                 return true;
             }
+        }
+
+        for (Node n :this.getNodes()) {
+            if (n.isTrapped() && n.equals(na) && n.getTrap().getDestination().equals(nb))return true;
+            if (n.isTrapped() && n.equals(nb) && n.getTrap().getDestination().equals(na))return true;
         }
         return false;
     }
@@ -496,10 +513,10 @@ public class Board {
                     pixels[node.getX()*unit+x][node.getY()*unit+y]="░";
                 }
             }
-            if (node.getPiece()!=null){
+            if (node.getPiece()!=null) {
                 try {
-                    pixels[centerX][centerY]=node.getPiece().getColor().getString()+node.getPiece().getId()+Color.ANSI_RESET;
-                } catch (ArrayIndexOutOfBoundsException e){
+                    pixels[centerX][centerY] = node.getPiece().getColor().getString() + node.getPiece().getId() + Color.ANSI_RESET;
+                } catch (ArrayIndexOutOfBoundsException e) {
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
             }
@@ -511,10 +528,19 @@ public class Board {
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
             }
-
             if (node.isTrapped()){
-                pixels[node.getX()*unit+nodeSize-1][node.getY()*unit+nodeSize-1] = "T";
+                pixels[node.getX()*unit][node.getY()*unit+nodeSize-1] = ">";
+                id = String.valueOf(node.getTrap().getDestination().getId());
+                for (int i = 0; i < id.length(); i++) {
+                    try {
+                        pixels[node.getX()*unit+1+i][node.getY()*unit+nodeSize-1] = ""+id.charAt(i);
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                    }
+                }
+
             }
+
         }
 
         //===================RENDU DES LIGNES===============================

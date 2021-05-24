@@ -10,6 +10,8 @@ public class Player {
 
     private final ArrayList<Piece> pieces;
 
+    private int nbTrap;
+
     public Player(String name, Color color){
         if(name.equals("")){
             throw new Error("Pas de nom de joueurs");
@@ -17,13 +19,22 @@ public class Player {
         this.name = name;
         this.color = color;
         this.pieces = new ArrayList<Piece>();
+        this.nbTrap=3;
     }
 
-    public Player(Player player){
-        this(player.getName(),player.getColor());
-        for (Piece p:player.getPieces()) {
+    public Player(Player player) {
+        this(player.getName(), player.getColor());
+        for (Piece p : player.getPieces()) {
             this.pieces.add(new Piece(p));
         }
+    }
+
+    public int getNbTrap() {
+        return nbTrap;
+    }
+
+    public void placedATrap(){
+        this.nbTrap=Math.max(0,this.getNbTrap()-1);
     }
 
     public String getName(){

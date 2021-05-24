@@ -3,7 +3,7 @@ package moulin;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Piece implements Cloneable{
+public class Piece{
     private final Color color;
     private Node node;
     private int id;
@@ -59,10 +59,17 @@ public class Piece implements Cloneable{
     }
 
     public boolean move(Board board,int id){
-        if(board.isLinked(this.getNode().getId(),id) && board.isLinked(id,this.getNode().getId()) && board.getNodeById(id).getPiece()==null){
+        if((board.isLinked(this.getNode().getId(),id) || board.isLinked(id,this.getNode().getId())) && board.getNodeById(id).getPiece()==null){
+            Node destination=board.getNodeById(id);
+
             this.getNode().setPiece(null);
             this.put(board.getNodeById(id));
             this.getNode().setPiece(this);
+
+            if (destination.isTrapped()){
+                return this.move(board,((TrapTeleport)destination.getTrap()).getDestination().getId());
+            }
+
             return true;
         }
         return false;
