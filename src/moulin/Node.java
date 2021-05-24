@@ -8,7 +8,7 @@ public class Node{
     private int id;
     private static int counter=1;
     private Piece piece;
-    TrapTeleport trap;
+    private TrapTeleport trap;
 
     public Node(int x,int y){
         this.x=x;
@@ -86,8 +86,8 @@ public class Node{
         if(this==null)return false;
         if(other==null)return false;
         if(this.getId()==other.getId() &&
-        this.getX()==other.getX() &&
-        this.getY()==other.getY())return true;
+                this.getX()==other.getX() &&
+                this.getY()==other.getY())return true;
         return false;
     }
 
