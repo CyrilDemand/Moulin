@@ -47,7 +47,7 @@ public class Jeu {
                     System.out.println("Mettez l'id de là où vous voulez mettre votre pion "+i);
                     p.getPieces().get(i).put(this.getBoard().getNodeById(scanner.nextInt()));
                 }else {
-                    ((RandomAI)p).start(board,p.getPieces().get(i));
+                    ((NormalAI)p).start(this,p.getPieces().get(i));
                 }
                 try {
                     if(this.isFinished()){
@@ -94,7 +94,12 @@ public class Jeu {
                     endroit =scanner.nextInt();
                 }while (!player.getPieces().get(piece).move(board,endroit));
             }else{
-                ((RandomAI)player).endGame(board);
+                try {
+                    ((RandomAI)player).endGame(board);
+                }catch (Exception ignored){}
+                try {
+                    ((NormalAI)player).endGame(board);
+                }catch (Exception ignored){}
             }
             if (isFinished())break;
         }

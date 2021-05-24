@@ -8,12 +8,12 @@ public class RandomAI extends AI{
         super(name, color);
     }
 
-    public void start(Board board,Piece piece) {
-        int position = (int)(Math.random()*board.getNodes().size())+1;
-        while (!board.getNodeById(position).isEmpty()){
-            position = (int)(Math.random()*board.getNodes().size())+1;
+    public void start(Jeu jeu,Piece piece) {
+        int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
+        while (!jeu.getBoard().getNodeById(position).isEmpty()){
+            position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
         }
-        this.put(board.getNodeById(position),piece);
+        this.put(jeu.getBoard().getNodeById(position),piece);
     }
 
     public void endGame(Board board) {
