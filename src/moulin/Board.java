@@ -17,6 +17,8 @@ public class Board {
 
     public static void main(String[] args) {
         Board board=Board.generateBoard(4);
+        board.trapNode(1,2,3);
+        System.out.println(board.isLinked(1,2));
         board.render(3,2);
 
         System.out.println(board.toString());
@@ -139,6 +141,28 @@ public class Board {
         this.lines.add(new Line(nodes));
     }
 
+    public boolean trapEdge(int idStart,int idEnd, int turns){
+        Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
+        boolean res=false;
+        for (Edge e:this.edges){
+            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start)){
+                e.setTrap(new Trap(turns));
+                res=true;
+            }
+        }
+        return res;
+    }
+
+    public boolean trapNode(int id, int idDestination,int turns){
+        Node start=this.getNodeById(id);
+        if (start==null)return false;
+        Node destination=this.getNodeById(idDestination);
+        if (destination==null)return false;
+
+        start.setTrap(new TrapTeleport(turns,destination));
+        return true;
+    }
+
     /**
      * Retourne la node d'une ID en paramètre
      *
@@ -249,6 +273,7 @@ public class Board {
 
     public boolean isLinked(int a, int b){
         for (Edge e:this.getEdges()) {
+            if (e.isTrapped())continue;
             if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b)) ||
                     e.getStart().equals(this.getNodeById(b))&&e.getEnd().equals(this.getNodeById(a))){
                 return true;
@@ -481,11 +506,14 @@ public class Board {
                 String id = String.valueOf(node.getId());
                 for (int i = 0; i < id.length(); i++) {
                     try {
-                    pixels[centerX + i][centerY] = ""+id.charAt(i);
+                        pixels[node.getX()*unit+i][node.getY()*unit] = ""+id.charAt(i);
                     } catch (ArrayIndexOutOfBoundsException e){
                         //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                     }
                 }
+            }
+            if (node.isTrapped()){
+                pixels[node.getX()*unit+nodeSize-1][node.getY()*unit+nodeSize-1] = "T";
             }
         }
 
@@ -531,8 +559,12 @@ public class Board {
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
 
+                    if (edge.isTrapped()) {
+                        pixels[(int)x][(int)y]=".";
+                    }else{
+                        pixels[(int)x][(int)y]="*";
+                    }
 
-                    pixels[(int)x][(int)y]="*";
 
                     /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';

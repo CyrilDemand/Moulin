@@ -8,6 +8,7 @@ public class Node{
     private int id;
     private static int counter=1;
     private Piece piece;
+    TrapTeleport trap;
 
     public Node(int x,int y){
         this.x=x;
@@ -59,6 +60,16 @@ public class Node{
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+    }
+
+    public void setTrap(TrapTeleport trap){
+        this.trap=trap;
+    }
+    public TrapTeleport getTrap(){
+        return this.trap;
+    }
+    public boolean isTrapped(){
+        return this.getTrap()!=null && this.getTrap().getTurnsLeft()>0;
     }
 
     @Override
