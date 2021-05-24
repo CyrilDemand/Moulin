@@ -2,12 +2,13 @@ package moulin;
 
 import java.util.ArrayList;
 
-public class Node implements Cloneable{
+public class Node{
     private int x;
     private int y;
     private int id;
     private static int counter=1;
     private Piece piece;
+    private boolean isTrapped;
 
     public Node(int x,int y){
         this.x=x;
