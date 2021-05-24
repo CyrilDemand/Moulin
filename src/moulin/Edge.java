@@ -3,6 +3,7 @@ package moulin;
 public class Edge {
     private Node start;
     private Node end;
+    private Trap trap;
 
     public Edge(Node start,Node end){
         this.start=start;
@@ -23,6 +24,15 @@ public class Edge {
     }
     public void setEnd(Node end){
         this.end=end;
+    }
+    public void setTrap(Trap trap){
+        this.trap=trap;
+    }
+    public Trap getTrap(){
+        return this.trap;
+    }
+    public boolean isTrapped(){
+        return this.getTrap()!=null && this.getTrap().getTurnsLeft()>0;
     }
 
     public boolean equals(Edge other){
