@@ -17,7 +17,7 @@ public class Board {
 
     public static void main(String[] args) {
         Board board=Board.generateBoard(4);
-        board.trapEdge(1,2,3);
+        board.trapNode(1,2,3);
         System.out.println(board.isLinked(1,2));
         board.render(3,2);
 
@@ -151,6 +151,16 @@ public class Board {
             }
         }
         return res;
+    }
+
+    public boolean trapNode(int id, int idDestination,int turns){
+        Node start=this.getNodeById(id);
+        if (start==null)return false;
+        Node destination=this.getNodeById(idDestination);
+        if (destination==null)return false;
+
+        start.setTrap(new TrapTeleport(turns,destination));
+        return true;
     }
 
     /**
@@ -501,6 +511,9 @@ public class Board {
                         //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                     }
                 }
+            }
+            if (node.isTrapped()){
+                pixels[node.getX()*unit+nodeSize-1][node.getY()*unit+nodeSize-1] = "T";
             }
         }
 
