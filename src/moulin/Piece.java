@@ -36,9 +36,15 @@ public class Piece implements Cloneable{
         return id;
     }
 
-    public void put(Node node){
-        this.node=node;
-        this.node.setPiece(this);
+    public boolean put(Node node){
+        if(node.getPiece()==null){
+            this.node=node;
+            this.node.setPiece(this);
+            return true;
+        }
+        else {
+            return false;
+        }
     }//(setter)
 
     public void setId(int id){ this.id=id;}

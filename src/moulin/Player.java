@@ -42,8 +42,8 @@ public class Player {
         this.pieces.add(piece);
     }
 
-    public void put(Node node,Piece piece){
-        piece.put(node);
+    public boolean put(Node node,Piece piece){
+        return piece.put(node);
     }
 
     public boolean arePiecesLinked(Board board,int x){

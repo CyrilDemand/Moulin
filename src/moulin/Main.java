@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Board board = Board.generateBoard(4);
+        Board board = Board.loadBoard("ressources\\mapSquare.json");
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));
         players.add(new NormalAI("Intelligence Artificielle",Color.BLEU));
@@ -17,6 +17,7 @@ public class Main {
         Jeu jeu = new Jeu(board,players);
         System.out.println(jeu.getPlayers());
         jeu.start();
+        System.out.println(players.get(1).getPieces());
         board.render(3,3);
         Jeu jeu1 = new Jeu(jeu);
         jeu1.getBoard().render(3,3);
