@@ -9,7 +9,6 @@ public class Main {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));
         players.add(new NormalAI("Intelligence Artificielle",Color.BLEU));
-        TrapEdge t = new TrapEdge(2,board.getEdges().get(1));
         for (int i = 0;i<3;i++){
             for (Player p:players) {
                 p.addPiece(new Piece(p.getColor(),i));
