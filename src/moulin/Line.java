@@ -1,6 +1,7 @@
 package moulin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Line {
     private ArrayList<Node> nodes;
@@ -27,5 +28,12 @@ public class Line {
         return "Line{" +
                 "nodes=" + nodes +
                 '}';
+    }
+
+    public Node whichIsNotIn(List<Node> other){
+        for (Node n:this.getNodes()) {
+            if (!other.contains(n))return n;
+        }
+        return null;
     }
 }

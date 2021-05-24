@@ -492,6 +492,9 @@ public class Board {
         //===================RENDU DES LIGNES===============================
 
         for (Edge edge:this.edges){
+            String edgeChar=(edge.isTrapped() ? "*" : ".");
+
+
             Node n1=edge.getStart();
             Node n2=edge.getEnd();
             //System.out.println("Node : n1="+n1.getId()+" n2="+n2.getId());
@@ -532,7 +535,7 @@ public class Board {
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
 
 
-                    pixels[(int)x][(int)y]="*";
+                    pixels[(int)x][(int)y]=edgeChar;
 
                     /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
