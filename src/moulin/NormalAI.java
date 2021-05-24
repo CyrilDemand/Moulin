@@ -10,15 +10,18 @@ public class NormalAI extends AI{
     public void start(Jeu jeu,Piece piece) {
         int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
         try {
-            System.out.println(position);
-            position = this.willBeLoose(jeu.getBoard(),jeu.getPlayers().get(0)).getId();
-            System.out.println(position);
-        } catch (Exception ignored) {
-            while (position == -1 &&jeu.getBoard().getNodeById(position).isEmpty()){
-                position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
+            if (this.willBeWin(jeu.getBoard()))position = this.alignPiece(jeu.getBoard()).getId();
+            else {
+                System.out.println(position);
+                position = this.willBeLoose(jeu.getBoard(),jeu.getPlayers().get(0)).getId();
+                System.out.println(position);
             }
+        } catch (Exception ignored) {
+            position = this.alignPiece(jeu.getBoard()).getId();
         }
-        this.put(jeu.getBoard().getNodeById(position),piece);
+        while (!this.put(jeu.getBoard().getNodeById(position),piece)){
+            position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
+        }
     }
 
     public void endGame(Board board) {
@@ -45,7 +48,6 @@ public class NormalAI extends AI{
 
     public Node willBeLoose(Board board,Player player) throws Exception {
         int i = 0;
-        System.out.println("je suis dans la fonction qui clc");
         System.out.println(board.getLines());
         try {
             ArrayList<Node> nodes = new ArrayList<>();
@@ -63,5 +65,38 @@ public class NormalAI extends AI{
         } catch (Exception ignored) { System.out.println(i); }
         System.out.println(i);
         throw new Exception();
+    }
+
+    public boolean willBeWin(Board board){
+        int i = 0;
+        System.out.println(board.getLines());
+        try {
+            ArrayList<Node> nodes = new ArrayList<>();
+            for (Piece piece:this.getPieces()) {
+                if (piece.getNode()!=null)nodes.add(piece.getNode());
+            }
+            for (Line line:board.getLines()) {
+                i=0;
+                for (Node node:nodes) {
+                    if (line.getNodes().contains(node))i++;
+                    System.out.println( line.whichIsNotIn(nodes));
+                    if (i==2)return true;
+                }
+            }
+        } catch (Exception ignored) { System.out.println(i); }
+        return false;
+    }
+
+    public Node alignPiece(Board board){
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (Piece piece:this.getPieces()) {
+            if (piece.getNode()!=null)nodes.add(piece.getNode());
+        }
+        for (Line line:board.getLines()) {
+            for (Piece p:this.getPieces()) {
+                if (line.getNodes().contains(p.getNode()))return line.whichIsNotIn(nodes);
+            }
+        }
+        return board.getNodeById((int)(Math.random()*board.getNodes().size())+1);
     }
 }

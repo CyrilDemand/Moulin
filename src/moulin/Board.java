@@ -502,16 +502,16 @@ public class Board {
                 } catch (ArrayIndexOutOfBoundsException e){
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
-            }else {
-                String id = String.valueOf(node.getId());
-                for (int i = 0; i < id.length(); i++) {
-                    try {
-                        pixels[node.getX()*unit+i][node.getY()*unit] = ""+id.charAt(i);
-                    } catch (ArrayIndexOutOfBoundsException e){
-                        //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
-                    }
+            }
+            String id = String.valueOf(node.getId());
+            for (int i = 0; i < id.length(); i++) {
+                try {
+                    pixels[node.getX()*unit+i][node.getY()*unit] = ""+id.charAt(i);
+                } catch (ArrayIndexOutOfBoundsException e){
+                    //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
             }
+
             if (node.isTrapped()){
                 pixels[node.getX()*unit+nodeSize-1][node.getY()*unit+nodeSize-1] = "T";
             }
