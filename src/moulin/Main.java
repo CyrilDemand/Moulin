@@ -4,6 +4,13 @@ import java.util.*;
 
 public class Main {
 
+    /**
+     * Allows you to launch the game
+     *
+     * @param args
+     * @throws Exception
+     */
+
     public static void main(String[] args) throws Exception {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
@@ -26,6 +33,13 @@ public class Main {
         board.render(3,1);
         System.out.println("fin");
     }
+
+    /**
+     *Creates an ArrayList for the Players
+     *
+     * @return ArrayList<Player>
+     *
+     */
 
     public static ArrayList<Player> initPlayer(){
         ArrayList<Player> players = new ArrayList<>();

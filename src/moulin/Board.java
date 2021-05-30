@@ -25,10 +25,7 @@ public class Board {
     }
 
     /**
-     * Génère une class Board
-     *
-     * Attributs : ArrayList de Edges (Arrêtes, Lignes du Plateau)
-     * Attributs : ArrayList de Nodes (Noeuds, Sommets du plateau)
+     * Generates a Board class
      *
      */
 
@@ -37,6 +34,13 @@ public class Board {
         this.nodes = new ArrayList<Node>();
         this.lines = new ArrayList<Line>();
     }
+
+    /**
+     *
+     * Use the board given to copy it's attributes into the main Board
+     *
+     * @param board board used to copy it into the main board
+     */
 
     public Board(Board board){
         this();
@@ -50,13 +54,12 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" Arraylist
      *
-     * @param x  : Position X de la node
-     * @param y  : Position Y de la node
+     * @param x  X position of the node
+     * @param y  Y position of the node
      *
-     * l'id de la node est générée avec la création d'une nouvelle node, par l'incrémentation d'un compteur
-     *
+     * the node's ID is generated with the creation of a new node, by the incrementation of a counter
      */
 
     public void addNode(int x,int y){
@@ -64,11 +67,11 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" ArrayList
      *
-     * @param x  : Position X de la node
-     * @param y  : Position Y de la node
-     * @param id  : ID de la node
+     * @param x X position of the node
+     * @param y Y position of the node
+     * @param id node's ID
      *
      */
 
@@ -77,9 +80,9 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" ArrayList
      *
-     * @param node : Node ajoutée
+     * @param node added node
      *
      */
 
@@ -88,10 +91,10 @@ public class Board {
     }
 
     /**
-     * Ajoute une edge à l'ArrayList du plateau
+     * Adds an Edge to the "edges" ArrayList
      *
-     * @param idStart : id de la première node
-     * @param idEnd : id de la seconde node
+     * @param idStart First node's ID
+     * @param idEnd Second node's ID
      *
      */
 
@@ -100,10 +103,10 @@ public class Board {
     }
 
     /**
-     * Ajoute une edge à l'ArrayList du plateau
+     * Adds an Edge to the "edges" ArrayList
      *
-     * @param start : première node
-     * @param end : seconde node
+     * @param start First node
+     * @param end Second node
      *
      */
 
@@ -112,7 +115,7 @@ public class Board {
     }
 
     /**
-     * Retourne le tableau d'Edges du plateau
+     * Returns the Edge Table of the Board
      *
      * @return ArrayList<Edge>
      *
@@ -123,23 +126,49 @@ public class Board {
     }
 
     /**
-     * Retourne le tableau de Nodes du plateau
+     * Returns the Nodes Table of the Board
      *
      * @return ArrayList<Node>
      *
+     */
+
+    /**
+     * Gets the nodes ArrayList
+     * @return ArrayList<Node>
      */
 
     public ArrayList<Node> getNodes() {
         return nodes;
     }
 
+    /**
+     * Gets the lines ArrayList
+     * @return ArrayList<Line>
+     *
+     */
+
     public ArrayList<Line> getLines() {
         return lines;
     }
 
+    /**
+     * Takes a nodes ArrayList to create a new Line in the "lines" ArrayList
+     * @param nodes the ArrayList used to create a Line
+     */
     public void addLine(ArrayList<Node> nodes){
         this.lines.add(new Line(nodes));
     }
+
+    /**
+     *
+     * Creates a Trap on an Edge
+     *
+     * @param idStart Start of the Trap
+     * @param idEnd End of the Trap
+     * @param turns Amount of turns the Trap remains
+     * @return true if you can place the Trap
+     */
+
 
     public boolean trapEdge(int idStart,int idEnd, int turns){
         Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
@@ -153,6 +182,14 @@ public class Board {
         return res;
     }
 
+    /**
+     * Places a Trap that teleports the Piece to another location
+     *
+     * @param id Trap's position
+     * @param idDestination Destination of the teleporter
+     * @param turns Amount of turn the teleporter remains
+     * @return true if you can place the Trap
+     */
     public boolean trapNode(int id, int idDestination,int turns){
         Node start=this.getNodeById(id);
         if (start==null)return false;
@@ -162,6 +199,11 @@ public class Board {
         start.setTrap(new TrapTeleport(turns,destination));
         return true;
     }
+
+
+    /**
+     * Switch to next turn for the Traps
+     */
 
     public void nextTurn(){
         for (Edge edge:this.edges){
@@ -173,10 +215,10 @@ public class Board {
     }
 
     /**
-     * Retourne la node d'une ID en paramètre
+     * Returns the node associated to the given ID
      *
-     * @param id : id de la node à récupérer
-     * @return n
+     * @param id ID of the node
+     * @return the Node
      *
      */
 
@@ -191,11 +233,11 @@ public class Board {
     }
 
     /**
-     * Vérifie l'égalité entre deux plateaux
+     * Check if two Boards are the same
      *
-     * @param other : un plateau de jeu 'Board'
-     * @return true : si bien égaux
-     * @return false : si l'un des plateaux est null, ou différent de l'autre
+     * @param other one Board
+     * @return true if both Boards are the same
+     * @return false if one of the Board is different of the other
      *
      */
 
@@ -209,11 +251,11 @@ public class Board {
     }
 
     /**
-     * Génère le plateau sous forme d'un String
+     * Generates the Board in a String
      *
      * @return String
      *
-     * Exemple :
+     * Example :
      *
      * Node(0,0,1);
      * Node(1,0,2);
@@ -222,7 +264,7 @@ public class Board {
      * Edge(1,2);
      * Edge(2,3);
      *
-     * Génération : Board{edges=[Edge{start=1, end=2}, Edge{start=2, end=3}], nodes=[Node{x=0, y=0, id=1}, Node{x=1, y=0, id=2}, Node{x=2, y=0, id=3}]}
+     * Generation : Board{edges=[Edge{start=1, end=2}, Edge{start=2, end=3}], nodes=[Node{x=0, y=0, id=1}, Node{x=1, y=0, id=2}, Node{x=2, y=0, id=3}]}
      *
      */
 
@@ -236,10 +278,10 @@ public class Board {
     }
 
     /**
-     * Vérifie l'égalité entre deux plateaux
-     * Génère un plateau de jeu depuis un .json
+     * Check if two Boards are equal
+     * Generates a Board from a .json
      *
-     * @param chemin : chemin d'accès au format d'un String
+     * @param chemin path in the String type
      * @return Board
      *
      */
@@ -273,10 +315,10 @@ public class Board {
     }
 
     /**
-     * Vérifie si des l'ID de deux Nodes sont bien liées par une Edge
+     * Checks if the ID of two nodes are linked by an Edge
      *
-     * @return true : si les Nodes sont liées
-     * @return false : si elles ne le sont pas
+     * @return true if the nodes are linked
+     * @return false if the nodes aren't linked
      *
      */
 
@@ -300,8 +342,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand X connu parmi elles
-     *
+     * Compare all the nodes and get the highest X position known within the nodes
      * @return int
      *
      */
@@ -315,7 +356,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand Y connu parmi elles
+     * Compare all the nodes and get the highest Y position known within the nodes
      *
      * @return int
      *
@@ -330,7 +371,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit X connu parmi elles
+     * Compare all the nodes and get the lowest X position known within the nodes
      *
      * @return int
      *
@@ -345,7 +386,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit Y connu parmi elles
+     * Compare all the nodes and get the lowest Y position known within the nodes
      *
      * @return int
      *
@@ -360,7 +401,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit id connu parmi elles
+     * Compare all the nodes and get the lowest ID known within the nodes
      *
      * @return int
      *
@@ -375,7 +416,7 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand id connu parmi elles
+     * Compare all the nodes and get the highest ID known within the nodes
      *
      * @return int
      *
@@ -390,9 +431,9 @@ public class Board {
     }
 
     /**
-     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
+     * Generates a Board with a node size/spacing management
      *
-     * @param nbSides : nombre de cotés de la map
+     * @param nbSides amount of map sides
      */
 
     public static Board generateBoard(int nbSides){
@@ -408,7 +449,7 @@ public class Board {
             Node newNodeMiddle=null;
             Node startNode=null;
 
-            //----------Creation Node et Edges------------------
+            //----------Nodes and Edges Creation------------------
 
             for (int i=0;i<nbSides;i++){
 
@@ -440,7 +481,7 @@ public class Board {
             if (nextId<board.getMaxId())board.addEdge(i,nextId);
         }
 
-        //----------Creation Lines------------------
+        //----------Lines Creation------------------
         int nodesPerLayer=nbSides*2;
         for (int layer=0;layer<3;layer++){
             int startId=1+nodesPerLayer*layer;
@@ -480,10 +521,10 @@ public class Board {
     }
 
     /**
-     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
+     * Generates a board with nodes size/spacing management
      *
-     * @param nodeSize : Taille des nodes
-     * @param margeSize : Taide des arêtes
+     * @param nodeSize node's size
+     * @param margeSize edge's size
      *
      */
 
@@ -501,7 +542,7 @@ public class Board {
             }
         }
 
-        //===================RENDU DES NODES===============================
+        //===================Node's render===============================
 
         for (Node node : this.nodes){
             int offset=(nodeSize%2==0 ? 1 : 0);
@@ -543,7 +584,7 @@ public class Board {
 
         }
 
-        //===================RENDU DES LIGNES===============================
+        //===================Lined render===============================
 
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
@@ -611,7 +652,7 @@ public class Board {
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
 
-        //===================AFFICHAGE FINAL===============================
+        //===================Final display===============================
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

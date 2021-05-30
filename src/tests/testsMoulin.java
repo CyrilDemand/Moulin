@@ -11,7 +11,6 @@ public class testsMoulin{
     public static void main(String[] args){
         assertTrue(testNode.testNodes());
         assertTrue(testEdge.testEdges());
-        assertTrue(testVector.testVector());
         assertTrue(testBoard.testBoard());
         assertTrue(testPlayer.testPlayer());
     }
