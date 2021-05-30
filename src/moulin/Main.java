@@ -6,11 +6,9 @@ public class Main {
 
     /**
      * Allows you to launch the game
-     *
-     * @param args
-     * @throws Exception
+     * @param args arguments
+     * @throws Exception exception
      */
-
     public static void main(String[] args) throws Exception {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
@@ -35,10 +33,8 @@ public class Main {
     }
 
     /**
-     *Creates an ArrayList for the Players
-     *
-     * @return ArrayList<Player>
-     *
+     * creates an ArrayList for the players
+     * @return the player list
      */
 
     public static ArrayList<Player> initPlayer(){

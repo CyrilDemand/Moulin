@@ -13,7 +13,7 @@ public class Trap {
 
     /**
      * returns the amount of turns left
-     * @return
+     * @return the amount of turns left
      */
     public int getTurnsLeft(){
         return this.turnsLeft;

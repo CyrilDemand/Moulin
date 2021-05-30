@@ -11,9 +11,9 @@ public class Node{
     private TrapTeleport trap;
 
     /**
-     * Creates a Node class
-     * @param x
-     * @param y
+     * Creates a node class
+     * @param x X coordinate for the node
+     * @param y Y coordinate for the node
      */
     public Node(int x,int y){
         this.x=x;
@@ -25,7 +25,7 @@ public class Node{
 
     /**
      * Creates a Node class
-     * @param node
+     * @param node node to copy
      */
     public Node(Node node){
         this(node.getX(),node.getY());
@@ -34,9 +34,9 @@ public class Node{
 
     /**
      * Creates a Node class
-     * @param x
-     * @param y
-     * @param id
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param id ID of the node
      */
     public Node(int x, int y, int id){
         this(x,y);
@@ -87,19 +87,19 @@ public class Node{
 
     /**
      * Sets the class' X to the given value
-     * @param x
+     * @param x X coordinate to set
      */
     public void setX(int x){ this.x=x;}
 
     /**
      * Sets the class' Y to the given value
-     * @param y
+     * @param y Y coordinate to set
      */
     public void setY(int y){ this.y=y;}
 
     /**
      * Sets the class' Id to the given value
-     * @param id
+     * @param id ID to set
      */
     public void setId(int id){ this.id=id;}
 
@@ -112,7 +112,7 @@ public class Node{
 
     /**
      * Sets the class' Piece to the given Piece
-     * @param piece
+     * @param piece piece to copy
      */
     public void setPiece(Piece piece) {
         this.piece = piece;
@@ -120,7 +120,7 @@ public class Node{
 
     /**
      * Sets the class' Trap to the given Trap
-     * @param trap
+     * @param trap trap to copy
      */
     public void setTrap(TrapTeleport trap){
         this.trap=trap;
@@ -128,7 +128,7 @@ public class Node{
 
     /**
      * Returns the Class' trap
-     * @return
+     * @return the trap
      */
     public TrapTeleport getTrap(){
         return this.trap;
@@ -144,7 +144,7 @@ public class Node{
 
     /**
      * Displays a node into a String
-     * @return
+     * @return the string generated
      */
 
     @Override
@@ -159,7 +159,7 @@ public class Node{
     /**
      * checks if two nodes are the same
      * @param other other node to compare
-     * @return
+     * @return true if they are the same node, false otherwise
      */
     public boolean equals(Node other){
         if(this==other)return true;
@@ -181,7 +181,7 @@ public class Node{
 
     /**
      * checks if the current node is linked
-     * @param board
+     * @param board the board we're working on
      * @return an arrayList of the linked nodes
      */
     public ArrayList<Node> isLinkedWith(Board board){

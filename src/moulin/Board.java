@@ -114,27 +114,18 @@ public class Board {
         this.edges.add(new Edge(start,end));
     }
 
+
     /**
      * Returns the Edge Table of the Board
-     *
-     * @return ArrayList<Edge>
-     *
+     * @return the edge table
      */
-
     public ArrayList<Edge> getEdges() {
         return edges;
     }
 
     /**
-     * Returns the Nodes Table of the Board
-     *
-     * @return ArrayList<Node>
-     *
-     */
-
-    /**
-     * Gets the nodes ArrayList
-     * @return ArrayList<Node>
+     * return the nodes ArrayList
+     * @return the list of the nodes
      */
 
     public ArrayList<Node> getNodes() {
@@ -143,7 +134,7 @@ public class Board {
 
     /**
      * Gets the lines ArrayList
-     * @return ArrayList<Line>
+     * @return the lines ArrayList
      *
      */
 
@@ -155,6 +146,7 @@ public class Board {
      * Takes a nodes ArrayList to create a new Line in the "lines" ArrayList
      * @param nodes the ArrayList used to create a Line
      */
+
     public void addLine(ArrayList<Node> nodes){
         this.lines.add(new Line(nodes));
     }
@@ -234,11 +226,8 @@ public class Board {
 
     /**
      * Check if two Boards are the same
-     *
-     * @param other one Board
-     * @return true if both Boards are the same
-     * @return false if one of the Board is different of the other
-     *
+     * @param other the second Board
+     * @return true if they are the same, false otherwise
      */
 
     public boolean equals(Board other){
@@ -314,14 +303,13 @@ public class Board {
         return res;
     }
 
+
     /**
      * Checks if the ID of two nodes are linked by an Edge
-     *
-     * @return true if the nodes are linked
-     * @return false if the nodes aren't linked
-     *
+     * @param a first node ID
+     * @param b second node ID
+     * @return true if they are linked, false otherwise
      */
-
     public boolean isLinked(int a, int b){
         Node na=this.getNodeById(a);
         Node nb=this.getNodeById(b);
@@ -432,10 +420,9 @@ public class Board {
 
     /**
      * Generates a Board with a node size/spacing management
-     *
-     * @param nbSides amount of map sides
+     * @param nbSides amount of sides to the board
+     * @return the Board generated
      */
-
     public static Board generateBoard(int nbSides){
         Board board=new Board();
         Node.resetCounter();

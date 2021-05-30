@@ -39,8 +39,8 @@ public class Player {
     }
 
     /**
-     * returns the amount of traps that the Player can place
-     * @return
+     *  returns the amount of traps that the Player can place
+     * @return the amount of usable traps
      */
     public int getNbTrap() {
         return nbTrap;
@@ -55,7 +55,7 @@ public class Player {
 
     /**
      * Returns the Player's name
-     * @return
+     * @return the String for the player's name
      */
     public String getName(){
         return this.name;
@@ -63,7 +63,7 @@ public class Player {
 
     /**
      * returns the player's color
-     * @return
+     * @return the player's color
      */
     public Color getColor(){
         return this.color;
@@ -71,7 +71,7 @@ public class Player {
 
     /**
      * Returns the Pieces of the Player
-     * @return
+     * @return the list of pieces owned by the player
      */
     public ArrayList<Piece> getPieces() {
         return pieces;
@@ -97,7 +97,7 @@ public class Player {
 
     /**
      * Allows the user to type his name
-     * @return
+     * @return the chosen name
      */
 
     public static String chooseName(){
@@ -114,7 +114,7 @@ public class Player {
 
     /**
      *  Allows the user to choose his color
-     * @return
+     * @return the chosen color
      */
     public static Color chooseColor(){
         Scanner scan = new Scanner(System.in);
@@ -131,7 +131,7 @@ public class Player {
 
     /**
      *Returns a String summary of the Player
-     * @return
+     * @return the String generated
      */
 
     public String toString(){
