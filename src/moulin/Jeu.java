@@ -2,20 +2,39 @@ package moulin;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class containing the main game loop
+ */
+
 public class Jeu {
     private static int turn = 0;
     private Board board;
     private final ArrayList<Player> players;
 
+
+    /**
+     * creates a new game
+     * @param board the board used in the game
+     * @param players the list of players
+     */
     public Jeu(Board board,ArrayList<Player> players){
         this.board=board;
         this.players=players;
     }
 
+    /**
+     * creates a copy of a game
+     * @param jeu the game to copy
+     */
     public Jeu(Jeu jeu){
         this(new Board(jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
     }
 
+    /**
+     * creates a copy of all the players
+     * @param p1 the list to copy
+     * @return a copy of the list
+     */
     public ArrayList<Player> copyPlayers(ArrayList<Player> p1){
         ArrayList<Player> p = new ArrayList<>();
         for (Player p2: p1) {
@@ -24,18 +43,40 @@ public class Jeu {
         return p;
     }
 
+    /**
+     * gets the board
+     * @return the board
+     */
     public Board getBoard(){
         return this.board;
     }
+
+    /**
+     * gets the list of players
+     * @return the list of players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    /**
+     * adds one the the turn counter
+     */
     public void addTurn(){
         Jeu.turn++;
     }
+
+    /**
+     * changes the board of the game
+     * @param board the new board
+     */
     public void setBoard(Board board){
         this.board = board;
     }
+
+    /**
+     * starts the game : each player places their Pieces on the board
+     */
 
     public void start(){
         for(int i = 0; i<this.getPlayers().get(0).getPieces().size();i++){
@@ -62,6 +103,10 @@ public class Jeu {
         }
     }
 
+    /**
+     * starts the game but everyone places their pieces randomly
+     */
+
     public void randomStart(){
         for(int i = 0; i<this.getPlayers().get(0).getPieces().size();i++){
             for (Player p: this.getPlayers()) {
@@ -80,6 +125,10 @@ public class Jeu {
             }
         }
     }
+
+    /**
+     * starts the second part of the game : players move their pieces and try to make a line
+     */
 
     public void endGame(){
         Scanner scanner = new Scanner(System.in);
@@ -153,6 +202,11 @@ public class Jeu {
         board.nextTurn();
     }
 
+    /**
+     * checks if the game is finished or not
+     * @return true if someone has made a line on the board, false otherwise
+     */
+
     public boolean isFinished(){
         for (Player p: this.getPlayers()) {
             for (Line l:this.getBoard().getLines()) {
@@ -165,10 +219,4 @@ public class Jeu {
         }
         return false;
     }
-
-    public void displayPlayers(){
-        for (Player player:this.players){
-            System.out.println(player);
-        }
-    }//debugage
 }
