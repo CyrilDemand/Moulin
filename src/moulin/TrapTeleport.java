@@ -23,7 +23,7 @@ public class TrapTeleport extends Trap{
 
     /**
      * gets the destination of the trap
-     * @return
+     * @return the node where the trap leads
      */
     public Node getDestination() {
         return destination;
