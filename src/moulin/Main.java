@@ -25,7 +25,7 @@ public class Main {
         board.render(3,1);
         Jeu jeu1 = new Jeu(jeu);
         jeu1.getBoard().render(3,1);
-        while (!jeu.isFinished()){
+        while (jeu.isFinished()==null){
             jeu.endGame();
         }
         board.render(3,1);

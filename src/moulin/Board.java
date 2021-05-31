@@ -227,7 +227,8 @@ public class Board {
                 return n;
             }
         }
-        throw new Error("Il n'y a pas de Node avec cet id sur ce board");
+        return null;
+        //throw new Error("Il n'y a pas de Node avec cet id sur ce board");
     }
 
     /**

@@ -83,16 +83,21 @@ public class Jeu {
             for (Player p: this.getPlayers()) {
                 System.out.println(p.getClass().getSimpleName());
                 if (p.getClass().getSimpleName().equals("Player")){
-                    Scanner scanner = new Scanner(System.in);
                     board.render(3,1);
-                    System.out.println("Mettez l'id de là où vous voulez mettre votre pion "+i);
-                    p.getPieces().get(i).put(this.getBoard().getNodeById(scanner.nextInt()));
+                    System.out.println("Entrez le numero de la case où vous voulez placer votre pion numero "+i);
+                    boolean posed=false;
+                    do{
+                        Scanner scanner = new Scanner(System.in);
+                        posed=p.getPieces().get(i).put(this.getBoard().getNodeById(scanner.nextInt()));
+                        if (!posed)System.out.println("Erreur : veuillez réessayer");
+                    }while (!posed);
                 }else {
                     ((NormalAI)p).start(this,p.getPieces().get(i));
                 }
                 try {
-                    if(this.isFinished()){
-                        System.out.println("jeu fini");
+                    Player winner = this.isFinished();
+                    if(winner!=null){
+                        System.out.println(winner+" a gagné ! ");
                         break;
                     }
                 }catch (Exception ignored){
@@ -116,7 +121,9 @@ public class Jeu {
                 }
                 p.getPieces().get(i).put(this.getBoard().getNodeById(position));
                 try {
-                    if(this.isFinished()){
+                    Player winner = this.isFinished();
+                    if(winner!=null){
+                        System.out.println(winner+" a gagné ! ");
                         break;
                     }
                 }catch (Exception ignored){
@@ -147,7 +154,9 @@ public class Jeu {
                     System.out.println("Pièges Restants : "+player.getNbTrap());
 
                     do{
+                        System.out.print("Votre choix : ");
                         choix=scanner.nextInt();
+                        if (!(choix>=1 && choix<=3))System.out.println("Erreur : veuillez réessayer");
                     }while (!(choix>=1 && choix<=3));
                 }else{
                     choix=1;
@@ -157,13 +166,14 @@ public class Jeu {
 
                     int piece;
                     int endroit;
+                    System.out.println("Entrez le nuremo de la piece que vous voulez bouger et le nuremo de la case où vous voulez la bouger");
                     do {
-                        System.out.println("Entrez le nuremo de la piece que vous voulez bouger et le nuremo de la case où vous voulez la bouger");
                         System.out.print("Piece : ");
                         piece = scanner.nextInt();
                         System.out.print("Case : ");
                         endroit =scanner.nextInt();
-                    }while (!player.getPieces().get(piece).move(board,endroit));
+                        System.out.println("Erreur : veuillez réessayer");
+                    }while (!(piece<player.getPieces().size() && piece>=0 && player.getPieces().get(piece).move(board,endroit)));
 
                 }else if (choix==2){
                     int idStart;
@@ -174,7 +184,8 @@ public class Jeu {
                         idStart = scanner.nextInt();
                         System.out.print("Fin : ");
                         idEnd=scanner.nextInt();
-                    }while (!board.trapEdge(idStart,idEnd,3));
+                        System.out.println("Erreur : veuillez réessayer");
+                    }while (board.trapEdge(idStart,idEnd,3));
                     player.placedATrap();
                 }else if (choix==3){
                     int idNode;
@@ -185,6 +196,7 @@ public class Jeu {
                         idNode = scanner.nextInt();
                         System.out.print("Destination : ");
                         idDestination=scanner.nextInt();
+                        System.out.println("Erreur : veuillez réessayer");
                     }while (!board.trapNode(idNode,idDestination,3));
                     player.placedATrap();
                 }
@@ -197,7 +209,7 @@ public class Jeu {
                 }catch (Exception ignored){}
             }
 
-            if (isFinished())break;
+            if (isFinished()!=null)break;
         }
         board.nextTurn();
     }
@@ -207,16 +219,16 @@ public class Jeu {
      * @return true if someone has made a line on the board, false otherwise
      */
 
-    public boolean isFinished(){
+    public Player isFinished(){
         for (Player p: this.getPlayers()) {
             for (Line l:this.getBoard().getLines()) {
                 int nbPiece = 0;
                 for (Piece p1: p.getPieces()) {
                     if (l.getNodes().contains(p1.getNode()))nbPiece++;
                 }
-                if (nbPiece==l.getNodes().size())return true;
+                if (nbPiece==l.getNodes().size())return p;
             }
         }
-        return false;
+        return null;
     }
 }
