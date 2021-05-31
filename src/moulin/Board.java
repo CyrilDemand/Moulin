@@ -164,14 +164,13 @@ public class Board {
 
     public boolean trapEdge(int idStart,int idEnd, int turns){
         Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
-        boolean res=false;
         for (Edge e:this.edges){
-            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start)){
+            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped()){
                 e.setTrap(new Trap(turns));
-                res=true;
+                return true;
             }
         }
-        return res;
+        return false;
     }
 
     /**
