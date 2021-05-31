@@ -188,6 +188,13 @@ public class Board {
         Node destination=this.getNodeById(idDestination);
         if (destination==null)return false;
 
+        if (destination.equals(start))return false;
+        if (destination.isTrapped()) return false;
+        if (start.isTrapped()) return false;
+        for (Node n:this.nodes){
+            if (n.isTrapped() && (n.getTrap().getDestination().equals(start)||n.getTrap().getDestination().equals(destination) ))return false;
+        }
+
         start.setTrap(new TrapTeleport(turns,destination));
         return true;
     }
