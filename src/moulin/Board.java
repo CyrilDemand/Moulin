@@ -164,14 +164,13 @@ public class Board {
 
     public boolean trapEdge(int idStart,int idEnd, int turns){
         Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
-        boolean res=false;
         for (Edge e:this.edges){
-            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start)){
+            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped()){
                 e.setTrap(new Trap(turns));
-                res=true;
+                return true;
             }
         }
-        return res;
+        return false;
     }
 
     /**
@@ -187,6 +186,13 @@ public class Board {
         if (start==null)return false;
         Node destination=this.getNodeById(idDestination);
         if (destination==null)return false;
+
+        if (destination.equals(start))return false;
+        if (destination.isTrapped()) return false;
+        if (start.isTrapped()) return false;
+        for (Node n:this.nodes){
+            if (n.isTrapped() && (n.getTrap().getDestination().equals(start)||n.getTrap().getDestination().equals(destination) ))return false;
+        }
 
         start.setTrap(new TrapTeleport(turns,destination));
         return true;
