@@ -1,7 +1,6 @@
 package moulin;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,12 +8,28 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 
+/**
+ * Class used for saving the current game to a file
+ */
+
 public class Save {
+
+    /**
+     * creates a new save object
+     * @param path the path of the file where you want your game to be saved
+     */
 
     String path;
     public Save(String path){
         this.path = "saves"+ File.separator+path;
     }
+
+    /**
+     * generates a file containing the data of a game
+     * @param jeu the game you want to save
+     * @return true if it managed to create a file, false otherwise
+     * @throws JSONException exception
+     */
 
     public boolean generateSave(Jeu jeu) throws JSONException {
         ArrayList<Character> save = new ArrayList<>();
@@ -49,6 +64,12 @@ public class Save {
         return false;
     }
 
+    /**
+     * create a text version of a board used for saving
+     * @param board the board you want to save
+     * @return the data of the board as an arraylist of characters
+     */
+
     public ArrayList<Character> SaveBoard(Board board){
         ArrayList<Character> res = new ArrayList<>();
         res.addAll(this.SaveNodes(board));
@@ -57,6 +78,13 @@ public class Save {
         res.addAll(this.SaveTrap(board));
         return res;
     }
+
+    /**
+     * create a text version of a board's nodes used for saving
+     * @param board the board you want to save the nodes from
+     * @return the data of the nodes as an arraylist of characters
+     */
+
     public ArrayList<Character> SaveNodes(Board board) {
         ArrayList<Character> res = new ArrayList<>(this.StringToList("\n\t\"nodes\":[\n"));
         for (Node n : board.getNodes()) {
@@ -76,6 +104,12 @@ public class Save {
         res.add('\t');res.add(']');res.add(',');
         return res;
     }
+
+    /**
+     * create a text version of a board's edges used for saving
+     * @param board the board you want to save the edges from
+     * @return the data of the edges as an arraylist of characters
+     */
     public ArrayList<Character> SaveEdges(Board board) {
         ArrayList<Character> res = new ArrayList<>(this.StringToList("\n\t\"edges\":[\n"));
         for (Edge e: board.getEdges()) {
@@ -95,6 +129,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * create a text version of a board's lines used for saving
+     * @param board the board you want to save the lines from
+     * @return the data of the lines as an arraylist of characters
+     */
     public ArrayList<Character> SaveLines(Board board) {
         ArrayList<Character> res = new ArrayList<>(this.StringToList("\n\t\"lines\":[\n"));
         for (Line l: board.getLines()) {
@@ -117,6 +156,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * create a text version of the players in the game
+     * @param players the list of players you want to save
+     * @return the data of the players as an arraylist of characters
+     */
     public ArrayList<Character> SavePlayers(ArrayList<Player> players) {
         ArrayList<Character> res = new ArrayList<>(this.StringToList("\n\t\"players\":[\n"));
         for (Player p: players) {
@@ -140,6 +184,12 @@ public class Save {
         return res;
     }
 
+
+    /**
+     * create a text version of the pieces of a player
+     * @param player the player you want to save pieces of
+     * @return the data of the pieces as an arraylist of characters
+     */
     public ArrayList<Character> SavePiece(Player player) {
         ArrayList<Character> res = new ArrayList<>();
         res.add('[');
@@ -153,6 +203,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * reate a text version of the trap on the board
+     * @param board the board you want to traps pieces of
+     * @return the data of the traps as an arraylist of characters
+     */
     public ArrayList<Character> SaveTrap(Board board) {
         ArrayList<Character> res = new ArrayList<>(this.StringToList("\n\t\"traps\":[\n"));
         ArrayList<String> traps = new ArrayList<>();
@@ -200,6 +255,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * converts a string into a list of character
+     * @param s the string
+     * @return the char tab
+     */
     public ArrayList<Character> StringToList(String s){
         ArrayList<Character> res = new ArrayList<>();
         for (Character c:s.toCharArray()) {
