@@ -23,6 +23,8 @@ public class Main {
         System.out.println(jeu.getPlayers());
         jeu.start();
         Save save = new Save("test");
+        Trap t = new Trap(3);
+        board.getEdges().get(2).setTrap(t);
         save.generateSave(jeu);
         board.render(3,1);
         Jeu jeu1 = new Jeu(jeu);
