@@ -13,7 +13,7 @@ public class Main {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));
-        players.add(new NormalAI("Intelligence Artificielle",Color.BLEU));
+        players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
         for (int i = 0;i<3;i++){
             for (Player p:players) {
                 p.addPiece(new Piece(p.getColor(),i));
@@ -22,6 +22,10 @@ public class Main {
         Jeu jeu = new Jeu(board,players);
         System.out.println(jeu.getPlayers());
         jeu.start();
+        Save save = new Save("test");
+        Trap t = new Trap(3);
+        board.getEdges().get(2).setTrap(t);
+        save.generateSave(jeu);
         board.render(3,1);
         Jeu jeu1 = new Jeu(jeu);
         jeu1.getBoard().render(3,1);
