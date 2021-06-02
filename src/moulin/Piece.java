@@ -69,7 +69,7 @@ public class Piece{
      */
     public boolean put(Node node){
         if (node==null)return false;
-        if(node.getPiece()==null){
+        if(node.getPiece()==null && node.getPiece()==null){
             this.node=node;
             this.node.setPiece(this);
             return true;

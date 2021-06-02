@@ -131,25 +131,21 @@ public class Jeu {
      * @return the player who won, null if no one won
      */
 
-    public Player randomStart(){
-        for(int i = 0; i<this.getPlayers().get(0).getPieces().size();i++){
-            for (Player p: this.getPlayers()) {
-                int position = (int)(Math.random()*this.getBoard().getNodes().size())+1;
-                while (!this.getBoard().getNodeById(position).isEmpty()){
-                    position = (int)(Math.random()*this.getBoard().getNodes().size())+1;
-                }
-                p.getPieces().get(i).put(this.getBoard().getNodeById(position));
-                try {
-                    Player winner = this.isFinished();
-                    if(winner!=null){
-                        return winner;
+    public static Jeu randomStart(Board board,ArrayList<Player> players){
+        Jeu jeu;
+        do {
+            jeu = new Jeu(board,players);
+            for(int i = 0; i<jeu.getPlayers().get(0).getPieces().size();i++){
+                for (Player p: jeu.getPlayers()) {
+                    int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
+                    while (!p.getPieces().get(i).put(jeu.getBoard().getNodeById(position))){
+                        position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
                     }
-                }catch (Exception ignored){
-
                 }
             }
-        }
-        return null;
+        }while (jeu.isFinished()!=null);
+
+        return jeu;
     }
 
     /**
