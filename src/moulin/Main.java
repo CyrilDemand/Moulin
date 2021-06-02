@@ -10,45 +10,54 @@ public class Main {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
+
+        Player resultOfTheGame=null;
+
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));
         players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
-        for (int i = 0;i<3;i++){
+
+        for (int i=0;i<3;i++){
             for (Player p:players) {
                 p.addPiece(new Piece(p.getColor(),i));
             }
         }
+
         Jeu jeu = new Jeu(board,players);
         System.out.println(jeu.getPlayers());
-        jeu.start();
-        Save save = new Save("test");
-        Trap t = new Trap(3);
-        board.getEdges().get(2).setTrap(t);
-        save.generateSave(jeu);
-        board.render(3,1);
-        Jeu jeu1 = new Jeu(jeu);
-        jeu1.getBoard().render(3,1);
-        while (jeu.isFinished()==null){
-            jeu.endGame();
+
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choisissez votre methode de placement des pions : ");
+        System.out.println("[1] Placement par les joueurs");
+        System.out.println("[2] Placement aléatoire");
+        int choix;
+        do {
+            System.out.print("Votre choix : ");
+            choix = scanner.nextInt();
+        }while (!(choix>=1 && choix<=2));
+
+        if (choix==1){
+            resultOfTheGame=jeu.start();
+        }else if (choix==2){
+            resultOfTheGame=jeu.randomStart();
         }
-        board.render(3,1);
-        System.out.println("fin");
+
+        if (resultOfTheGame==null){
+            resultOfTheGame=jeu.endGame();
+        }
+
+        if (resultOfTheGame==null){
+
+        }else{
+            board.render(3,1);
+            System.out.println(resultOfTheGame+" a gagné !");
+        }
+
+
     }
 
-    /**
-     * creates an ArrayList for the players
-     * @return the player list
-     */
 
-    public static ArrayList<Player> initPlayer(){
-        ArrayList<Player> players = new ArrayList<>();
-        for (int i = 0; i<2;i++){
-            players.add(new Player(Player.chooseName(),Player.chooseColor()));
-            for (int idx = 0; idx<3;idx++){
-                players.get(i).addPiece(new Piece(players.get(i).getColor(),players.get(i).getPieces().size()));
-            }
-        }
-        return players;
-    }
 }
