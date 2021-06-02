@@ -11,6 +11,9 @@ public class RandomAI extends AI{
     public RandomAI(String name, Color color) {
         super(name, color);
     }
+    public RandomAI(String name, Color color,int nbTrap) {
+        super(name, color,nbTrap);
+    }
 
     /**
      * starts the game

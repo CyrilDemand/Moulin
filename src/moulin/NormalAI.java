@@ -13,6 +13,9 @@ public class NormalAI extends AI{
         super(name, color);
     }
 
+    public NormalAI(String name, Color color,int nbTrap) { super(name, color,nbTrap); }
+
+
     /**
      * starts the Game
      * @param jeu Game used to play
