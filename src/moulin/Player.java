@@ -18,7 +18,7 @@ public class Player {
      * @param color the color that the player will be associated with
      */
     public Player(String name, Color color){
-        this(name,color,3);
+        this(name,color,Config.numberOfTraps);
     }
 
     /**
@@ -39,7 +39,13 @@ public class Player {
         this.name = name;
         this.color = color;
         this.pieces = new ArrayList<Piece>();
+        for (int i=0;i<Config.numberOfPieces;i++){
+            this.pieces.add(new Piece(this.color,i));
+        }
+
         this.nbTrap=nbTrap;
+
+
     }
     /**
      *  returns the amount of traps that the Player can place

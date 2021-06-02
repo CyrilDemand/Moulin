@@ -10,6 +10,9 @@ public class Main {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
+        Config.loadConfig();
+
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenue sur le jeu du moulin !\n");
         System.out.println("Que voulez-vous faire ?");
@@ -52,7 +55,13 @@ public class Main {
                 return;
             }
 
-            ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(scanner.nextInt(), scanner.nextInt()));
+            System.out.println("Combien de joueurs voulez-vous ? (2 à 4 joueurs)");
+            do{
+                System.out.print("Votre choix : ");
+                choix=scanner.nextInt();
+            }while (!(choix>=2 && choix<=4));
+
+            ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(choix));
 
             jeu = new Jeu(board,players);
             System.out.println(jeu.getPlayers());
@@ -76,7 +85,7 @@ public class Main {
             Jeu jeu1 = Save.loadJeu("");
             System.out.println(Jeu.getTurn());
             System.out.println(jeu1.getPlayers().get(Jeu.getTurn()).getColor());
-            jeu1.getBoard().render(3,1);
+            jeu1.getBoard().render();
             jeu1.endGame();
             return;
         }else{
@@ -92,7 +101,7 @@ public class Main {
         if (resultOfTheGame==null){
 
         }else{
-            jeu.getBoard().render(3,1);
+            jeu.getBoard().render();
             System.out.println(resultOfTheGame+" a gagné !");
         }
 

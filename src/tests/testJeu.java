@@ -64,11 +64,11 @@ public class testJeu {
             j.getPlayers().get(0).put(b.getNodeById(4),j.getPlayers().get(0).getPieces().get(0));
             j.getPlayers().get(0).put(b.getNodeById(1),j.getPlayers().get(0).getPieces().get(1));
             j.getPlayers().get(0).put(b.getNodeById(2),j.getPlayers().get(0).getPieces().get(2));
-            j.getBoard().render(3,3);
+            j.getBoard().render();
             if(j.isFinished()!=null)return false;
             System.out.println("\tnoFinish ok");
             j.getPlayers().get(0).put(b.getNodeById(3),j.getPlayers().get(0).getPieces().get(3));
-            j.getBoard().render(3,3);
+            j.getBoard().render();
             if(j.isFinished()==null)return false;
             System.out.println("\tfinish ok");
 
