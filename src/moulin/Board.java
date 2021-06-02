@@ -274,44 +274,6 @@ public class Board {
     }
 
     /**
-     * Check if two Boards are equal
-     * Generates a Board from a .json
-     *
-     * @param chemin path in the String type
-     * @return Board
-     *
-     */
-
-    public static Board loadBoard(String chemin){
-        Board res = new Board();
-        try {
-            String content = new String((Files.readAllBytes(Paths.get(chemin))));
-            JSONObject o = new JSONObject(content);
-            JSONArray nodes = o.getJSONArray("nodes");
-            JSONArray edges = o.getJSONArray("edges");
-            JSONArray lines = o.getJSONArray("lines");
-            for (int i = 0;i<nodes.length();i++){
-                res.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
-            }
-            for (int i = 0;i<edges.length();i++){
-                res.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
-            }
-            for (int i = 0;i<lines.length();i++){
-                ArrayList<Node> lineNodes=new ArrayList<Node>();
-                for (int j=0;j<lines.getJSONArray(i).length();j++) {
-                    lineNodes.add(res.getNodeById(lines.getJSONArray(i).getInt(j)));
-                }
-                res.addLine(lineNodes);
-            }
-        }
-        catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-
-    /**
      * Checks if the ID of two nodes are linked by an Edge
      * @param a first node ID
      * @param b second node ID
