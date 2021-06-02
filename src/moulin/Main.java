@@ -27,8 +27,6 @@ public class Main {
         Jeu jeu = new Jeu(board,players);
         System.out.println(jeu.getPlayers());
 
-
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choisissez votre methode de placement des pions : ");
         System.out.println("[1] Placement par les joueurs");
@@ -41,8 +39,8 @@ public class Main {
 
         if (choix==1){
             resultOfTheGame=jeu.start();
-        }else if (choix==2){
-            resultOfTheGame=jeu.randomStart();
+        }else {
+            jeu = Jeu.randomStart(jeu.getBoard(),jeu.getPlayers());
         }
 
         if (resultOfTheGame==null){
