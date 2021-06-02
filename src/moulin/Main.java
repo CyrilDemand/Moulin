@@ -30,9 +30,28 @@ public class Main {
 
         if (choix==1){
             //-------NOUVELLE PARTIE--------
+            System.out.println("Sur quel map voulez-vous jouer ?");
+            System.out.println("[1] Map pre-génerée");
+            System.out.println("[2] Map customisée");
+            do {
+                System.out.print("Votre choix : ");
+                choix = scanner.nextInt();
+            }while (!(choix>=1 && choix<=2));
 
+            Board board=null;
+            if (choix==1){
+                System.out.println("Choisissez le nombre de cotés de votre map (3 à 10)");
+                do {
+                    System.out.print("Votre choix : ");
+                    choix = scanner.nextInt();
+                }while (!(choix>=3 && choix<=10));
 
-            Board board = Board.generateBoard(4);
+                board=Board.generateBoard(choix);
+            }else if (choix==2){
+                System.out.println("Charger une map depuis un fichier");
+                return;
+            }
+
             ArrayList<Player> players = new ArrayList<>();
             players.add(new Player("Patrick",Color.ROUGE));
             players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
@@ -62,7 +81,9 @@ public class Main {
             }
         }else if (choix==2){
             //----------CHARGER UNE PARTIE EXISTANTE------------------
+            return;
         }else{
+            //QUITTER
             return;
         }
 
