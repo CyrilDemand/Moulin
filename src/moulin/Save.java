@@ -1,11 +1,15 @@
 package moulin;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -20,18 +24,19 @@ public class Save {
      */
 
     String path;
-    public Save(String path){
-        this.path = "saves"+ File.separator+path;
+    String name;
+    public Save(String name){
+        this.name = name;
+        this.path = "saves"+ File.separator+name+".json";
     }
 
     /**
      * generates a file containing the data of a game
      * @param jeu the game you want to save
      * @return true if it managed to create a file, false otherwise
-     * @throws JSONException exception
      */
 
-    public boolean generateSave(Jeu jeu) throws JSONException {
+    public boolean generateSave(Jeu jeu){
         ArrayList<Character> save = new ArrayList<>();
         save.add('{');
         save.addAll(this.SaveBoard(jeu.getBoard()));
@@ -39,7 +44,7 @@ public class Save {
         save.add('\n');;
         save.add('}');
         char[] b = new char[save.size()];
-        File fichier =  new File(this.path+".json");
+        File fichier =  new File(this.path);
         for (int i = 0; i<save.size();i++) {
             b[i]=save.get(i);
         }
@@ -224,15 +229,14 @@ public class Save {
                 tmp+=',';
                 tmp+=Integer.toString(e.getEnd().getId());
                 tmp+=']';
-                tmp+='\n';
                 traps.add(tmp);
             }
         }
         for (Node n: board.getNodes()) {
             if(n.isTrapped()){
                 String tmp = "";
-                tmp+='\t';
-                tmp+=res.add('[');
+                tmp+="\t\t";
+                tmp+='[';
                 tmp+="\"node\"";
                 tmp+=',';
                 tmp+=Integer.toString(n.getTrap().getTurnsLeft());
@@ -248,9 +252,10 @@ public class Save {
             res.addAll(this.StringToList(s));
             if(!s.equals(traps.get(traps.size()-1))){
                 res.add(',');
+                res.add('\n');
             }
         }
-        res.add('\t');res.add(']');
+        res.add('\n');res.add('\t');res.add(']');
         res.add(',');
         return res;
     }
@@ -266,5 +271,111 @@ public class Save {
             res.add(c);
         }
         return res;
+    }
+
+    public ArrayList<Player> loadPlayers(Board board,String chemin){
+        ArrayList<Player> res = new ArrayList<>();
+        try {
+            System.out.println(chemin);
+            String content = new String((Files.readAllBytes(Paths.get(chemin))));
+            JSONObject o = new JSONObject(content);
+            JSONArray players = o.getJSONArray("players");
+            for (int i = 0; i< players.length();i++){
+                res.add(new Player(players.getJSONArray(i).get(0).toString(),Color.valueOf(players.getJSONArray(i).get(1).toString())));
+                for (int idx = 0; idx<players.getJSONArray(i).getJSONArray(2).length();idx++){
+                    Piece p = new Piece(res.get(i).getColor(),idx);
+                    p.put(board.getNodeById(players.getJSONArray(i).getJSONArray(2).getInt(idx)));
+                    res.get(i).addPiece(p);
+                }
+            }
+        }
+        catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public Board loadBoard(String chemin){
+        Board board = new Board();
+        try {
+            String content = new String((Files.readAllBytes(Paths.get(chemin))));
+            JSONObject o = new JSONObject(content);
+            Save.loadNodes(o.getJSONArray("nodes"),board);
+            Save.loadEdges(o.getJSONArray("edges"),board);
+            Save.loadLines(o.getJSONArray("lines"),board);
+            Save.loadTraps(o.getJSONArray("traps"),board);
+        }
+        catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return board;
+    }
+
+    private static void loadNodes(JSONArray nodes,Board board) throws JSONException {
+        for (int i = 0;i<nodes.length();i++){
+            board.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
+        }
+    }
+
+    private static void loadEdges(JSONArray edges,Board board) throws JSONException {
+        for (int i = 0;i<edges.length();i++){
+            board.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
+        }
+    }
+
+    private static void loadLines(JSONArray lines,Board board) throws JSONException {
+        for (int i = 0;i<lines.length();i++){
+            ArrayList<Node> lineNodes=new ArrayList<Node>();
+            for (int j=0;j<lines.getJSONArray(i).length();j++) {
+                lineNodes.add(board.getNodeById(lines.getJSONArray(i).getInt(j)));
+            }
+            board.addLine(lineNodes);
+        }
+    }
+
+    private static void loadTraps(JSONArray traps,Board board) throws JSONException {
+        for (int i = 0;i<traps.length();i++){
+            if (traps.getJSONArray(i).get(0).equals("edge")){
+                Trap trap = new Trap(traps.getJSONArray(i).getInt(1));
+                for (Edge e:board.getEdges()) {
+                    if (e.equals(new Edge(board.getNodeById(traps.getJSONArray(i).getInt(2)),board.getNodeById(traps.getJSONArray(i).getInt(3))))){
+                        e.setTrap(trap);
+                    }
+                }
+            }else{
+                TrapTeleport trapTeleport = new TrapTeleport(traps.getJSONArray(i).getInt(1), board.getNodeById(traps.getJSONArray(i).getInt(3)));
+                board.getNodeById(traps.getJSONArray(i).getInt(2)).setTrap(trapTeleport);
+            }
+        }
+    }
+
+    public static Jeu loadJeu(String name){
+        Save save = new Save(name);
+        Board board = save.loadBoard(save.path);
+        ArrayList<Player> players = new ArrayList<>(save.loadPlayers(board,save.path));
+        return new Jeu(board,players);
+    }
+
+    public static void main(String[] args){
+        Board board = Board.generateBoard(4);
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Player("Patrick",Color.ROUGE));
+        players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
+
+        for (int i=0;i<3;i++){
+            for (Player p:players) {
+                p.addPiece(new Piece(p.getColor(),i));
+            }
+        }
+        TrapTeleport trapTeleport = new TrapTeleport(3,board.getNodeById(5));
+        board.getNodeById(10).setTrap(trapTeleport);
+        Trap trap = new Trap(5);
+        board.getEdges().get(5).setTrap(trap);
+        Jeu jeu= new Jeu(board,players);
+        jeu = Jeu.randomStart(board,players);
+        Save save = new Save("test");
+        save.generateSave(jeu);
+        Jeu jeu1 = Save.loadJeu(save.name);
+        jeu1.getBoard().render(3,1);
     }
 }
