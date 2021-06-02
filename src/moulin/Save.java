@@ -413,6 +413,6 @@ public class Save {
         save.generateSave(jeu);
         Jeu jeu1 = Save.loadJeu(save.name);
         System.out.println(Jeu.getTurn());
-        jeu1.getBoard().render(3,1);
+        jeu1.getBoard().render();
     }
 }

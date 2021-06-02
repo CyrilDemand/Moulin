@@ -19,7 +19,7 @@ public class Board {
         Board board=Board.generateBoard(4);
         board.trapNode(1,2,3);
         System.out.println(board.isLinked(1,2));
-        board.render(3,2);
+        board.render();
 
         System.out.println(board.toString());
     }
@@ -513,13 +513,12 @@ public class Board {
 
     /**
      * Generates a board with nodes size/spacing management
-     *
-     * @param nodeSize node's size
-     * @param margeSize edge's size
-     *
      */
 
-    public void render(int nodeSize,int margeSize) {
+    public void render() {
+        int nodeSize=Config.nodeSize;
+        int margeSize=Config.margeSize;
+
         int maxX = this.getMaxX(), maxY = this.getMaxY();
         int unit=(nodeSize+margeSize);
         int width=unit*(maxX+1)-margeSize;

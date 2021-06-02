@@ -85,33 +85,35 @@ public class Jeu {
 
 
 
-    /**
-     * creates an ArrayList for the players
-     * @return the player list
-     */
 
-    public static ArrayList<Player> initPlayer(int nbJoueurs, int nbAI){
+
+
+    public static ArrayList<Player> initPlayer(int nbPlayer){
         ArrayList<Player> players = new ArrayList<>();
-        if (nbAI>=nbJoueurs)return null;
-        for (int i = 0; i<nbJoueurs;i++){
-            if (i<nbJoueurs-nbAI){
-                players.add(new Player(Player.chooseName(),Player.chooseColor()));
-            }else{
-                ArrayList<String>nameAI = new ArrayList<>();
-                nameAI.add("Shrek");nameAI.add("gluton");nameAI.add("bellsprout");nameAI.add("Beaufils");nameAI.add("Noé");nameAI.add("Sac à dos");
-                System.out.println("1.RandomAI 2.NormalAI");
-                Scanner scanner = new Scanner(System.in);
-                if (scanner.nextInt()==1){
-                    players.add(new RandomAI(nameAI.get((int)(Math.random()*nameAI.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+        boolean chooseAtLeastOnePlayer=false;
 
-                }else {
-                    players.add(new NormalAI(nameAI.get((int)(Math.random()*nameAI.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
-                }
-            }
-            for (int idx = 0; idx<3;idx++){
-                players.get(i).addPiece(new Piece(players.get(i).getColor(),players.get(i).getPieces().size()));
+        Scanner scanner = new Scanner(System.in);
+        int choix;
+
+        for (int i = 0; i<nbPlayer;i++){
+            System.out.println("Choisissez un type de joueur : ");
+            System.out.println("[1] Player");
+            System.out.println("[2] IA random");
+            System.out.println("[3] IA");
+            do{
+                System.out.print("Joueur n°"+(i+1)+": ");
+                choix=scanner.nextInt();
+            }while (!(choix>=1 && choix<=3));
+
+            if (choix==1){
+                players.add(new Player(Player.chooseName(),Player.chooseColor()));
+            }else if (choix==2){
+                players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+            }else if (choix==3){
+                players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
             }
         }
+
         return players;
     }
 
@@ -124,7 +126,7 @@ public class Jeu {
             for (Player p: this.getPlayers()) {
                 System.out.println(p.getClass().getSimpleName());
                 if (p.getClass().getSimpleName().equals("Player")){
-                    board.render(3,1);
+                    board.render();
                     System.out.println("Entrez le numero de la case où vous voulez placer votre pion numero "+i);
                     boolean posed=false;
                     do{
@@ -158,10 +160,10 @@ public class Jeu {
         Jeu jeu;
         do {
             jeu = new Jeu(board,players);
-            jeu.getBoard().render(1,3);
+            jeu.getBoard().render();
             for(int i = 0; i<jeu.getPlayers().get(0).getPieces().size();i++){
                 for (Player p: jeu.getPlayers()) {
-                    jeu.getBoard().render(1,3);
+                    jeu.getBoard().render();
                     int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
                     while (!p.getPieces().get(i).put(jeu.getBoard().getNodeById(position))){
                         position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
@@ -185,7 +187,7 @@ public class Jeu {
             Scanner scanner = new Scanner(System.in);
             for (Player player:this.getPlayers()) {
                 if (this.getPlayers().get(Jeu.turn).equals(player)){
-                    board.render(3,1);
+                    board.render();
                     if (player.getClass().getSimpleName().equals("Player")){
                         int choix;
 
