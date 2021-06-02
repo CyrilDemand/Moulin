@@ -109,7 +109,7 @@ public class Player {
         String user = "";
         user = scan.nextLine();
         while (user.equals("") || user.length()<3){
-            System.out.println("Choisissez un vrai nom");
+            System.out.println("Choisissez un vrai nom (+ de 2 lettres)");
             user = scan.nextLine();
         }
         return user;

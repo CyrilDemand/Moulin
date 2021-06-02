@@ -91,6 +91,19 @@ public class Board {
     }
 
     /**
+     * Adds a list of nodes to the "nodes" ArrayList
+     *
+     * @param nodes added list of node
+     *
+     */
+
+    public void addNodes(ArrayList<Node> nodes){
+        for(Node n : nodes) {
+            this.nodes.add(n);
+        }
+    }
+
+    /**
      * Adds an Edge to the "edges" ArrayList
      *
      * @param idStart First node's ID
@@ -114,6 +127,28 @@ public class Board {
         this.edges.add(new Edge(start,end));
     }
 
+    /**
+     * Adds an Edge to the "edges" ArrayList
+     *
+     * @param edge the edge
+     *
+     */
+
+    public void addEdge(Edge edge){
+        this.edges.add(new Edge(edge.getStart(),edge.getEnd()));
+    }
+
+    /**
+     * Add an ArrayList of nodes to the "nodes" ArrayList
+     *
+     * @param edges added list of node
+     */
+
+    public void addEdges(ArrayList<Edge> edges){
+        for (Edge e : edges){
+            this.addEdge(e);
+        }
+    }
 
     /**
      * Returns the Edge Table of the Board
@@ -304,7 +339,7 @@ public class Board {
      *
      */
 
-    private int getMaxX(){
+    public int getMaxX(){
         int maxX=0;
         for (Node node : this.nodes){
             if (node.getX()>maxX)maxX=node.getX();
@@ -319,7 +354,7 @@ public class Board {
      *
      */
 
-    private int getMaxY(){
+    public int getMaxY(){
         int maxY=0;
         for (Node node : this.nodes){
             if (node.getY()>maxY)maxY=node.getY();
@@ -334,7 +369,7 @@ public class Board {
      *
      */
 
-    private int getMinX(){
+    public int getMinX(){
         int minX=999999;
         for (Node node : this.nodes){
             if (node.getX()<minX)minX=node.getX();
@@ -349,7 +384,7 @@ public class Board {
      *
      */
 
-    private int getMinY(){
+    public int getMinY(){
         int minY=99999;
         for (Node node : this.nodes){
             if (node.getY()<minY)minY=node.getY();
@@ -364,7 +399,7 @@ public class Board {
      *
      */
 
-    private int getMinId(){
+    public int getMinId(){
         int minId=99999;
         for (Node node : this.nodes){
             if (node.getId()<minId)minId=node.getId();
@@ -379,7 +414,7 @@ public class Board {
      *
      */
 
-    private int getMaxId(){
+    public int getMaxId(){
         int maxId=0;
         for (Node node : this.nodes){
             if (node.getId()>maxId)maxId=node.getId();

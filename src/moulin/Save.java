@@ -324,7 +324,7 @@ public class Save {
         return res;
     }
 
-    public Board loadBoard(String chemin){
+    public static Board loadBoard(String chemin){
         Board board = new Board();
         try {
             String content = new String((Files.readAllBytes(Paths.get(chemin))));
@@ -332,8 +332,12 @@ public class Save {
             Save.loadNodes(o.getJSONArray("nodes"),board);
             Save.loadEdges(o.getJSONArray("edges"),board);
             Save.loadLines(o.getJSONArray("lines"),board);
-            Save.loadTraps(o.getJSONArray("traps"),board);
-        }
+            try {
+                Save.loadTraps(o.getJSONArray("traps"), board);
+            }catch (Exception ignored){
+
+            }
+            }
         catch (IOException | JSONException e) {
             e.printStackTrace();
         }
