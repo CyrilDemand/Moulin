@@ -18,13 +18,7 @@ public class Player {
      * @param color the color that the player will be associated with
      */
     public Player(String name, Color color){
-        if(name.equals("")){
-            throw new Error("Pas de nom de joueurs");
-        }
-        this.name = name;
-        this.color = color;
-        this.pieces = new ArrayList<Piece>();
-        this.nbTrap=3;
+        this(name,color,3);
     }
 
     /**
@@ -38,6 +32,15 @@ public class Player {
         }
     }
 
+    public Player(String name, Color color,int nbTrap){
+        if(name.equals("")){
+            throw new Error("Pas de nom de joueurs");
+        }
+        this.name = name;
+        this.color = color;
+        this.pieces = new ArrayList<Piece>();
+        this.nbTrap=nbTrap;
+    }
     /**
      *  returns the amount of traps that the Player can place
      * @return the amount of usable traps

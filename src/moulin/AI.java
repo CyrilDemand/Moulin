@@ -9,6 +9,7 @@ public abstract class AI extends Player{
     public AI(String name, Color color) {
         super(name, color);
     }
+    public AI(String name, Color color,int nbTrap) { super(name, color,nbTrap); }
 
     /**
      * starts the Game

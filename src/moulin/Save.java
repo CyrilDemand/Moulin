@@ -39,6 +39,7 @@ public class Save {
     public boolean generateSave(Jeu jeu){
         ArrayList<Character> save = new ArrayList<>();
         save.add('{');
+        save.addAll(this.saveTurn(jeu));
         save.addAll(this.SaveBoard(jeu.getBoard()));
         save.addAll(this.SavePlayers(jeu.getPlayers()));
         save.add('\n');;
@@ -67,6 +68,10 @@ public class Save {
         }
 
         return false;
+    }
+
+    public ArrayList<Character> saveTurn(Jeu jeu){
+        return new ArrayList<>(this.StringToList("\t\"turn\":\n\t\t["+Jeu.getTurn()+"\n\t\t],"));
     }
 
     /**
@@ -171,6 +176,8 @@ public class Save {
         for (Player p: players) {
             res.add('\t');res.add('\t');
             res.add('[');
+            res.addAll(this.StringToList('\"'+p.getClass().getSimpleName()+'\"'));
+            res.add(',');
             res.addAll(this.StringToList('\"'+p.getName()+'\"'));
             res.add(',');
             res.addAll(this.StringToList('\"'+p.getColor().toString()+'\"'));
@@ -273,6 +280,22 @@ public class Save {
         return res;
     }
 
+    private static void loadTurn(Jeu jeu,String chemin){
+        int res = 0;
+        try {
+            System.out.println(chemin);
+            String content = new String((Files.readAllBytes(Paths.get(chemin))));
+            JSONObject o = new JSONObject(content);
+            int turn = o.getJSONArray("turn").getInt(0);
+            while (Jeu.getTurn()!=turn){
+                jeu.addTurn();
+            }
+        }
+        catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Player> loadPlayers(Board board,String chemin){
         ArrayList<Player> res = new ArrayList<>();
         try {
@@ -281,10 +304,16 @@ public class Save {
             JSONObject o = new JSONObject(content);
             JSONArray players = o.getJSONArray("players");
             for (int i = 0; i< players.length();i++){
-                res.add(new Player(players.getJSONArray(i).get(0).toString(),Color.valueOf(players.getJSONArray(i).get(1).toString())));
-                for (int idx = 0; idx<players.getJSONArray(i).getJSONArray(2).length();idx++){
+                if (players.getJSONArray(i).get(0).toString().equals("Player")){
+                    res.add(new Player(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                }else if(players.getJSONArray(i).get(0).toString().equals("RandomAI")){
+                    res.add(new RandomAI(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                }else{
+                    res.add(new NormalAI(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                }
+                for (int idx = 0; idx<players.getJSONArray(i).getJSONArray(3).length();idx++){
                     Piece p = new Piece(res.get(i).getColor(),idx);
-                    p.put(board.getNodeById(players.getJSONArray(i).getJSONArray(2).getInt(idx)));
+                    p.put(board.getNodeById(players.getJSONArray(i).getJSONArray(3).getInt(idx)));
                     res.get(i).addPiece(p);
                 }
             }
@@ -353,7 +382,9 @@ public class Save {
         Save save = new Save(name);
         Board board = save.loadBoard(save.path);
         ArrayList<Player> players = new ArrayList<>(save.loadPlayers(board,save.path));
-        return new Jeu(board,players);
+        Jeu jeu = new Jeu(board,players);
+        Save.loadTurn(jeu, save.path);
+        return jeu;
     }
 
     public static void main(String[] args){
@@ -372,10 +403,12 @@ public class Save {
         Trap trap = new Trap(5);
         board.getEdges().get(5).setTrap(trap);
         Jeu jeu= new Jeu(board,players);
+        jeu.addTurn();
         jeu = Jeu.randomStart(board,players);
         Save save = new Save("test");
         save.generateSave(jeu);
         Jeu jeu1 = Save.loadJeu(save.name);
+        System.out.println(Jeu.getTurn());
         jeu1.getBoard().render(3,1);
     }
 }

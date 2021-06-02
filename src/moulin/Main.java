@@ -81,6 +81,11 @@ public class Main {
             }
         }else if (choix==2){
             //----------CHARGER UNE PARTIE EXISTANTE------------------
+            Jeu jeu1 = Save.loadJeu("");
+            System.out.println(Jeu.getTurn());
+            System.out.println(jeu1.getPlayers().get(Jeu.getTurn()).getColor());
+            jeu1.getBoard().render(3,1);
+            jeu1.endGame();
             return;
         }else{
             //QUITTER
