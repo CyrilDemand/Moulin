@@ -52,15 +52,7 @@ public class Main {
                 return;
             }
 
-            ArrayList<Player> players = new ArrayList<>();
-            players.add(new Player("Patrick",Color.ROUGE));
-            players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
-
-            for (int i=0;i<3;i++){
-                for (Player p:players) {
-                    p.addPiece(new Piece(p.getColor(),i));
-                }
-            }
+            ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(scanner.nextInt(), scanner.nextInt()));
 
             jeu = new Jeu(board,players);
             System.out.println(jeu.getPlayers());
