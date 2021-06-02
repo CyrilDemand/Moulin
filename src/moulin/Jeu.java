@@ -90,10 +90,24 @@ public class Jeu {
      * @return the player list
      */
 
-    public static ArrayList<Player> initPlayer(){
+    public static ArrayList<Player> initPlayer(int nbJoueurs, int nbAI){
         ArrayList<Player> players = new ArrayList<>();
-        for (int i = 0; i<2;i++){
-            players.add(new Player(Player.chooseName(),Player.chooseColor()));
+        if (nbAI>=nbJoueurs)return null;
+        for (int i = 0; i<nbJoueurs;i++){
+            if (i<nbJoueurs-nbAI){
+                players.add(new Player(Player.chooseName(),Player.chooseColor()));
+            }else{
+                ArrayList<String>nameAI = new ArrayList<>();
+                nameAI.add("Shrek");nameAI.add("gluton");nameAI.add("bellsprout");nameAI.add("Beaufils");nameAI.add("Noé");nameAI.add("Sac à dos");
+                System.out.println("1.RandomAI 2.NormalAI");
+                Scanner scanner = new Scanner(System.in);
+                if (scanner.nextInt()==1){
+                    players.add(new RandomAI(nameAI.get((int)(Math.random()*nameAI.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+
+                }else {
+                    players.add(new NormalAI(nameAI.get((int)(Math.random()*nameAI.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+                }
+            }
             for (int idx = 0; idx<3;idx++){
                 players.get(i).addPiece(new Piece(players.get(i).getColor(),players.get(i).getPieces().size()));
             }
@@ -144,8 +158,10 @@ public class Jeu {
         Jeu jeu;
         do {
             jeu = new Jeu(board,players);
+            jeu.getBoard().render(1,3);
             for(int i = 0; i<jeu.getPlayers().get(0).getPieces().size();i++){
                 for (Player p: jeu.getPlayers()) {
+                    jeu.getBoard().render(1,3);
                     int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
                     while (!p.getPieces().get(i).put(jeu.getBoard().getNodeById(position))){
                         position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
