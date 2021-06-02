@@ -1,4 +1,5 @@
 package moulin;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -84,10 +85,6 @@ public class Jeu {
     }
 
 
-
-
-
-
     public static ArrayList<Player> initPlayer(int nbPlayer){
         ArrayList<Player> players = new ArrayList<>();
         boolean chooseAtLeastOnePlayer=false;
@@ -96,17 +93,24 @@ public class Jeu {
         int choix;
 
         for (int i = 0; i<nbPlayer;i++){
-            System.out.println("Choisissez un type de joueur : ");
-            System.out.println("[1] Player");
-            System.out.println("[2] IA random");
-            System.out.println("[3] IA");
-            do{
-                System.out.print("Joueur n°"+(i+1)+": ");
-                choix=scanner.nextInt();
-            }while (!(choix>=1 && choix<=3));
+            if (i==nbPlayer-1 && !chooseAtLeastOnePlayer){
+                System.out.println("Il faut au moins un joueur humain dans la partie ! ");
+                choix=1;
+            }else{
+                System.out.println("Choisissez un type de joueur : ");
+                System.out.println("[1] Player");
+                System.out.println("[2] IA random");
+                System.out.println("[3] IA");
+                do{
+                    System.out.print("Joueur n°"+(i+1)+": ");
+                    choix=scanner.nextInt();
+                }while (!(choix>=1 && choix<=3));
+            }
+
 
             if (choix==1){
                 players.add(new Player(Player.chooseName(),Player.chooseColor()));
+                chooseAtLeastOnePlayer=true;
             }else if (choix==2){
                 players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
             }else if (choix==3){
@@ -255,9 +259,14 @@ public class Jeu {
                             }while (!board.trapNode(idNode,idDestination,3));
                             player.placedATrap();
                         }else if ((choix==2 && player.getNbTrap()<=0) || choix==4){
-                            System.out.println("quelle nom voulez vous donner à votre sauvegarde ?");
-                            String s = scanner.nextLine();
-                            new Save(s).generateSave(this);
+                            System.out.println("Quel nom voulez-vous donner à votre sauvegarde ?");
+
+                            String nom="";
+                            do{
+                                nom=scanner.nextLine();
+                            }while (nom.equals("") || nom.length()<=0);
+
+                            new Save(nom).generateSave(this);
                             System.out.println("La partie a bien été sauvegardée");
                             return null;
                         }
@@ -277,6 +286,28 @@ public class Jeu {
             board.nextTurn();
         }
         return this.isFinished();
+    }
+
+    /**
+     * gets all the json files in a directory
+     * @param directory the directory your want to get your files from (either saves or maps)
+     * @return the list of files as an ArrayList of strings
+     */
+
+    public static ArrayList<String> getFiles(String directory){
+        String path=System.getProperty("user.dir")+File.separator+directory;
+        File f=new File(path);
+        String[] files=f.list();
+        if (files==null)return null;
+
+        ArrayList<String> names=new ArrayList<String>();
+
+        for (String s : files){
+            if (s.substring(Math.max(0,s.length()-4),s.length()).equals("json")){
+                names.add(s.substring(0,Math.max(0,s.length()-5)));
+            }
+        }
+        return names;
     }
 
     /**
