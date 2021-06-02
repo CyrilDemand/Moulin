@@ -135,7 +135,8 @@ public class Player {
      */
 
     public String toString(){
-        return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
+        return this.getName();
+        //return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
     }
 
     /**
