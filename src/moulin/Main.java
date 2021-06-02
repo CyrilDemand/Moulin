@@ -1,5 +1,7 @@
 package moulin;
 
+import java.io.File;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -33,7 +35,7 @@ public class Main {
 
         if (choix==1){
             //-------NOUVELLE PARTIE--------
-            System.out.println("Sur quel map voulez-vous jouer ?");
+            System.out.println("Sur quellle map voulez-vous jouer ?");
             System.out.println("[1] Map pre-génerée");
             System.out.println("[2] Map customisée");
             do {
@@ -51,8 +53,23 @@ public class Main {
 
                 board=Board.generateBoard(choix);
             }else if (choix==2){
-                System.out.println("Charger une map depuis un fichier");
-                return;
+                System.out.println("Voici les maps disponibles");
+                ArrayList<String> mapFiles=Jeu.getFiles("customMaps");
+
+                for (int i=0;i<mapFiles.size();i++){
+                    System.out.print(mapFiles.get(i));
+                    if (i!=mapFiles.size()-1){
+                        System.out.print(", ");
+                    }
+                }
+
+                System.out.println("\nEntrez le nom de la map sur laquelle vous voulez jouer : ");
+                String map="";
+                do{
+                    map=scanner.nextLine();
+                }while (!mapFiles.contains(map));
+
+                board=Save.loadBoard(System.getProperty("user.dir")+ File.separator+"customMaps"+File.separator+map+".json");
             }
 
             System.out.println("Combien de joueurs voulez-vous ? (2 à 4 joueurs)");
@@ -64,9 +81,6 @@ public class Main {
             ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(choix));
 
             jeu = new Jeu(board,players);
-            System.out.println(jeu.getPlayers());
-
-
             System.out.println("Choisissez votre methode de placement des pions : ");
             System.out.println("[1] Placement par les joueurs");
             System.out.println("[2] Placement aléatoire");
@@ -81,13 +95,23 @@ public class Main {
                 jeu = Jeu.randomStart(jeu.getBoard(), jeu.getPlayers());
             }
         }else if (choix==2){
-            //----------CHARGER UNE PARTIE EXISTANTE------------------
-            Jeu jeu1 = Save.loadJeu("");
-            System.out.println(Jeu.getTurn());
-            System.out.println(jeu1.getPlayers().get(Jeu.getTurn()).getColor());
-            jeu1.getBoard().render();
-            jeu1.endGame();
-            return;
+            System.out.println("Voici les sauvegardes disponibles");
+            ArrayList<String> savesFiles=Jeu.getFiles("saves");
+
+            for (int i=0;i<savesFiles.size();i++){
+                System.out.print(savesFiles.get(i));
+                if (i!=savesFiles.size()-1){
+                    System.out.print(", ");
+                }
+            }
+
+            System.out.println("\nEntrez le nom de la sauvegarde que vous voulez charger : ");
+            String map="";
+            do{
+                map=scanner.nextLine();
+            }while (!savesFiles.contains(map));
+
+            jeu=Save.loadJeu(map);
         }else{
             //QUITTER
             return;
