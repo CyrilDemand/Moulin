@@ -26,7 +26,7 @@ public class Main {
         int choix;
         do {
             System.out.print("Votre choix : ");
-            choix = scanner.nextInt();
+            choix = Config.nextInt(1,3);
         }while (!(choix>=1 && choix<=3));
 
 
@@ -40,7 +40,7 @@ public class Main {
             System.out.println("[2] Map customisée");
             do {
                 System.out.print("Votre choix : ");
-                choix = scanner.nextInt();
+                choix = Config.nextInt(1,2);
             }while (!(choix>=1 && choix<=2));
 
             Board board=null;
@@ -48,7 +48,7 @@ public class Main {
                 System.out.println("Choisissez le nombre de cotés de votre map (3 à 10)");
                 do {
                     System.out.print("Votre choix : ");
-                    choix = scanner.nextInt();
+                    choix = Config.nextInt(3,10);
                 }while (!(choix>=3 && choix<=10));
 
                 board=Board.generateBoard(choix);
@@ -75,7 +75,7 @@ public class Main {
             System.out.println("Combien de joueurs voulez-vous ? (2 à 4 joueurs)");
             do{
                 System.out.print("Votre choix : ");
-                choix=scanner.nextInt();
+                choix=Config.nextInt(2,4);
             }while (!(choix>=2 && choix<=4));
 
             ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(choix));
@@ -86,7 +86,7 @@ public class Main {
             System.out.println("[2] Placement aléatoire");
             do {
                 System.out.print("Votre choix : ");
-                choix = scanner.nextInt();
+                choix = Config.nextInt(1,2);
             }while (!(choix>=1 && choix<=2));
 
             if (choix==1){

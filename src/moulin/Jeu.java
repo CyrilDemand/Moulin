@@ -103,7 +103,7 @@ public class Jeu {
                 System.out.println("[3] IA");
                 do{
                     System.out.print("Joueur n°"+(i+1)+": ");
-                    choix=scanner.nextInt();
+                    choix=Config.nextInt(1,3);
                 }while (!(choix>=1 && choix<=3));
             }
 
@@ -134,8 +134,7 @@ public class Jeu {
                     System.out.println("Entrez le numero de la case où vous voulez placer votre pion numero "+i);
                     boolean posed=false;
                     do{
-                        Scanner scanner = new Scanner(System.in);
-                        posed=p.getPieces().get(i).put(this.getBoard().getNodeById(scanner.nextInt()));
+                        posed=p.getPieces().get(i).put(this.getBoard().getNodeById(Config.nextInt(board.getMinId(),board.getMaxId())));
                         if (!posed)System.out.println("Erreur : veuillez réessayer");
                     }while (!posed);
                 }else {
@@ -241,7 +240,7 @@ public class Jeu {
         System.out.println("Pièges Restants : "+player.getNbTrap());
         do{
             System.out.print("Votre choix : ");
-            choix=scanner.nextInt();
+            choix=Config.nextInt(1,4);
             if (!(choix>=1 && choix<=4))System.out.println("Erreur : veuillez réessayer");
         }while (!(choix>=1 && choix<=4));
         return choix;
@@ -255,7 +254,7 @@ public class Jeu {
         System.out.println("[2] Sauvegarder et quitter");
         do{
             System.out.print("Votre choix : ");
-            choix=scanner.nextInt();
+            choix=Config.nextInt(1,2);
             if (!(choix>=1 && choix<=2))System.out.println("Erreur : veuillez réessayer");
         }while (!(choix>=1 && choix<=2));
         return choix;
@@ -268,10 +267,14 @@ public class Jeu {
         System.out.println("Entrez le nuremo de la piece que vous voulez bouger et le nuremo de la case où vous voulez la bouger");
         do {
             System.out.print("Piece : ");
-            piece = scanner.nextInt();
+            piece = Config.nextInt(0,player.getPieces().size()-1);
             System.out.print("Case : ");
-            endroit =scanner.nextInt();
-            System.out.println("Erreur : veuillez réessayer");
+            endroit = Config.nextInt(1,board.getMaxId());
+            boolean isMovable = false;
+            for (Node node:player.getPieces().get(piece).getNode().isLinkedWith(board)) {
+                if (node.getId() == endroit)isMovable = true;
+            }
+            if (!isMovable)System.out.println("Erreur : veuillez réessayer");
         }while (!(piece<player.getPieces().size() && piece>=0 && player.getPieces().get(piece).move(board,endroit)));
     }
 
@@ -282,11 +285,17 @@ public class Jeu {
         System.out.println("Entrez le nuremo de la case de debut et de fin de la ligne que vous voulez bloquer");
         do {
             System.out.print("Debut : ");
-            idStart = scanner.nextInt();
+            idStart = Config.nextInt(board.getMinId(),board.getMaxId());
             System.out.print("Fin : ");
-            idEnd=scanner.nextInt();
-            System.out.println("Erreur : veuillez réessayer");
-        }while (board.trapEdge(idStart,idEnd,3));
+            idEnd=Config.nextInt(board.getMinId(),board.getMaxId());
+            boolean canBeTrapped = false;
+            System.out.println(idStart+idEnd);
+            for (Edge e: board.getEdges()) {
+                System.out.println(e.getStart().getId()+e.getEnd().getId());
+                if (e.equals(new Edge(board.getNodeById(idStart), board.getNodeById(idEnd))))canBeTrapped = true;
+            }
+            if (!canBeTrapped)System.out.println("Erreur : veuillez réessayer");
+        }while (!board.trapEdge(idStart,idEnd,3));
         player.placedATrap();
     }
 
@@ -297,10 +306,14 @@ public class Jeu {
         System.out.println("Entrez le nuremo de la case sur laquelle vous voulez placer le teleporteur et la case où il va vous teleporter");
         do {
             System.out.print("Case : ");
-            idNode = scanner.nextInt();
+            idNode = Config.nextInt(board.getMinId(),board.getMaxId());
             System.out.print("Destination : ");
-            idDestination=scanner.nextInt();
-            System.out.println("Erreur : veuillez réessayer");
+            idDestination=Config.nextInt(board.getMinId(),board.getMaxId());
+            int canBeTrapped = 0;
+            for (Node node: board.getNodes()) {
+                if (node.getId()==idNode || node.getId()==idDestination)canBeTrapped++;
+            }
+            if (canBeTrapped!=2)System.out.println("Erreur : veuillez réessayer");
         }while (!board.trapNode(idNode,idDestination,3));
         player.placedATrap();
     }

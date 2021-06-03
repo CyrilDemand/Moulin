@@ -200,7 +200,7 @@ public class Board {
     public boolean trapEdge(int idStart,int idEnd, int turns){
         Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
         for (Edge e:this.edges){
-            if (e.getStart().equals(start) && e.getEnd().equals(end) || e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped()){
+            if ((e.getStart().equals(start) && e.getEnd().equals(end)) || (e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped())){
                 e.setTrap(new Trap(turns));
                 return true;
             }
