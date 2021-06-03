@@ -128,8 +128,5 @@ public class Main {
             jeu.getBoard().render();
             System.out.println(resultOfTheGame+" a gagné !");
         }
-
     }
-
-
 }
