@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Scanner;
 
 /**
  * Class used for loading and saving the properties of the game
@@ -72,7 +73,19 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    public static int nextInt(int min,int max){
+        int choix = min-2;
+        while (!(choix>=min && choix<= max)){
+            Scanner scanner = new Scanner(System.in);
+            try {
+                choix = scanner.nextInt();
+            }catch (Exception e){
+                System.out.println("On t'as demandé un nombre tu sais pas lire pd ?");
+            }
+            if (!(choix>=min && choix<= max)) System.out.println("ça t'arracherais les doigts de mettre un nombre entre "+ min + " et " + max +" ?");
+        }
+        return choix;
+    }
 }

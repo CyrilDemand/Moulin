@@ -103,7 +103,7 @@ public class Jeu {
                 System.out.println("[3] IA");
                 do{
                     System.out.print("Joueur n°"+(i+1)+": ");
-                    choix=scanner.nextInt();
+                    choix=Config.nextInt(1,3);
                 }while (!(choix>=1 && choix<=3));
             }
 
@@ -134,8 +134,7 @@ public class Jeu {
                     System.out.println("Entrez le numero de la case où vous voulez placer votre pion numero "+i);
                     boolean posed=false;
                     do{
-                        Scanner scanner = new Scanner(System.in);
-                        posed=p.getPieces().get(i).put(this.getBoard().getNodeById(scanner.nextInt()));
+                        posed=p.getPieces().get(i).put(this.getBoard().getNodeById(Config.nextInt(board.getMinId(),board.getMaxId())));
                         if (!posed)System.out.println("Erreur : veuillez réessayer");
                     }while (!posed);
                 }else {
@@ -186,90 +185,12 @@ public class Jeu {
 
     public Player endGame(){
         while (this.isFinished()==null){
-
-
             Scanner scanner = new Scanner(System.in);
             for (Player player:this.getPlayers()) {
                 if (this.getPlayers().get(Jeu.turn).equals(player)){
                     board.render();
                     if (player.getClass().getSimpleName().equals("Player")){
-                        int choix;
-
-                        System.out.println("Tour du joueur "+player.getColor());
-
-                        if (player.getNbTrap()>0){
-                            System.out.println("Que voulez vous faire ?");
-                            System.out.println("[1] Deplacer un pion");
-                            System.out.println("[2] Bloquer une ligne");
-                            System.out.println("[3] Placer un teleporteur");
-                            System.out.println("[4] Sauvegarder et quitter");
-                            System.out.println("Pièges Restants : "+player.getNbTrap());
-
-                            do{
-                                System.out.print("Votre choix : ");
-                                choix=scanner.nextInt();
-                                if (!(choix>=1 && choix<=4))System.out.println("Erreur : veuillez réessayer");
-                            }while (!(choix>=1 && choix<=4));
-                        }else{
-                            System.out.println("Que voulez vous faire ?");
-                            System.out.println("[1] Deplacer un pion");
-                            System.out.println("[2] Sauvegarder et quitter");
-                            do{
-                                System.out.print("Votre choix : ");
-                                choix=scanner.nextInt();
-                                if (!(choix>=1 && choix<=2))System.out.println("Erreur : veuillez réessayer");
-                            }while (!(choix>=1 && choix<=2));
-                        }
-
-                        if (choix==1) {
-
-                            int piece;
-                            int endroit;
-                            System.out.println("Entrez le nuremo de la piece que vous voulez bouger et le nuremo de la case où vous voulez la bouger");
-                            do {
-                                System.out.print("Piece : ");
-                                piece = scanner.nextInt();
-                                System.out.print("Case : ");
-                                endroit =scanner.nextInt();
-                                System.out.println("Erreur : veuillez réessayer");
-                            }while (!(piece<player.getPieces().size() && piece>=0 && player.getPieces().get(piece).move(board,endroit)));
-
-                        }else if (choix==2 && player.getNbTrap()>0){
-                            int idStart;
-                            int idEnd;
-                            System.out.println("Entrez le nuremo de la case de debut et de fin de la ligne que vous voulez bloquer");
-                            do {
-                                System.out.print("Debut : ");
-                                idStart = scanner.nextInt();
-                                System.out.print("Fin : ");
-                                idEnd=scanner.nextInt();
-                                System.out.println("Erreur : veuillez réessayer");
-                            }while (board.trapEdge(idStart,idEnd,3));
-                            player.placedATrap();
-                        }else if (choix==3){
-                            int idNode;
-                            int idDestination;
-                            System.out.println("Entrez le nuremo de la case sur laquelle vous voulez placer le teleporteur et la case où il va vous teleporter");
-                            do {
-                                System.out.print("Case : ");
-                                idNode = scanner.nextInt();
-                                System.out.print("Destination : ");
-                                idDestination=scanner.nextInt();
-                                System.out.println("Erreur : veuillez réessayer");
-                            }while (!board.trapNode(idNode,idDestination,3));
-                            player.placedATrap();
-                        }else if ((choix==2 && player.getNbTrap()<=0) || choix==4){
-                            System.out.println("Quel nom voulez-vous donner à votre sauvegarde ?");
-
-                            String nom="";
-                            do{
-                                nom=scanner.nextLine();
-                            }while (nom.equals("") || nom.length()<=0);
-
-                            new Save(nom).generateSave(this);
-                            System.out.println("La partie a bien été sauvegardée");
-                            return null;
-                        }
+                        if(!menuPlayer(player))return null;
                     }else{
                         try {
                             ((RandomAI)player).endGame(board);
@@ -280,7 +201,6 @@ public class Jeu {
                     }
                     this.addTurn();
                     if (isFinished()!=null)break;
-
                 }
             }
             board.nextTurn();
@@ -288,6 +208,127 @@ public class Jeu {
         return this.isFinished();
     }
 
+    private boolean menuPlayer(Player player){
+        int choix;
+        System.out.println("Tour du joueur "+player.getColor().getString()+player.getName()+Color.ANSI_RESET);
+        if (player.getNbTrap()>0){
+            choix = menuWithTrap(player);
+        }else{
+            choix = menuWithoutTrap();
+        }
+        if (choix==1) {
+            menuMovePiece(player);
+        }else if (choix==2 && player.getNbTrap()>0){
+            menuPlaceTrapEdge(player);
+        }else if (choix==3){
+            menuPlaceTrap(player);
+        }else if ((choix==2 && player.getNbTrap()<=0) || choix==4){
+            menuSave();
+            return false;
+        }
+        return true;
+    }
+
+    private int menuWithTrap(Player player){
+        int choix;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Que voulez vous faire ?");
+        System.out.println("[1] Deplacer un pion");
+        System.out.println("[2] Bloquer une ligne");
+        System.out.println("[3] Placer un teleporteur");
+        System.out.println("[4] Sauvegarder et quitter");
+        System.out.println("Pièges Restants : "+player.getNbTrap());
+        do{
+            System.out.print("Votre choix : ");
+            choix=Config.nextInt(1,4);
+            if (!(choix>=1 && choix<=4))System.out.println("Erreur : veuillez réessayer");
+        }while (!(choix>=1 && choix<=4));
+        return choix;
+    }
+
+    private int menuWithoutTrap(){
+        int choix;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Que voulez vous faire ?");
+        System.out.println("[1] Deplacer un pion");
+        System.out.println("[2] Sauvegarder et quitter");
+        do{
+            System.out.print("Votre choix : ");
+            choix=Config.nextInt(1,2);
+            if (!(choix>=1 && choix<=2))System.out.println("Erreur : veuillez réessayer");
+        }while (!(choix>=1 && choix<=2));
+        return choix;
+    }
+
+    private void menuMovePiece(Player player){
+        Scanner scanner = new Scanner(System.in);
+        int piece;
+        int endroit;
+        System.out.println("Entrez le nuremo de la piece que vous voulez bouger et le nuremo de la case où vous voulez la bouger");
+        do {
+            System.out.print("Piece : ");
+            piece = Config.nextInt(0,player.getPieces().size()-1);
+            System.out.print("Case : ");
+            endroit = Config.nextInt(1,board.getMaxId());
+            boolean isMovable = false;
+            for (Node node:player.getPieces().get(piece).getNode().isLinkedWith(board)) {
+                if (node.getId() == endroit)isMovable = true;
+            }
+            if (!isMovable)System.out.println("Erreur : veuillez réessayer");
+        }while (!(piece<player.getPieces().size() && piece>=0 && player.getPieces().get(piece).move(board,endroit)));
+    }
+
+    private void menuPlaceTrapEdge(Player player){
+        Scanner scanner = new Scanner(System.in);
+        int idStart;
+        int idEnd;
+        System.out.println("Entrez le nuremo de la case de debut et de fin de la ligne que vous voulez bloquer");
+        do {
+            System.out.print("Debut : ");
+            idStart = Config.nextInt(board.getMinId(),board.getMaxId());
+            System.out.print("Fin : ");
+            idEnd=Config.nextInt(board.getMinId(),board.getMaxId());
+            boolean canBeTrapped = false;
+            System.out.println(idStart+idEnd);
+            for (Edge e: board.getEdges()) {
+                System.out.println(e.getStart().getId()+e.getEnd().getId());
+                if (e.equals(new Edge(board.getNodeById(idStart), board.getNodeById(idEnd))))canBeTrapped = true;
+            }
+            if (!canBeTrapped)System.out.println("Erreur : veuillez réessayer");
+        }while (!board.trapEdge(idStart,idEnd,3));
+        player.placedATrap();
+    }
+
+    private void menuPlaceTrap(Player player){
+        Scanner scanner = new Scanner(System.in);
+        int idNode;
+        int idDestination;
+        System.out.println("Entrez le nuremo de la case sur laquelle vous voulez placer le teleporteur et la case où il va vous teleporter");
+        do {
+            System.out.print("Case : ");
+            idNode = Config.nextInt(board.getMinId(),board.getMaxId());
+            System.out.print("Destination : ");
+            idDestination=Config.nextInt(board.getMinId(),board.getMaxId());
+            int canBeTrapped = 0;
+            for (Node node: board.getNodes()) {
+                if (node.getId()==idNode || node.getId()==idDestination)canBeTrapped++;
+            }
+            if (canBeTrapped!=2)System.out.println("Erreur : veuillez réessayer");
+        }while (!board.trapNode(idNode,idDestination,3));
+        player.placedATrap();
+    }
+
+    private void menuSave(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quel nom voulez-vous donner à votre sauvegarde ?");
+        String nom="";
+        do{
+            nom=scanner.nextLine();
+        }while (nom.equals("") || nom.length()<=0);
+
+        new Save(nom).generateSave(this);
+        System.out.println("La partie a bien été sauvegardée");
+    }
     /**
      * gets all the json files in a directory
      * @param directory the directory your want to get your files from (either saves or maps)

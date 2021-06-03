@@ -95,6 +95,8 @@ public class Edge {
         if(other==null)return false;
         if(this.getStart().equals(other.getStart()) &&
                 this.getEnd().equals(other.getEnd()))return true;
+        if(this.getStart().equals(other.getEnd()) &&
+                this.getEnd().equals(other.getStart()))return true;
         return false;
     }
 
