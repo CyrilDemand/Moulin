@@ -127,12 +127,12 @@ public class Player {
      */
     public static Color chooseColor(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Voici les couleurs que l'on a :");
+        System.out.println("Here are the colors you can choose :");
         Color.diplayColor();
         String user = "";
         user = scan.nextLine();
         while (!Color.isColor(user.toLowerCase())){
-            System.out.println("Choisissez une vraie couleur");
+            System.out.println("Choose a real color");
             user = scan.nextLine();
         }
         return Color.valueOf(user.toUpperCase());

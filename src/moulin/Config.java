@@ -89,9 +89,9 @@ public class Config {
             try {
                 choix = scanner.nextInt();
             }catch (Exception e){
-                System.out.println("Veuillez entrer un chiffre");
+                System.out.println("Please enter a number");
             }
-            if (!(choix>=min && choix<= max)) System.out.println("Veuillez entrer un nombre entre "+ min + " et " + max +" ?");
+            if (!(choix>=min && choix<= max)) System.out.println("Please enter a number between "+ min + " and " + max +" ?");
         }
         return choix;
     }
