@@ -20,7 +20,7 @@ public class Main {
         System.out.println("What do you want to do ?");
 
         System.out.println("[1] New game");
-        System.out.println("[2] Load a saved game;
+        System.out.println("[2] Load a saved game");
         System.out.println("[3] Quit");
 
         int choix;
