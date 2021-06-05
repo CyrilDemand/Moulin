@@ -196,7 +196,7 @@ public class Jeu {
                             ((RandomAI)player).endGame(board);
                         }catch (Exception ignored){}
                         try {
-                            ((NormalAI)player).endGame(board);
+                            ((NormalAI)player).endGame(this);
                         }catch (Exception ignored){}
                     }
                     this.addTurn();
