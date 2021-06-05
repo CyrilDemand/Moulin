@@ -75,6 +75,13 @@ public class Config {
         }
     }
 
+    /**
+     * ask a player to input a number between min and max
+     * @param min the minimum value
+     * @param max the maximum value
+     * @return the number that was input
+     */
+
     public static int nextInt(int min,int max){
         int choix = min-2;
         while (!(choix>=min && choix<= max)){
@@ -82,9 +89,9 @@ public class Config {
             try {
                 choix = scanner.nextInt();
             }catch (Exception e){
-                System.out.println("On t'as demandé un nombre tu sais pas lire pd ?");
+                System.out.println("Veuillez entrer un chiffre");
             }
-            if (!(choix>=min && choix<= max)) System.out.println("ça t'arracherais les doigts de mettre un nombre entre "+ min + " et " + max +" ?");
+            if (!(choix>=min && choix<= max)) System.out.println("Veuillez entrer un nombre entre "+ min + " et " + max +" ?");
         }
         return choix;
     }
