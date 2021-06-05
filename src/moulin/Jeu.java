@@ -223,7 +223,7 @@ public class Jeu {
         }else if (choix==3){
             menuPlaceTrap(player);
         }else if ((choix==2 && player.getNbTrap()<=0) || choix==4){
-            menuSave();
+            menuSave(player);
             return false;
         }
         return true;
@@ -265,11 +265,14 @@ public class Jeu {
         int piece;
         int endroit;
         System.out.println("Enter the ID of the piece you want to move, and ID of the node where you want to move it");
+        System.out.println("Whether you are asked for the id of your piece or the destination, enter -1 if you want to go back");
         do {
             System.out.print("Piece : ");
-            piece = Config.nextInt(0,player.getPieces().size()-1);
+            piece = Config.nextInt(-1,player.getPieces().size()-1);
+            if (piece==-1)this.menuPlayer(player);
             System.out.print("Node : ");
-            endroit = Config.nextInt(1,board.getMaxId());
+            endroit = Config.nextInt(-1,board.getMaxId());
+            if (endroit==-1)this.menuPlayer(player);
             boolean isMovable = false;
             for (Node node:player.getPieces().get(piece).getNode().isLinkedWith(board)) {
                 if (node.getId() == endroit)isMovable = true;
@@ -279,15 +282,17 @@ public class Jeu {
     }
 
     private void menuPlaceTrapEdge(Player player){
-        Scanner scanner = new Scanner(System.in);
         int idStart;
         int idEnd;
         System.out.println("Enter the ID of the beginning and ending node of the line you want to block");
+        System.out.println("Whether you are asked for the id of the start or the end, enter 0 if you want to go back");
         do {
             System.out.print("Start : ");
-            idStart = Config.nextInt(board.getMinId(),board.getMaxId());
+            idStart = Config.nextInt(0,board.getMaxId());
+            if (idStart==0)this.menuPlayer(player);
             System.out.print("End : ");
-            idEnd=Config.nextInt(board.getMinId(),board.getMaxId());
+            idEnd=Config.nextInt(0,board.getMaxId());
+            if (idEnd==0)this.menuPlayer(player);
             boolean canBeTrapped = false;
             System.out.println(idStart+idEnd);
             for (Edge e: board.getEdges()) {
@@ -304,11 +309,14 @@ public class Jeu {
         int idNode;
         int idDestination;
         System.out.println("Enter the ID of the node where you want to place the teleporter, and the node where it will teleport");
+        System.out.println("Whether you are asked for the id of the start or the end, enter 0 if you want to go back");
         do {
             System.out.print("Node : ");
-            idNode = Config.nextInt(board.getMinId(),board.getMaxId());
+            idNode = Config.nextInt(0,board.getMaxId());
+            if (idNode==0)this.menuPlayer(player);
             System.out.print("Destination : ");
-            idDestination=Config.nextInt(board.getMinId(),board.getMaxId());
+            idDestination=Config.nextInt(0,board.getMaxId());
+            if (idDestination==0)this.menuPlayer(player);
             int canBeTrapped = 0;
             for (Node node: board.getNodes()) {
                 if (node.getId()==idNode || node.getId()==idDestination)canBeTrapped++;
@@ -318,12 +326,14 @@ public class Jeu {
         player.placedATrap();
     }
 
-    private void menuSave(){
+    private void menuSave(Player player){
         Scanner scanner = new Scanner(System.in);
         System.out.println("How do you want to name your save ?");
+        System.out.println("Enter IWANTTOGOBACK if you want to go back to the game !");
         String nom="";
         do{
             nom=scanner.nextLine();
+            if (nom.equals("IWANTTOGOBACK"))this.menuPlayer(player);
         }while (nom.equals("") || nom.length()<=0);
 
         new Save(nom).generateSave(this);
