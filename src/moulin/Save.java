@@ -70,6 +70,11 @@ public class Save {
         return false;
     }
 
+    /**
+     * saves the current turn
+     * @param jeu current game
+     * @return character arraylist
+     */
     public ArrayList<Character> saveTurn(Jeu jeu){
         return new ArrayList<>(this.StringToList("\t\"turn\":\n\t\t["+Jeu.getTurn()+"\n\t\t],"));
     }
@@ -280,6 +285,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * gives the current turn of the game
+     * @param jeu current game
+     * @param chemin current path
+     */
     private static void loadTurn(Jeu jeu,String chemin){
         int res = 0;
         try {
@@ -296,6 +306,12 @@ public class Save {
         }
     }
 
+    /**
+     *return a player arraylist
+     * @param board current board
+     * @param chemin current path
+     * @return players arraylist
+     */
     public ArrayList<Player> loadPlayers(Board board,String chemin){
         ArrayList<Player> res = new ArrayList<>();
         try {
@@ -324,6 +340,11 @@ public class Save {
         return res;
     }
 
+    /**
+     * returns the board
+      * @param chemin current path
+     * @return current board
+     */
     public static Board loadBoard(String chemin){
         Board board = new Board();
         try {
@@ -344,18 +365,36 @@ public class Save {
         return board;
     }
 
+    /**
+     * load all the current nodes
+     * @param nodes current nodes
+     * @param board current board
+     * @throws JSONException exception
+     */
     private static void loadNodes(JSONArray nodes,Board board) throws JSONException {
         for (int i = 0;i<nodes.length();i++){
             board.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
         }
     }
 
+    /**
+     * load all the current edges
+     * @param edges current edges
+     * @param board current board
+     * @throws JSONException exception
+     */
     private static void loadEdges(JSONArray edges,Board board) throws JSONException {
         for (int i = 0;i<edges.length();i++){
             board.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
         }
     }
 
+    /**
+     * load all the current lines
+     * @param lines current lines
+     * @param board current board
+     * @throws JSONException exception
+     */
     private static void loadLines(JSONArray lines,Board board) throws JSONException {
         for (int i = 0;i<lines.length();i++){
             ArrayList<Node> lineNodes=new ArrayList<Node>();
@@ -366,6 +405,12 @@ public class Save {
         }
     }
 
+    /**
+     * load all the current traps
+     * @param traps current traps
+     * @param board current board
+     * @throws JSONException exception
+     */
     private static void loadTraps(JSONArray traps,Board board) throws JSONException {
         for (int i = 0;i<traps.length();i++){
             if (traps.getJSONArray(i).get(0).equals("edge")){
@@ -382,6 +427,11 @@ public class Save {
         }
     }
 
+    /**
+     * load the current game
+     * @param name name of the game
+     * @return current game
+     */
     public static Jeu loadJeu(String name){
         Save save = new Save(name);
         Board board = save.loadBoard(save.path);
@@ -391,6 +441,10 @@ public class Save {
         return jeu;
     }
 
+    /**
+     * saves the game
+     * @param args args
+     */
     public static void main(String[] args){
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
