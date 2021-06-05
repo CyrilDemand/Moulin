@@ -423,91 +423,115 @@ public class Board {
     }
 
     /**
+     * Checks if two nodes are overlapping on the board
+     * @return true if any two nodes are overlapping, false otherwise
+     */
+
+    public boolean hasOverlappingNodes(){
+        for (Node node : this.getNodes()){
+            for (Node other : this.getNodes()){
+                if (node!=other && node.getX()==other.getX() && node.getY()==other.getY())return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Generates a Board with a node size/spacing management
      * @param nbSides amount of sides to the board
      * @return the Board generated
      */
     public static Board generateBoard(int nbSides){
-        Board board=new Board();
-        Node.resetCounter();
+        Board board;
+        double defaultRadius=1;
 
-        double angleStep=(2*Math.PI)/nbSides;
+        do {
 
-        for (double layer=0;layer<3;layer++){
-            double radius=2+layer*2;
-
-            Node newNode=null;
-            Node newNodeMiddle=null;
-            Node startNode=null;
-
-            //----------Nodes and Edges Creation------------------
-
-            for (int i=0;i<nbSides;i++){
+            board = new Board();
+            Node.resetCounter();
 
 
-                double x=(Math.cos(angleStep*i)*radius);
-                double y=(Math.sin(angleStep*i)*radius);
+            double angleStep = (2 * Math.PI) / nbSides;
 
-                double nextX=(Math.cos(angleStep*(i+1))*radius);
-                double nextY=(Math.sin(angleStep*(i+1))*radius);
+            for (double layer = 0; layer < 3; layer++) {
+                double radius = defaultRadius + layer * 2;
 
-                double middleX=(x+nextX)/2;
-                double middleY=(y+nextY)/2;
+                Node newNode = null;
+                Node newNodeMiddle = null;
+                Node startNode = null;
 
-                newNode=new Node((int)Math.round(x),(int)Math.round(y));
-                if (i==0)startNode=newNode;
-                if (newNodeMiddle!=null)board.addEdge(newNodeMiddle,newNode);
-                newNodeMiddle=new Node((int)Math.round(middleX),(int)Math.round(middleY));
+                //----------Nodes and Edges Creation------------------
+
+                for (int i = 0; i < nbSides; i++) {
 
 
-                board.addNode(newNode);
-                board.addNode(newNodeMiddle);
-                board.addEdge(newNode,newNodeMiddle);
-                if (i==nbSides-1)board.addEdge(startNode,newNodeMiddle);
+                    double x = (Math.cos(angleStep * i) * radius);
+                    double y = (Math.sin(angleStep * i) * radius);
+
+                    double nextX = (Math.cos(angleStep * (i + 1)) * radius);
+                    double nextY = (Math.sin(angleStep * (i + 1)) * radius);
+
+                    double middleX = (x + nextX) / 2;
+                    double middleY = (y + nextY) / 2;
+
+                    newNode = new Node((int) Math.round(x), (int) Math.round(y));
+                    if (i == 0) startNode = newNode;
+                    if (newNodeMiddle != null) board.addEdge(newNodeMiddle, newNode);
+                    newNodeMiddle = new Node((int) Math.round(middleX), (int) Math.round(middleY));
+
+
+                    board.addNode(newNode);
+                    board.addNode(newNodeMiddle);
+                    board.addEdge(newNode, newNodeMiddle);
+                    if (i == nbSides - 1) board.addEdge(startNode, newNodeMiddle);
+                }
             }
-        }
 
-        for (int i=1;i<board.getMaxId();i+=2){
-            int nextId=i+2*nbSides;
-            if (nextId<board.getMaxId())board.addEdge(i,nextId);
-        }
+            for (int i = 1; i < board.getMaxId(); i += 2) {
+                int nextId = i + 2 * nbSides;
+                if (nextId < board.getMaxId()) board.addEdge(i, nextId);
+            }
 
-        //----------Lines Creation------------------
-        int nodesPerLayer=nbSides*2;
-        for (int layer=0;layer<3;layer++){
-            int startId=1+nodesPerLayer*layer;
-            for (int side=0;side<nbSides;side++){
-                ArrayList<Node> lineNodes=new ArrayList<Node>();
+            //----------Lines Creation------------------
+            int nodesPerLayer = nbSides * 2;
+            for (int layer = 0; layer < 3; layer++) {
+                int startId = 1 + nodesPerLayer * layer;
+                for (int side = 0; side < nbSides; side++) {
+                    ArrayList<Node> lineNodes = new ArrayList<Node>();
 
 
-                lineNodes.add(board.getNodeById(startId+side*2));
-                lineNodes.add(board.getNodeById(startId+side*2+1));
-                lineNodes.add(board.getNodeById(startId+side*2+2==startId+nodesPerLayer ? startId : startId+side*2+2) );
+                    lineNodes.add(board.getNodeById(startId + side * 2));
+                    lineNodes.add(board.getNodeById(startId + side * 2 + 1));
+                    lineNodes.add(board.getNodeById(startId + side * 2 + 2 == startId + nodesPerLayer ? startId : startId + side * 2 + 2));
+
+                    //System.out.println(lineNodes);
+
+                    board.addLine(lineNodes);
+                }
+            }
+
+            for (int side = 0; side < nbSides; side++) {
+                ArrayList<Node> lineNodes = new ArrayList<Node>();
+
+                lineNodes.add(board.getNodeById(1 + side * 2 + 0 * nodesPerLayer));
+                lineNodes.add(board.getNodeById(1 + side * 2 + 1 * nodesPerLayer));
+                lineNodes.add(board.getNodeById(1 + side * 2 + 2 * nodesPerLayer));
 
                 //System.out.println(lineNodes);
 
                 board.addLine(lineNodes);
             }
-        }
 
-        for (int side=0;side<nbSides;side++){
-            ArrayList<Node> lineNodes=new ArrayList<Node>();
+            int minX = board.getMinX();
+            int minY = board.getMinY();
+            for (Node node : board.getNodes()) {
+                if (minX < 0) node.setX(node.getX() + Math.abs(minX));
+                if (minY < 0) node.setY(node.getY() + Math.abs(minY));
+            }
 
-            lineNodes.add(board.getNodeById(1+side*2 + 0*nodesPerLayer));
-            lineNodes.add(board.getNodeById(1+side*2 + 1*nodesPerLayer));
-            lineNodes.add(board.getNodeById(1+side*2 + 2*nodesPerLayer));
+            defaultRadius++;
+        }while (board.hasOverlappingNodes());
 
-            //System.out.println(lineNodes);
-
-            board.addLine(lineNodes);
-        }
-
-        int minX=board.getMinX();
-        int minY=board.getMinY();
-        for (Node node : board.getNodes()) {
-            if (minX < 0) node.setX(node.getX() + Math.abs(minX));
-            if (minY < 0) node.setY(node.getY() + Math.abs(minY));
-        }
         return board;
     }
 
