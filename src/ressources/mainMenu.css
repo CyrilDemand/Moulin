@@ -1,0 +1,22 @@
+/*.label {
+    -fx-
+}
+*/
+.label{
+    -fx-text-fill: rgba(0,0,0,0.6);
+    -fx-font-size: 50;
+    -fx-margin:30;
+}
+
+#mainMenuButtons {
+    -fx-base:#3c7fb1;
+   /* -fx-color: -fx-focused-base;*/
+}
+
+#mainMenuButtons: hover {
+    /*-fx-border-radius:4;*/
+    -fx-border-color:green;
+    -fx-scale-y:1.2;
+    -fx-scale-x:1.05;
+}
+
