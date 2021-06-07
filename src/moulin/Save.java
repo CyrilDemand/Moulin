@@ -11,6 +11,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class used for saving the current game to a file
@@ -25,9 +26,14 @@ public class Save {
 
     String path;
     String name;
-    public Save(String name){
-        this.name = name;
-        this.path = "saves"+ File.separator+name+".json";
+    public Save(String path){
+        this.path = path;
+        ArrayList<String> s = new ArrayList<>(Arrays.asList(this.path.split("/")));
+        name = s.get(s.size()-1);
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     /**
@@ -45,7 +51,7 @@ public class Save {
         save.add('\n');;
         save.add('}');
         char[] b = new char[save.size()];
-        File fichier =  new File(this.path);
+        File fichier =  new File(this.path.replace('/',File.separatorChar));
         for (int i = 0; i<save.size();i++) {
             b[i]=save.get(i);
         }

@@ -14,7 +14,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Config.loadConfig();
 
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Mill game !\n");
         System.out.println("What do you want to do ?");
