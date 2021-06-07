@@ -25,6 +25,9 @@ public class SceneAskFile {
             Main.changeScene(SceneMainMenu.getScene());
         });
         Button goBack=new Button("Go Back");
+        goBack.setOnAction(e->{
+            Main.changeScene(SceneNewGame.getScene());
+        });
         Button next=new Button("Next");
         next.setDisable(true);
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);

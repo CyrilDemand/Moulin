@@ -555,7 +555,6 @@ public class Board {
                 pixels[x][y]=" ";
             }
         }
-
         //===================Node's render===============================
 
         for (Node node : this.nodes){
@@ -597,12 +596,14 @@ public class Board {
             }
 
         }
-
         //===================Lined render===============================
 
         for (Edge edge:this.edges){
+            System.out.println("test 2");
             Node n1=edge.getStart();
+
             Node n2=edge.getEnd();
+
             //System.out.println("Node : n1="+n1.getId()+" n2="+n2.getId());
             //System.out.println("Start : x="+edge.getStart().getX()+" y="+edge.getStart().getY());
             //System.out.println("End : x="+edge.getEnd().getX()+" y="+edge.getEnd().getY());
@@ -613,11 +614,9 @@ public class Board {
             int n2CenterY=n2.getY()*unit+((int)(nodeSize/2));
             //System.out.println("Start Char: x="+n1CenterX+" y="+n1CenterY);
             //System.out.println("End Char : x="+n2CenterX+" y="+n2CenterY);
-
             float xDist=n2CenterX-n1CenterX;
             float yDist=n2CenterY-n1CenterY;
             //System.out.println("Dist : x="+xDist+" y="+yDist);
-
             float xStep,yStep;
             if (xDist==0){
                 xStep=0;yStep=(yDist>=0 ? 1 : -1);
@@ -631,7 +630,6 @@ public class Board {
             yStep=Math.min(Math.max(yStep,-1),1);
 
             //System.out.println("Steps : x="+xStep+" y="+yStep);
-
             float x=n1CenterX;
             float y=n1CenterY;
 
@@ -639,10 +637,12 @@ public class Board {
             do{
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
-
+                    System.out.println("test 2");
                     if (edge.isTrapped()) {
+                        System.out.println("test 1");
                         pixels[(int)x][(int)y]=".";
                     }else{
+                        System.out.println("test 3");
                         pixels[(int)x][(int)y]="*";
                     }
 
@@ -658,14 +658,16 @@ public class Board {
                     }*/
                 }
                 if (xDist!=0)x+=xStep;
+                System.out.println("test 4");
                 if (yDist!=0)y+=yStep;
+                System.out.println("test 5");
             }
 
             while ( !(x>n2CenterX-(float)nodeSize/2 && x<n2CenterX+(float)nodeSize/2 && y>n2CenterY-(float)nodeSize/2 && y<n2CenterY+(float)nodeSize/2) );
 
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
-
+        System.out.println("test 2");
         //===================Final display===============================
 
         for (int y = 0; y < height; y++) {
@@ -674,5 +676,6 @@ public class Board {
             }
             System.out.println("");
         }
+        System.out.println("test 2");
     }
 }
