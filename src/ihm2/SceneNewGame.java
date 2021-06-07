@@ -14,19 +14,18 @@ public class SceneNewGame {
 
     public static void create(){
         VBox root=new VBox();
-        Label title = new Label("new/load a game");
-        Button newGame = new Button("new game");
+        Label title = new Label("New/Load a game");
+        Button newGame = new Button("New game");
         newGame.setOnAction(e->{
 
         });
-        Button loadGame = new Button("load game");
+        Button loadGame = new Button("Load a game file");
         loadGame.setOnAction(e->{
-            System.out.println("fgerljghur");
-            Main.stage.setScene(SceneAskFile.getScene());
+            Main.changeScene(SceneAskFile.getScene());
         });
-        Button returnButton =new Button("return");
+        Button returnButton =new Button("Go back");
         returnButton.setOnAction(e->{
-            Main.stage.setScene(SceneMainMenu.getScene());
+            Main.changeScene(SceneMainMenu.getScene());
         });
         root.getChildren().addAll(title,newGame,loadGame,returnButton);
         scene=new Scene(root,1000,500);

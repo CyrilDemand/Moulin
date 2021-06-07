@@ -13,17 +13,20 @@ public class SceneMainMenu{
         VBox root=new VBox();
 
         Button playButton=new Button("Play");
+        playButton.setOnAction(e->{
+            Main.changeScene(SceneNewGame.getScene());
+        });
         Button optionButton=new Button("Options");
         optionButton.setOnAction(e->{
-            Main.stage.setScene(SceneOptions.getScene());
+            Main.changeScene(SceneOptions.getScene());
         });
         Button rulesButton=new Button("Rules");
         rulesButton.setOnAction(e->{
-            Main.stage.setScene(SceneRules.getScene());
+            Main.changeScene(SceneRules.getScene());
         });
         Button quitButton=new Button("Quit");
         quitButton.setOnAction(e->{
-            Main.stage.close();
+            Main.getStage().close();
         });
 
         root.getChildren().addAll(new Label("The Mill Game"),playButton,optionButton,rulesButton,quitButton);
