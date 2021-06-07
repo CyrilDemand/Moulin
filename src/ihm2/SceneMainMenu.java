@@ -14,7 +14,7 @@ public class SceneMainMenu{
 
         Button playButton=new Button("Play");
         Button optionButton=new Button("Options");
-        playButton.setOnAction(e->{
+        optionButton.setOnAction(e->{
             Main.stage.setScene(SceneOptions.getScene());
         });
         Button rulesButton=new Button("Rules");
