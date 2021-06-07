@@ -3,6 +3,7 @@ package ihm2;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import moulin.Config;
 
 public class Main extends Application {
 
@@ -12,8 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Main.stage=stage;
-
+        Config.loadConfig();
         //Creation of all the scenes
+        SceneSidesMap.create();
+        SceneCustomMap.create();
         SceneAskFile.create();
         SceneNewGame.create();
         SceneTypeOfMap.create();

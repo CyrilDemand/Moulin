@@ -10,15 +10,15 @@ public class SceneTypeOfMap {
     public static void create(){
         VBox root=new VBox();
 
-        Button generate =new Button("generate a map with x side");
+        Button generate =new Button("Generate a map with x side");
         generate.setOnAction(e->{
             Main.changeScene(SceneSidesMap.getScene());
         });
-        Button load =new Button("load a custom map");
+        Button load =new Button("Load a custom map");
         load.setOnAction(e->{
             Main.changeScene(SceneCustomMap.getScene());
         });
-        Button goBack =new Button("go back");
+        Button goBack =new Button("Go back");
         goBack.setOnAction(e->{
             Main.changeScene(SceneNewGame.getScene());
         });

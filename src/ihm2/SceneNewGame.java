@@ -17,7 +17,7 @@ public class SceneNewGame {
         Label title = new Label("New/Load a game");
         Button newGame = new Button("New game");
         newGame.setOnAction(e->{
-
+            Main.changeScene(SceneTypeOfMap.getScene());
         });
         Button loadGame = new Button("Load a game file");
         loadGame.setOnAction(e->{
