@@ -1,6 +1,9 @@
 package moulin;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -94,23 +97,7 @@ public class Main {
                 jeu = Jeu.randomStart(jeu.getBoard(), jeu.getPlayers());
             }
         }else if (choix==2){
-            System.out.println("Here are the available saves :");
-            ArrayList<String> savesFiles=Jeu.getFiles("saves");
-
-            for (int i=0;i<savesFiles.size();i++){
-                System.out.print(savesFiles.get(i));
-                if (i!=savesFiles.size()-1){
-                    System.out.print(", ");
-                }
-            }
-
-            System.out.println("\nEnter the name of the save you want to load : ");
-            String map="";
-            do{
-                map=scanner.nextLine();
-            }while (!savesFiles.contains(map));
-
-            jeu=Save.loadJeu(map);
+           loadJeu(jeu);
         }else{
             //QUITTER
             return;
@@ -126,6 +113,27 @@ public class Main {
         }else{
             jeu.getBoard().render();
             System.out.println(resultOfTheGame+" won !");
+        }
+    }
+
+    public static void loadJeu(Jeu jeu){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nEnter the name of the save you want to load : ");
+        String map="";
+        File file;
+        do{
+            map=scanner.nextLine();
+            file = new File(map);
+            if(!file.exists()) System.out.println("wrong file");
+            if (!map.substring(map.length()-5,map.length()).equals(".json")) System.out.println("What you have entered is not in json format");
+            System.out.println(map.substring(map.length()-5,map.length()));
+        }while (!file.exists() || !map.substring(map.length()-5,map.length()).equals(".json"));
+
+        try {
+            jeu=Save.loadJeu(map);
+        }catch (IOException | JSONException e){
+            System.out.println("Your file is not compatible with our backup method");
+            loadJeu(jeu);
         }
     }
 }

@@ -32,6 +32,12 @@ public class Save {
         name = s.get(s.size()-1);
     }
 
+    public Save(File file){
+        this.path = file.getAbsolutePath();
+        ArrayList<String> s = new ArrayList<>(Arrays.asList(this.path.split(File.pathSeparator)));
+        name = s.get(s.size()-1);
+    }
+
     public String getName() {
         return this.name;
     }
@@ -289,7 +295,6 @@ public class Save {
     private static void loadTurn(Jeu jeu,String chemin){
         int res = 0;
         try {
-            System.out.println(chemin);
             String content = new String((Files.readAllBytes(Paths.get(chemin))));
             JSONObject o = new JSONObject(content);
             int turn = o.getJSONArray("turn").getInt(0);
@@ -305,7 +310,6 @@ public class Save {
     public ArrayList<Player> loadPlayers(Board board,String chemin){
         ArrayList<Player> res = new ArrayList<>();
         try {
-            System.out.println(chemin);
             String content = new String((Files.readAllBytes(Paths.get(chemin))));
             JSONObject o = new JSONObject(content);
             JSONArray players = o.getJSONArray("players");
@@ -330,7 +334,7 @@ public class Save {
         return res;
     }
 
-    public static Board loadBoard(String chemin){
+    public static Board loadBoard(String chemin) throws JSONException, IOException {
         Board board = new Board();
         try {
             String content = new String((Files.readAllBytes(Paths.get(chemin))));
@@ -338,14 +342,10 @@ public class Save {
             Save.loadNodes(o.getJSONArray("nodes"),board);
             Save.loadEdges(o.getJSONArray("edges"),board);
             Save.loadLines(o.getJSONArray("lines"),board);
-            try {
-                Save.loadTraps(o.getJSONArray("traps"), board);
-            }catch (Exception ignored){
-
-            }
-            }
+            Save.loadTraps(o.getJSONArray("traps"), board);
+        }
         catch (IOException | JSONException e) {
-            e.printStackTrace();
+            throw e;
         }
         return board;
     }
@@ -388,7 +388,7 @@ public class Save {
         }
     }
 
-    public static Jeu loadJeu(String name){
+    public static Jeu loadJeu(String name) throws JSONException, IOException {
         Save save = new Save(name);
         Board board = save.loadBoard(save.path);
         ArrayList<Player> players = new ArrayList<>(save.loadPlayers(board,save.path));
@@ -397,7 +397,7 @@ public class Save {
         return jeu;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws JSONException, IOException {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Patrick",Color.ROUGE));

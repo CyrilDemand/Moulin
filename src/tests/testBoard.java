@@ -4,9 +4,11 @@ import moulin.Board;
 import moulin.Edge;
 import moulin.Node;
 import moulin.Save;
+import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class testBoard {
@@ -96,7 +98,7 @@ public class testBoard {
     }
 
     @Test
-    public static boolean testLoadBoardJson(){
+    public static boolean testLoadBoardJson() throws JSONException, IOException {
         System.out.println("LoadBoardJson");
 
         Board board= Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
