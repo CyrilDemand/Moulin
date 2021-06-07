@@ -101,10 +101,9 @@ public class Jeu {
                 System.out.println("[1] Player");
                 System.out.println("[2] Random AI");
                 System.out.println("[3] AI");
-                do{
-                    System.out.print("Player n°"+(i+1)+": ");
-                    choix=Config.nextInt(1,3);
-                }while (!(choix>=1 && choix<=3));
+
+                System.out.print("Player n°"+(i+1)+": ");
+                choix=Config.nextInt(1,3);
             }
 
 
@@ -238,11 +237,10 @@ public class Jeu {
         System.out.println("[3] Place a teleporter");
         System.out.println("[4] Save and Quit");
         System.out.println("Remaining traps : "+player.getNbTrap());
-        do{
-            System.out.print("Your choice : ");
-            choix=Config.nextInt(1,4);
-            if (!(choix>=1 && choix<=4))System.out.println("Error : Please Try Again");
-        }while (!(choix>=1 && choix<=4));
+
+        System.out.print("Your choice : ");
+        choix=Config.nextInt(1,4);
+
         return choix;
     }
 
@@ -252,11 +250,9 @@ public class Jeu {
         System.out.println("What do you want to do ?");
         System.out.println("[1] Move a piece");
         System.out.println("[2] Save and quit");
-        do{
-            System.out.print("Your choice : ");
-            choix=Config.nextInt(1,2);
-            if (!(choix>=1 && choix<=2))System.out.println("Error : Please try again");
-        }while (!(choix>=1 && choix<=2));
+
+        System.out.print("Your choice : ");
+        choix=Config.nextInt(1,2);
         return choix;
     }
 
