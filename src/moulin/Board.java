@@ -17,16 +17,15 @@ public class Board {
 
     public static void main(String[] args) {
         Board board=Board.generateBoard(4);
-        board.render(3,2);
+        board.trapNode(1,2,3);
+        System.out.println(board.isLinked(1,2));
+        board.render();
 
         System.out.println(board.toString());
     }
 
     /**
-     * Génère une class Board
-     *
-     * Attributs : ArrayList de Edges (Arrêtes, Lignes du Plateau)
-     * Attributs : ArrayList de Nodes (Noeuds, Sommets du plateau)
+     * Generates a Board class
      *
      */
 
@@ -35,6 +34,13 @@ public class Board {
         this.nodes = new ArrayList<Node>();
         this.lines = new ArrayList<Line>();
     }
+
+    /**
+     *
+     * Use the board given to copy it's attributes into the main Board
+     *
+     * @param board board used to copy it into the main board
+     */
 
     public Board(Board board){
         this();
@@ -48,13 +54,12 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" Arraylist
      *
-     * @param x  : Position X de la node
-     * @param y  : Position Y de la node
+     * @param x  X position of the node
+     * @param y  Y position of the node
      *
-     * l'id de la node est générée avec la création d'une nouvelle node, par l'incrémentation d'un compteur
-     *
+     * the node's ID is generated with the creation of a new node, by the incrementation of a counter
      */
 
     public void addNode(int x,int y){
@@ -62,11 +67,11 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" ArrayList
      *
-     * @param x  : Position X de la node
-     * @param y  : Position Y de la node
-     * @param id  : ID de la node
+     * @param x X position of the node
+     * @param y Y position of the node
+     * @param id node's ID
      *
      */
 
@@ -75,9 +80,9 @@ public class Board {
     }
 
     /**
-     * Ajoute une node à l'ArrayList du plateau
+     * Adds a node to the "nodes" ArrayList
      *
-     * @param node : Node ajoutée
+     * @param node added node
      *
      */
 
@@ -86,10 +91,23 @@ public class Board {
     }
 
     /**
-     * Ajoute une edge à l'ArrayList du plateau
+     * Adds a list of nodes to the "nodes" ArrayList
      *
-     * @param idStart : id de la première node
-     * @param idEnd : id de la seconde node
+     * @param nodes added list of node
+     *
+     */
+
+    public void addNodes(ArrayList<Node> nodes){
+        for(Node n : nodes) {
+            this.nodes.add(n);
+        }
+    }
+
+    /**
+     * Adds an Edge to the "edges" ArrayList
+     *
+     * @param idStart First node's ID
+     * @param idEnd Second node's ID
      *
      */
 
@@ -98,10 +116,10 @@ public class Board {
     }
 
     /**
-     * Ajoute une edge à l'ArrayList du plateau
+     * Adds an Edge to the "edges" ArrayList
      *
-     * @param start : première node
-     * @param end : seconde node
+     * @param start First node
+     * @param end Second node
      *
      */
 
@@ -110,40 +128,130 @@ public class Board {
     }
 
     /**
-     * Retourne le tableau d'Edges du plateau
+     * Adds an Edge to the "edges" ArrayList
      *
-     * @return ArrayList<Edge>
+     * @param edge the edge
      *
      */
 
+    public void addEdge(Edge edge){
+        this.edges.add(new Edge(edge.getStart(),edge.getEnd()));
+    }
+
+    /**
+     * Add an ArrayList of nodes to the "nodes" ArrayList
+     *
+     * @param edges added list of node
+     */
+
+    public void addEdges(ArrayList<Edge> edges){
+        for (Edge e : edges){
+            this.addEdge(e);
+        }
+    }
+
+    /**
+     * Returns the Edge Table of the Board
+     * @return the edge table
+     */
     public ArrayList<Edge> getEdges() {
         return edges;
     }
 
     /**
-     * Retourne le tableau de Nodes du plateau
-     *
-     * @return ArrayList<Node>
-     *
+     * return the nodes ArrayList
+     * @return the list of the nodes
      */
 
     public ArrayList<Node> getNodes() {
         return nodes;
     }
 
+    /**
+     * Gets the lines ArrayList
+     * @return the lines ArrayList
+     *
+     */
+
     public ArrayList<Line> getLines() {
         return lines;
     }
+
+    /**
+     * Takes a nodes ArrayList to create a new Line in the "lines" ArrayList
+     * @param nodes the ArrayList used to create a Line
+     */
 
     public void addLine(ArrayList<Node> nodes){
         this.lines.add(new Line(nodes));
     }
 
     /**
-     * Retourne la node d'une ID en paramètre
      *
-     * @param id : id de la node à récupérer
-     * @return n
+     * Creates a Trap on an Edge
+     *
+     * @param idStart Start of the Trap
+     * @param idEnd End of the Trap
+     * @param turns Amount of turns the Trap remains
+     * @return true if you can place the Trap
+     */
+
+
+    public boolean trapEdge(int idStart,int idEnd, int turns){
+        Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
+        for (Edge e:this.edges){
+            if ((e.getStart().equals(start) && e.getEnd().equals(end)) || (e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped())){
+                e.setTrap(new Trap(turns));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Places a Trap that teleports the Piece to another location
+     *
+     * @param id Trap's position
+     * @param idDestination Destination of the teleporter
+     * @param turns Amount of turn the teleporter remains
+     * @return true if you can place the Trap
+     */
+    public boolean trapNode(int id, int idDestination,int turns){
+        Node start=this.getNodeById(id);
+        if (start==null)return false;
+        Node destination=this.getNodeById(idDestination);
+        if (destination==null)return false;
+
+        if (destination.equals(start))return false;
+        if (destination.isTrapped()) return false;
+        if (start.isTrapped()) return false;
+        for (Node n:this.nodes){
+            if (n.isTrapped() && (n.getTrap().getDestination().equals(start)||n.getTrap().getDestination().equals(destination) ))return false;
+        }
+
+        start.setTrap(new TrapTeleport(turns,destination));
+        return true;
+    }
+
+
+    /**
+     * Switch to next turn for the Traps
+     */
+
+    public void nextTurn(){
+        for (Edge edge:this.edges){
+            if (edge.isTrapped())edge.getTrap().nextTurn();
+        }
+        for (Node node:this.nodes){
+            if (node.isTrapped())node.getTrap().nextTurn();
+        }
+    }
+
+    /**
+     * Returns the node associated to the given ID
+     *
+     * @param id ID of the node
+     * @return the Node
      *
      */
 
@@ -154,16 +262,14 @@ public class Board {
                 return n;
             }
         }
-        throw new Error("Il n'y a pas de Node avec cet id sur ce board");
+        return null;
+        //throw new Error("Il n'y a pas de Node avec cet id sur ce board");
     }
 
     /**
-     * Vérifie l'égalité entre deux plateaux
-     *
-     * @param other : un plateau de jeu 'Board'
-     * @return true : si bien égaux
-     * @return false : si l'un des plateaux est null, ou différent de l'autre
-     *
+     * Check if two Boards are the same
+     * @param other the second Board
+     * @return true if they are the same, false otherwise
      */
 
     public boolean equals(Board other){
@@ -176,11 +282,11 @@ public class Board {
     }
 
     /**
-     * Génère le plateau sous forme d'un String
+     * Generates the Board in a String
      *
      * @return String
      *
-     * Exemple :
+     * Example :
      *
      * Node(0,0,1);
      * Node(1,0,2);
@@ -189,7 +295,7 @@ public class Board {
      * Edge(1,2);
      * Edge(2,3);
      *
-     * Génération : Board{edges=[Edge{start=1, end=2}, Edge{start=2, end=3}], nodes=[Node{x=0, y=0, id=1}, Node{x=1, y=0, id=2}, Node{x=2, y=0, id=3}]}
+     * Generation : Board{edges=[Edge{start=1, end=2}, Edge{start=2, end=3}], nodes=[Node{x=0, y=0, id=1}, Node{x=1, y=0, id=2}, Node{x=2, y=0, id=3}]}
      *
      */
 
@@ -203,68 +309,37 @@ public class Board {
     }
 
     /**
-     * Vérifie l'égalité entre deux plateaux
-     * Génère un plateau de jeu depuis un .json
-     *
-     * @param chemin : chemin d'accès au format d'un String
-     * @return Board
-     *
+     * Checks if the ID of two nodes are linked by an Edge
+     * @param a first node ID
+     * @param b second node ID
+     * @return true if they are linked, false otherwise
      */
-
-    public static Board loadBoard(String chemin){
-        Board res = new Board();
-        try {
-            String content = new String((Files.readAllBytes(Paths.get(chemin))));
-            JSONObject o = new JSONObject(content);
-            JSONArray nodes = o.getJSONArray("nodes");
-            JSONArray edges = o.getJSONArray("edges");
-            JSONArray lines = o.getJSONArray("lines");
-            for (int i = 0;i<nodes.length();i++){
-                res.addNode(nodes.getJSONArray(i).getInt(0),nodes.getJSONArray(i).getInt(1),nodes.getJSONArray(i).getInt(2));
-            }
-            for (int i = 0;i<edges.length();i++){
-                res.addEdge(edges.getJSONArray(i).getInt(0),edges.getJSONArray(i).getInt(1));
-            }
-            for (int i = 0;i<lines.length();i++){
-                ArrayList<Node> lineNodes=new ArrayList<Node>();
-                for (int j=0;j<lines.getJSONArray(i).length();j++) {
-                    lineNodes.add(res.getNodeById(lines.getJSONArray(i).getInt(j)));
-                }
-                res.addLine(lineNodes);
-            }
-        }
-        catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-    /**
-     * Vérifie si des l'ID de deux Nodes sont bien liées par une Edge
-     *
-     * @return true : si les Nodes sont liées
-     * @return false : si elles ne le sont pas
-     *
-     */
-
     public boolean isLinked(int a, int b){
+        Node na=this.getNodeById(a);
+        Node nb=this.getNodeById(b);
+
         for (Edge e:this.getEdges()) {
-            if (e.getStart().equals(this.getNodeById(a))&&e.getEnd().equals(this.getNodeById(b)) ||
-                    e.getStart().equals(this.getNodeById(b))&&e.getEnd().equals(this.getNodeById(a))){
+            if (e.isTrapped())continue;
+            if (e.getStart().equals(na)&&e.getEnd().equals(nb) ||
+                    e.getStart().equals(nb)&&e.getEnd().equals(na)){
                 return true;
             }
+        }
+
+        for (Node n :this.getNodes()) {
+            if (n.isTrapped() && n.equals(na) && n.getTrap().getDestination().equals(nb))return true;
+            if (n.isTrapped() && n.equals(nb) && n.getTrap().getDestination().equals(na))return true;
         }
         return false;
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand X connu parmi elles
-     *
+     * Compare all the nodes and get the highest X position known within the nodes
      * @return int
      *
      */
 
-    private int getMaxX(){
+    public int getMaxX(){
         int maxX=0;
         for (Node node : this.nodes){
             if (node.getX()>maxX)maxX=node.getX();
@@ -273,13 +348,13 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand Y connu parmi elles
+     * Compare all the nodes and get the highest Y position known within the nodes
      *
      * @return int
      *
      */
 
-    private int getMaxY(){
+    public int getMaxY(){
         int maxY=0;
         for (Node node : this.nodes){
             if (node.getY()>maxY)maxY=node.getY();
@@ -288,13 +363,13 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit X connu parmi elles
+     * Compare all the nodes and get the lowest X position known within the nodes
      *
      * @return int
      *
      */
 
-    private int getMinX(){
+    public int getMinX(){
         int minX=999999;
         for (Node node : this.nodes){
             if (node.getX()<minX)minX=node.getX();
@@ -303,13 +378,13 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit Y connu parmi elles
+     * Compare all the nodes and get the lowest Y position known within the nodes
      *
      * @return int
      *
      */
 
-    private int getMinY(){
+    public int getMinY(){
         int minY=99999;
         for (Node node : this.nodes){
             if (node.getY()<minY)minY=node.getY();
@@ -318,13 +393,13 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus petit id connu parmi elles
+     * Compare all the nodes and get the lowest ID known within the nodes
      *
      * @return int
      *
      */
 
-    private int getMinId(){
+    public int getMinId(){
         int minId=99999;
         for (Node node : this.nodes){
             if (node.getId()<minId)minId=node.getId();
@@ -333,13 +408,13 @@ public class Board {
     }
 
     /**
-     * Compare toutes les nodes et récupère le plus grand id connu parmi elles
+     * Compare all the nodes and get the highest ID known within the nodes
      *
      * @return int
      *
      */
 
-    private int getMaxId(){
+    public int getMaxId(){
         int maxId=0;
         for (Node node : this.nodes){
             if (node.getId()>maxId)maxId=node.getId();
@@ -348,104 +423,126 @@ public class Board {
     }
 
     /**
-     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
-     *
-     * @param nbSides : nombre de cotés de la map
+     * Checks if two nodes are overlapping on the board
+     * @return true if any two nodes are overlapping, false otherwise
      */
 
-    public static Board generateBoard(int nbSides){
-        Board board=new Board();
-        Node.resetCounter();
-
-        double angleStep=(2*Math.PI)/nbSides;
-
-        for (double layer=0;layer<3;layer++){
-            double radius=2+layer*2;
-
-            Node newNode=null;
-            Node newNodeMiddle=null;
-            Node startNode=null;
-
-            //----------Creation Node et Edges------------------
-
-            for (int i=0;i<nbSides;i++){
-
-
-                double x=(Math.cos(angleStep*i)*radius);
-                double y=(Math.sin(angleStep*i)*radius);
-
-                double nextX=(Math.cos(angleStep*(i+1))*radius);
-                double nextY=(Math.sin(angleStep*(i+1))*radius);
-
-                double middleX=(x+nextX)/2;
-                double middleY=(y+nextY)/2;
-
-                newNode=new Node((int)Math.round(x),(int)Math.round(y));
-                if (i==0)startNode=newNode;
-                if (newNodeMiddle!=null)board.addEdge(newNodeMiddle,newNode);
-                newNodeMiddle=new Node((int)Math.round(middleX),(int)Math.round(middleY));
-
-
-                board.addNode(newNode);
-                board.addNode(newNodeMiddle);
-                board.addEdge(newNode,newNodeMiddle);
-                if (i==nbSides-1)board.addEdge(startNode,newNodeMiddle);
+    public boolean hasOverlappingNodes(){
+        for (Node node : this.getNodes()){
+            for (Node other : this.getNodes()){
+                if (node!=other && node.getX()==other.getX() && node.getY()==other.getY())return true;
             }
         }
+        return false;
+    }
 
-        for (int i=1;i<board.getMaxId();i+=2){
-            int nextId=i+2*nbSides;
-            if (nextId<board.getMaxId())board.addEdge(i,nextId);
-        }
+    /**
+     * Generates a Board with a node size/spacing management
+     * @param nbSides amount of sides to the board
+     * @return the Board generated
+     */
+    public static Board generateBoard(int nbSides){
+        Board board;
+        double defaultRadius=1;
 
-        //----------Creation Lines------------------
-        int nodesPerLayer=nbSides*2;
-        for (int layer=0;layer<3;layer++){
-            int startId=1+nodesPerLayer*layer;
-            for (int side=0;side<nbSides;side++){
-                ArrayList<Node> lineNodes=new ArrayList<Node>();
+        do {
+
+            board = new Board();
+            Node.resetCounter();
 
 
-                lineNodes.add(board.getNodeById(startId+side*2));
-                lineNodes.add(board.getNodeById(startId+side*2+1));
-                lineNodes.add(board.getNodeById(startId+side*2+2==startId+nodesPerLayer ? startId : startId+side*2+2) );
+            double angleStep = (2 * Math.PI) / nbSides;
+
+            for (double layer = 0; layer < 3; layer++) {
+                double radius = defaultRadius + layer * 2;
+
+                Node newNode = null;
+                Node newNodeMiddle = null;
+                Node startNode = null;
+
+                //----------Nodes and Edges Creation------------------
+
+                for (int i = 0; i < nbSides; i++) {
+
+
+                    double x = (Math.cos(angleStep * i) * radius);
+                    double y = (Math.sin(angleStep * i) * radius);
+
+                    double nextX = (Math.cos(angleStep * (i + 1)) * radius);
+                    double nextY = (Math.sin(angleStep * (i + 1)) * radius);
+
+                    double middleX = (x + nextX) / 2;
+                    double middleY = (y + nextY) / 2;
+
+                    newNode = new Node((int) Math.round(x), (int) Math.round(y));
+                    if (i == 0) startNode = newNode;
+                    if (newNodeMiddle != null) board.addEdge(newNodeMiddle, newNode);
+                    newNodeMiddle = new Node((int) Math.round(middleX), (int) Math.round(middleY));
+
+
+                    board.addNode(newNode);
+                    board.addNode(newNodeMiddle);
+                    board.addEdge(newNode, newNodeMiddle);
+                    if (i == nbSides - 1) board.addEdge(startNode, newNodeMiddle);
+                }
+            }
+
+            for (int i = 1; i < board.getMaxId(); i += 2) {
+                int nextId = i + 2 * nbSides;
+                if (nextId < board.getMaxId()) board.addEdge(i, nextId);
+            }
+
+            //----------Lines Creation------------------
+            int nodesPerLayer = nbSides * 2;
+            for (int layer = 0; layer < 3; layer++) {
+                int startId = 1 + nodesPerLayer * layer;
+                for (int side = 0; side < nbSides; side++) {
+                    ArrayList<Node> lineNodes = new ArrayList<Node>();
+
+
+                    lineNodes.add(board.getNodeById(startId + side * 2));
+                    lineNodes.add(board.getNodeById(startId + side * 2 + 1));
+                    lineNodes.add(board.getNodeById(startId + side * 2 + 2 == startId + nodesPerLayer ? startId : startId + side * 2 + 2));
+
+                    //System.out.println(lineNodes);
+
+                    board.addLine(lineNodes);
+                }
+            }
+
+            for (int side = 0; side < nbSides; side++) {
+                ArrayList<Node> lineNodes = new ArrayList<Node>();
+
+                lineNodes.add(board.getNodeById(1 + side * 2 + 0 * nodesPerLayer));
+                lineNodes.add(board.getNodeById(1 + side * 2 + 1 * nodesPerLayer));
+                lineNodes.add(board.getNodeById(1 + side * 2 + 2 * nodesPerLayer));
 
                 //System.out.println(lineNodes);
 
                 board.addLine(lineNodes);
             }
-        }
 
-        for (int side=0;side<nbSides;side++){
-            ArrayList<Node> lineNodes=new ArrayList<Node>();
+            int minX = board.getMinX();
+            int minY = board.getMinY();
+            for (Node node : board.getNodes()) {
+                if (minX < 0) node.setX(node.getX() + Math.abs(minX));
+                if (minY < 0) node.setY(node.getY() + Math.abs(minY));
+            }
 
-            lineNodes.add(board.getNodeById(1+side*2 + 0*nodesPerLayer));
-            lineNodes.add(board.getNodeById(1+side*2 + 1*nodesPerLayer));
-            lineNodes.add(board.getNodeById(1+side*2 + 2*nodesPerLayer));
+            defaultRadius++;
+        }while (board.hasOverlappingNodes());
 
-            //System.out.println(lineNodes);
-
-            board.addLine(lineNodes);
-        }
-
-        int minX=board.getMinX();
-        int minY=board.getMinY();
-        for (Node node : board.getNodes()) {
-            if (minX < 0) node.setX(node.getX() + Math.abs(minX));
-            if (minY < 0) node.setY(node.getY() + Math.abs(minY));
-        }
         return board;
     }
 
     /**
-     * Génère un rendu du plateau avec gestion de la taille des nodes et de leur espacement
-     *
-     * @param nodeSize : Taille des nodes
-     * @param margeSize : Taide des arêtes
-     *
+     * Generates a board with nodes size/spacing management
      */
 
-    public void render(int nodeSize,int margeSize) {
+    public void render() {
+        int nodeSize=Config.nodeSize;
+        int margeSize=Config.margeSize;
+
         int maxX = this.getMaxX(), maxY = this.getMaxY();
         int unit=(nodeSize+margeSize);
         int width=unit*(maxX+1)-margeSize;
@@ -459,7 +556,7 @@ public class Board {
             }
         }
 
-        //===================RENDU DES NODES===============================
+        //===================Node's render===============================
 
         for (Node node : this.nodes){
             int offset=(nodeSize%2==0 ? 1 : 0);
@@ -471,25 +568,37 @@ public class Board {
                     pixels[node.getX()*unit+x][node.getY()*unit+y]="░";
                 }
             }
-            if (node.getPiece()!=null){
+            if (node.getPiece()!=null) {
                 try {
-                    pixels[centerX][centerY]=node.getPiece().getColor().getString()+node.getPiece().getId()+Color.ANSI_RESET;
+                    pixels[centerX][centerY] = node.getPiece().getColor().getString() + node.getPiece().getId() + Color.ANSI_RESET;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
+                }
+            }
+            String id = String.valueOf(node.getId());
+            for (int i = 0; i < id.length(); i++) {
+                try {
+                    pixels[node.getX()*unit+i][node.getY()*unit] = ""+id.charAt(i);
                 } catch (ArrayIndexOutOfBoundsException e){
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }
-            }else {
-                String id = String.valueOf(node.getId());
+            }
+            if (node.isTrapped()){
+                pixels[node.getX()*unit][node.getY()*unit+nodeSize-1] = ">";
+                id = String.valueOf(node.getTrap().getDestination().getId());
                 for (int i = 0; i < id.length(); i++) {
                     try {
-                    pixels[centerX + i][centerY] = ""+id.charAt(i);
+                        pixels[node.getX()*unit+1+i][node.getY()*unit+nodeSize-1] = ""+id.charAt(i);
                     } catch (ArrayIndexOutOfBoundsException e){
                         //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                     }
                 }
+
             }
+
         }
 
-        //===================RENDU DES LIGNES===============================
+        //===================Lined render===============================
 
         for (Edge edge:this.edges){
             Node n1=edge.getStart();
@@ -531,8 +640,12 @@ public class Board {
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
 
+                    if (edge.isTrapped()) {
+                        pixels[(int)x][(int)y]=".";
+                    }else{
+                        pixels[(int)x][(int)y]="*";
+                    }
 
-                    pixels[(int)x][(int)y]="*";
 
                     /*if (xDist==0){
                         pixels[(int)x][(int)y]='|';
@@ -553,7 +666,7 @@ public class Board {
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
 
-        //===================AFFICHAGE FINAL===============================
+        //===================Final display===============================
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

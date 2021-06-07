@@ -10,52 +10,112 @@ public class Player {
 
     private final ArrayList<Piece> pieces;
 
+    private int nbTrap;
+
+    ArrayList<Trap> traps;
+    /**
+     * Creates a Player class
+     * @param name String for the player's name
+     * @param color the color that the player will be associated with
+     */
     public Player(String name, Color color){
+        this(name,color,Config.numberOfTraps);
+    }
+
+    /**
+     * Creates a Player Class
+     * @param player Player to replicate
+     */
+    public Player(Player player) {
+        this(player.getName(), player.getColor());
+        for (Piece p : player.getPieces()) {
+            this.pieces.add(new Piece(p));
+        }
+    }
+
+    public Player(String name, Color color,int nbTrap){
         if(name.equals("")){
             throw new Error("Pas de nom de joueurs");
         }
         this.name = name;
         this.color = color;
         this.pieces = new ArrayList<Piece>();
-    }
-
-    public Player(Player player){
-        this(player.getName(),player.getColor());
-        for (Piece p:player.getPieces()) {
-            this.pieces.add(new Piece(p));
+        for (int i=0;i<Config.numberOfPieces;i++){
+            this.pieces.add(new Piece(this.color,i));
         }
+        traps = new ArrayList<>();
+        for(int i =0;i<nbTrap;i++){
+            traps.add(new Trap(3));
+        }
+        this.nbTrap=nbTrap;
+
+    }
+    /**
+     *  returns the amount of traps that the Player can place
+     * @return the amount of usable traps
+     */
+    public int getNbTrap() {
+        return nbTrap;
     }
 
+    public ArrayList<Trap> getTraps() {
+        return traps;
+    }
+
+    /**
+     * decrements the Trap counter
+     */
+    public void placedATrap(){
+        getTraps().remove(0);
+        this.nbTrap=Math.max(0,this.getNbTrap()-1);
+    }
+
+    /**
+     * Returns the Player's name
+     * @return the String for the player's name
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * returns the player's color
+     * @return the player's color
+     */
     public Color getColor(){
         return this.color;
     }
 
+    /**
+     * Returns the Pieces of the Player
+     * @return the list of pieces owned by the player
+     */
     public ArrayList<Piece> getPieces() {
         return pieces;
     }
 
+    /**
+     * Adds a piece to the Player
+     * @param piece Piece to add
+     */
     public void addPiece(Piece piece){
         this.pieces.add(piece);
     }
 
-    public void put(Node node,Piece piece){
-        piece.put(node);
+    /**
+     * Places a Piece on a Node
+     * @param node Node use for the piece
+     * @param piece Piece to place
+     * @return true if placed
+     */
+    public boolean put(Node node,Piece piece){
+        return piece.put(node);
     }
 
-    public boolean arePiecesLinked(Board board,int x){
-        int a = 0;
-        for (int i =0;i<this.getPieces().size();i++) {
-            for (int idx = 0; idx < this.getPieces().size(); idx++) {
-                if (board.isLinked(this.getPieces().get(i).getNode().getId(), this.getPieces().get(idx).getNode().getId()))
-                    a++;
-            }
-        }
-        return (int)(a/2)==x;
-    }
+    /**
+     * Allows the user to type his name
+     * @return the chosen name
+     */
 
     public static String chooseName(){
         Scanner scan = new Scanner(System.in);
@@ -63,29 +123,42 @@ public class Player {
         String user = "";
         user = scan.nextLine();
         while (user.equals("") || user.length()<3){
-            System.out.println("Choisissez un vrai nom");
+            System.out.println("Choisissez un vrai nom (+ de 2 lettres)");
             user = scan.nextLine();
         }
         return user;
     }
 
+    /**
+     *  Allows the user to choose his color
+     * @return the chosen color
+     */
     public static Color chooseColor(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Voici les couleurs que l'on a :");
+        System.out.println("Here are the colors you can choose :");
         Color.diplayColor();
         String user = "";
         user = scan.nextLine();
         while (!Color.isColor(user.toLowerCase())){
-            System.out.println("Choisissez une vraie couleur");
+            System.out.println("Choose a real color");
             user = scan.nextLine();
         }
         return Color.valueOf(user.toUpperCase());
     }
 
+    /**
+     *Returns a String summary of the Player
+     * @return the String generated
+     */
+
     public String toString(){
-        return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
+        return this.getName();
+        //return this.getName()+" possède "+this.pieces.size()+" pions de couleurs "+this.getColor();
     }
 
+    /**
+     * Display the Player's pieces
+     */
     public void displayPieces() {
         for (Piece piece : this.getPieces()) {
             System.out.println(piece.toString());
