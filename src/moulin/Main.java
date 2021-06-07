@@ -1,6 +1,7 @@
 package moulin;
 
 import ihm.Render;
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class Main {
         }
     }
 
-    public static void mainConsole(){
+    public static void mainConsole() throws JSONException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Mill game !\n");
         System.out.println("What do you want to do ?");
@@ -46,7 +47,7 @@ public class Main {
 
 
         Player resultOfTheGame=null;
-        Jeu jeu=null;
+        Jeu jeu = null;
 
         if (choix==1){
             //-------NOUVELLE PARTIE--------
@@ -102,7 +103,7 @@ public class Main {
                 jeu = Jeu.randomStart(jeu.getBoard(), jeu.getPlayers());
             }
         }else if (choix==2){
-           loadJeu(jeu);
+            jeu = loadJeu();
         }else{
             //QUITTER
             return;
@@ -121,7 +122,7 @@ public class Main {
         }
     }
 
-    public static void loadJeu(Jeu jeu){
+    public static Jeu loadJeu() throws JSONException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter the name of the save you want to load : ");
         String map="";
@@ -129,16 +130,32 @@ public class Main {
         do{
             map=scanner.nextLine();
             file = new File(map);
+            if (map.equals("IWANTTOGOBACK")){
+                Main.mainConsole();
+                break;
+            }
             if(!file.exists()) System.out.println("wrong file");
-            if (!map.substring(map.length()-5,map.length()).equals(".json")) System.out.println("What you have entered is not in json format");
-            System.out.println(map.substring(map.length()-5,map.length()));
-        }while (!file.exists() || !map.substring(map.length()-5,map.length()).equals(".json"));
+            try {
+                final String substring = map.substring(map.length() - 5);
+                if (!substring.equals(".json")) System.out.println("What you have entered is not in json format");
+            }catch (Exception ignored){
+
+            }
+        }while (!file.exists() || !isJson(map));
 
         try {
-            jeu=Save.loadJeu(map);
+            return Save.loadJeu(map);
         }catch (IOException | JSONException e){
             System.out.println("Your file is not compatible with our backup method");
-            loadJeu(jeu);
+            return loadJeu();
+        }
+    }
+
+    private static boolean isJson(String s){
+        try{
+            return s.substring(s.length()-5,s.length()).equals(".json");
+        }catch (Exception ignored){
+            return false;
         }
     }
 }
