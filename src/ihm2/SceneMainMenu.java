@@ -1,6 +1,7 @@
 package ihm2;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -13,10 +14,11 @@ public class SceneMainMenu{
 
 
 
-        SwitchSceneButton playButton=new SwitchSceneButton("Play",SceneTest.getScene());
-        SwitchSceneButton optionButton=new SwitchSceneButton("Options",null);
-        SwitchSceneButton rulesButton=new SwitchSceneButton("Rules",null);
-        SwitchSceneButton quitButton=new SwitchSceneButton("Quit",null);
+        Button playButton=new Button("Play");
+        playButton.setOnAction(e->{Main.stage.setScene(SceneTest.getScene());});
+        Button optionButton=new Button("Options");
+        Button rulesButton=new Button("Rules");
+        Button quitButton=new Button("Quit");
 
         root.getChildren().addAll(new Label("The Mill Game"),playButton,optionButton,rulesButton,quitButton);
 
