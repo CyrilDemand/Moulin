@@ -12,6 +12,7 @@ public class Player {
 
     private int nbTrap;
 
+    ArrayList<Trap> traps;
     /**
      * Creates a Player class
      * @param name String for the player's name
@@ -42,9 +43,11 @@ public class Player {
         for (int i=0;i<Config.numberOfPieces;i++){
             this.pieces.add(new Piece(this.color,i));
         }
-
+        traps = new ArrayList<>();
+        for(int i =0;i<nbTrap;i++){
+            traps.add(new Trap(3));
+        }
         this.nbTrap=nbTrap;
-
 
     }
     /**
@@ -55,10 +58,15 @@ public class Player {
         return nbTrap;
     }
 
+    public ArrayList<Trap> getTraps() {
+        return traps;
+    }
+
     /**
      * decrements the Trap counter
      */
     public void placedATrap(){
+        getTraps().remove(0);
         this.nbTrap=Math.max(0,this.getNbTrap()-1);
     }
 

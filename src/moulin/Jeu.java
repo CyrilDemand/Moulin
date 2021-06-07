@@ -196,7 +196,7 @@ public class Jeu {
                             ((RandomAI)player).endGame(board);
                         }catch (Exception ignored){}
                         try {
-                            ((NormalAI)player).endGame(board);
+                            ((NormalAI)player).endGame(this);
                         }catch (Exception ignored){}
                     }
                     this.addTurn();
@@ -269,7 +269,10 @@ public class Jeu {
         do {
             System.out.print("Piece : ");
             piece = Config.nextInt(-1,player.getPieces().size()-1);
-            if (piece==-1)this.menuPlayer(player);
+            if (piece==-1){
+                this.menuPlayer(player);
+                break;
+            }
             System.out.print("Node : ");
             endroit = Config.nextInt(-1,board.getMaxId());
             if (endroit==-1)this.menuPlayer(player);
@@ -289,10 +292,16 @@ public class Jeu {
         do {
             System.out.print("Start : ");
             idStart = Config.nextInt(0,board.getMaxId());
-            if (idStart==0)this.menuPlayer(player);
+            if (idStart==0){
+                this.menuPlayer(player);
+                break;
+            }
             System.out.print("End : ");
             idEnd=Config.nextInt(0,board.getMaxId());
-            if (idEnd==0)this.menuPlayer(player);
+            if (idEnd==0){
+                this.menuPlayer(player);
+                break;
+            }
             boolean canBeTrapped = false;
             System.out.println(idStart+idEnd);
             for (Edge e: board.getEdges()) {
@@ -313,10 +322,16 @@ public class Jeu {
         do {
             System.out.print("Node : ");
             idNode = Config.nextInt(0,board.getMaxId());
-            if (idNode==0)this.menuPlayer(player);
+            if (idNode==0){
+                this.menuPlayer(player);
+                break;
+            }
             System.out.print("Destination : ");
             idDestination=Config.nextInt(0,board.getMaxId());
-            if (idDestination==0)this.menuPlayer(player);
+            if (idDestination==0){
+                this.menuPlayer(player);
+                break;
+            }
             int canBeTrapped = 0;
             for (Node node: board.getNodes()) {
                 if (node.getId()==idNode || node.getId()==idDestination)canBeTrapped++;
@@ -333,7 +348,10 @@ public class Jeu {
         String nom="";
         do{
             nom=scanner.nextLine();
-            if (nom.equals("IWANTTOGOBACK"))this.menuPlayer(player);
+            if (nom.equals("IWANTTOGOBACK")){
+                this.menuPlayer(player);
+                break;
+            }
         }while (nom.equals("") || nom.length()<=0);
 
         new Save(nom).generateSave(this);
