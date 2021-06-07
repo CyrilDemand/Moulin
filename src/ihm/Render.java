@@ -17,9 +17,21 @@ import java.net.URISyntaxException;
 public class Render extends Application {
 
 
+    public static Scene sceneMainMenu;
+    public static Scene sceneOptions;
+    public static Scene scenePlay;
+    public static Scene sceneRules;
+
+
+
     private Scene prevScene;
+
     String musicFile = "ressources/defaultMusic.mp3";
+
+
     private String toMusicFile(String musicName){
+
+
         musicName.toLowerCase();
         StringBuilder res= new StringBuilder();
         String sub="";
@@ -41,28 +53,31 @@ public class Render extends Application {
     public void start(Stage stage) throws URISyntaxException {
 
         VBox mainMenu = new VBox();
-        Scene sceneMainMenu = new Scene(mainMenu, 1000, 500);
+        sceneMainMenu = new Scene(mainMenu, 1000, 500);
         prevScene=sceneMainMenu;
         mainMenu.setAlignment(Pos.CENTER);
 
         VBox options = new VBox();
-        Scene sceneOptions = new Scene(options, 1000, 500);
+        sceneOptions = new Scene(options, 1000, 500);
         options.setAlignment(Pos.BASELINE_CENTER);
 
         VBox rules = new VBox();
         Label labRules = new Label("Règles");
         ReturnButton rulesReturn = new ReturnButton(prevScene,stage, false);
-        Scene sceneRules = new Scene(rules, 1000, 500);
+        sceneRules = new Scene(rules, 1000, 500);
 
         rules.setAlignment(Pos.CENTER);
         rules.getChildren().addAll(labRules,rulesReturn);
 
         GridPane play = new GridPane();
-        Scene scenePlay = new Scene(play, 1000, 500);
+        scenePlay = new Scene(play, 1000, 500);
 
         Label labTitle = new Label("C tré le titre du projé");
         Region spacerLabTitle = new MainMenuSpacer(stage,0.1);
         MainMenuButton playButton = new MainMenuButton(" Jouer ",scenePlay,stage);
+        playButton.setOnAction(e->{
+
+        });
         //playButton.setId("mainMenuButtons");
         MainMenuSpacer spacerPlayButton = new MainMenuSpacer(stage);
         MainMenuButton settingsButton = new MainMenuButton(" Options ",sceneOptions,stage);
