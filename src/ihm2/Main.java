@@ -17,9 +17,8 @@ public class Main extends Application {
         SceneRules.create();
 
         SceneMainMenu.create();
-        SceneAskFile.create();
-        SceneNewGame.create();
-        SceneTypeOfMap.create();
+
+
 
         //Stage Settings
         stage.setTitle("The Mill Game");
