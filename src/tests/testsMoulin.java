@@ -1,14 +1,17 @@
 package tests;
 
 import moulin.*;
+import org.json.JSONException;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
 public class testsMoulin{
 
     @Test
-    public static void main(String[] args){
+    public static void main(String[] args) throws JSONException, IOException {
         String d="\n============";
         //testBoard
         System.out.println("\n**TESTS BOARD**"+d);

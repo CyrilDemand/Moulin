@@ -1,15 +1,17 @@
 package tests;
 
 import moulin.*;
+import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class testJeu {
 
         @Test
-        public static boolean testGettersAndSetters() {
+        public static boolean testGettersAndSetters() throws JSONException, IOException {
             System.out.println("Getters and Setters");
             Board b = Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
 
@@ -36,7 +38,7 @@ public class testJeu {
         }
 
         @Test
-        public static boolean testFinish() {
+        public static boolean testFinish() throws JSONException, IOException {
             System.out.println("Finish");
             Board b = Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
 
