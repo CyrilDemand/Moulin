@@ -1,5 +1,7 @@
 package moulin;
 
+import ihm.Render;
+
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -14,7 +16,21 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Config.loadConfig();
 
+        System.out.println("In which mode do you want to start the game ?\n");
 
+        System.out.println("[1] Console Mode");
+        System.out.println("[2] Graphic Mode");
+        System.out.print("Your choice : ");
+
+        int mode=Config.nextInt(1,2);
+        if (mode==1){
+            Main.mainConsole();
+        }else{
+            Render.main(new String[0]);
+        }
+    }
+
+    public static void mainConsole(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Mill game !\n");
         System.out.println("What do you want to do ?");
@@ -24,10 +40,8 @@ public class Main {
         System.out.println("[3] Quit");
 
         int choix;
-        do {
-            System.out.print("Your choice : ");
-            choix = Config.nextInt(1,3);
-        }while (!(choix>=1 && choix<=3));
+        System.out.print("Your choice : ");
+        choix = Config.nextInt(1,3);
 
 
         Player resultOfTheGame=null;
@@ -38,18 +52,14 @@ public class Main {
             System.out.println("Which map do you want to play on ?");
             System.out.println("[1] pre-generated map");
             System.out.println("[2] Custom map");
-            do {
-                System.out.print("Your choice : ");
-                choix = Config.nextInt(1,2);
-            }while (!(choix>=1 && choix<=2));
+            System.out.print("Your choice : ");
+            choix = Config.nextInt(1,2);
 
             Board board=null;
             if (choix==1){
                 System.out.println("Choose the amount of sides for your map (between 3 and 10)");
-                do {
-                    System.out.print("Your choice : ");
-                    choix = Config.nextInt(3,10);
-                }while (!(choix>=3 && choix<=10));
+                System.out.print("Your choice : ");
+                choix = Config.nextInt(3,10);
 
                 board=Board.generateBoard(choix);
             }else if (choix==2){
@@ -72,11 +82,9 @@ public class Main {
                 board=Save.loadBoard(System.getProperty("user.dir")+ File.separator+"customMaps"+File.separator+map+".json");
             }
 
-            System.out.println("How much players do you want ? (2 to 4 players)");
-            do{
-                System.out.print("Your choice : ");
-                choix=Config.nextInt(2,4);
-            }while (!(choix>=2 && choix<=4));
+            System.out.println("How many players do you want ? (2 to 4 players)");
+            System.out.print("Your choice : ");
+            choix=Config.nextInt(2,4);
 
             ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(choix));
 
@@ -84,10 +92,8 @@ public class Main {
             System.out.println("Choose a way to place the pieces : ");
             System.out.println("[1] Placement by the players");
             System.out.println("[2] Random placement");
-            do {
-                System.out.print("Your choice : ");
-                choix = Config.nextInt(1,2);
-            }while (!(choix>=1 && choix<=2));
+            System.out.print("Your choice : ");
+            choix = Config.nextInt(1,2);
 
             if (choix==1){
                 resultOfTheGame=jeu.start();
