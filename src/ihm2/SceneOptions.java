@@ -34,7 +34,7 @@ public class SceneOptions {
 
         Button returnButton=new Button("Go back");
         returnButton.setOnAction(e->{
-                Main.stage.setScene(SceneMainMenu.getScene());
+                Main.changeScene(SceneMainMenu.getScene());
         });
 
         root.getChildren().addAll(new Label("Options"),sliders,musicSelect,fullscreen,returnButton);

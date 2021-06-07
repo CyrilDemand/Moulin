@@ -22,10 +22,11 @@ public class SceneRules {
                 "- move one of his pieces.\n" +
                 "You can save the game too. \n"));
 
-        Button returnButton =new Button("return");
+        Button returnButton =new Button("Go back");
         returnButton.setOnAction(e->{
-            Main.stage.setScene(SceneMainMenu.getScene());
+            Main.changeScene(SceneMainMenu.getScene());
         });
+        root.getChildren().add(returnButton);
         scene=new Scene(root,1000,500);
     }
 
