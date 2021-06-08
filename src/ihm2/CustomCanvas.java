@@ -15,12 +15,23 @@ public class CustomCanvas extends Canvas {
     private static final Color bgColor=new Color(0.9,0.9,0.9,1);
     private static final Color strokeColor=new Color(0,0,0,1);
     private static final Color nodeColor=new Color(0.5,0.5,0.5,1);
+    private static final Color selectedColor=new Color(0,1,0,1);
     private static final double nodeSize=30;
     private static final double pieceSize=0.6;
+
+    private Node selectedNode=null;
+    private Edge selectedEdge=null;
+
+    private boolean canSelectNode;
+    private boolean canSelectEdge;
 
     private double mouseX,mouseY;
 
     public CustomCanvas(double width,double height){
+        this(width,height,false,false);
+    }
+
+    public CustomCanvas(double width,double height,boolean canSelectNode,boolean canSelectEdge){
         super(width,height);
         super.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
@@ -31,6 +42,31 @@ public class CustomCanvas extends Canvas {
                 //System.out.println("x="+mouseX+" y="+mouseY);
             }
         });
+        this.canSelectNode=canSelectNode;
+        this.canSelectEdge=canSelectEdge;
+
+
+    }
+
+    public void select(Jeu jeu){
+        selectedNode=null;
+        selectedEdge=null;
+
+        if (canSelectNode){
+            selectedNode=this.mouseOverNode(jeu);
+        }
+        if (canSelectEdge && selectedNode==null){
+            selectedEdge=this.mouseOverEdge(jeu);
+        }
+        this.render(jeu);
+    }
+
+    public Node getSelectedNode() {
+        return selectedNode;
+    }
+
+    public Edge getSelectedEdge() {
+        return selectedEdge;
     }
 
     public double getMouseX(){
@@ -63,17 +99,15 @@ public class CustomCanvas extends Canvas {
             double x2=CustomCanvas.map(e.getEnd().getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
             double y2=CustomCanvas.map(e.getEnd().getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
 
-            if (this.mouseOverEdge(jeu)==e){
-                gc.setStroke(new Color(1,1,1,1));
+            if (this.selectedEdge==e){
+                gc.setStroke(selectedColor);
             }else{
                 gc.setStroke(strokeColor);
             }
 
+
             if (e.isTrapped()){
-
                 gc.setStroke(new Color(1,0,0,1));
-            }else{
-
             }
             gc.strokeLine(x1,y1,x2,y2);
         }
@@ -82,10 +116,11 @@ public class CustomCanvas extends Canvas {
             double x=CustomCanvas.map(n.getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
             double y=CustomCanvas.map(n.getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
 
-            if (this.mouseOverNode(jeu)==n){
-                gc.setFill(new Color(1,1,1,1));
+            gc.setFill(nodeColor);
+            if (this.selectedNode==n){
+                gc.setStroke(selectedColor);
             }else{
-                gc.setFill(nodeColor);
+                gc.setStroke(strokeColor);
             }
 
             gc.fillOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);

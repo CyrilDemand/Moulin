@@ -24,7 +24,7 @@ public class SceneAskFile {
 
     public static void create() throws JSONException, IOException {
         VBox root=new VBox();
-        CustomCanvas canvas = new CustomCanvas(600,400);
+        CustomCanvas canvas = new CustomCanvas(800,600);
 
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
