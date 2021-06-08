@@ -80,7 +80,7 @@ public class SceneCustomMap {
 
 
         root.getChildren().addAll(label,canvas,loadGame,buttonBar);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

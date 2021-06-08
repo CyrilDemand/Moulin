@@ -39,7 +39,7 @@ public class SceneOptions {
 
         root.getChildren().addAll(new Label("Options"),sliders,musicSelect,fullscreen,returnButton);
 
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

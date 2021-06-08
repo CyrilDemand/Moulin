@@ -79,7 +79,7 @@ public class SceneAskFile {
 
         root.getChildren().addAll(canvas,loadGame,buttonBar);
 
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

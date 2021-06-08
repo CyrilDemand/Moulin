@@ -13,7 +13,7 @@ public class SceneStartGame {
         root.getChildren().add(customCanvas);
         customCanvas.render(SceneNewGame.getJeu());
 
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

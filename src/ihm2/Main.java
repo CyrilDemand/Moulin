@@ -8,8 +8,8 @@ import moulin.Config;
 public class Main extends Application {
 
     private static Stage stage;
-    private static double mouseX,mouseY;
 
+    private static final int defaultSceneWidth=1200,defaultSceneHeight=800;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,9 +45,18 @@ public class Main extends Application {
         return stage;
     }
 
+    public static int getDefaultSceneHeight() {
+        return defaultSceneHeight;
+    }
+
+    public static int getDefaultSceneWidth() {
+        return defaultSceneWidth;
+    }
+
     public static void main(String[] args) {
         Application.launch(args);
     }
+
 
 
 }

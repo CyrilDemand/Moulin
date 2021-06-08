@@ -54,7 +54,7 @@ public class SceneSidesMap {
         //next.setDisable(true);
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
         root.getChildren().addAll(canvas,spinner,buttonBar);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){
