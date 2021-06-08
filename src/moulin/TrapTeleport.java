@@ -28,4 +28,11 @@ public class TrapTeleport extends Trap{
     public Node getDestination() {
         return destination;
     }
+
+    @Override
+    public String toString() {
+        return "TrapTeleport{" +
+                "destination=" + destination +
+                '}';
+    }
 }

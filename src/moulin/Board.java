@@ -191,6 +191,7 @@ public class Board {
 
 
     public boolean trapEdge(int idStart,int idEnd, int turns){
+        System.out.println("idStart : "+idStart+"idEnd:"+idEnd+"turns"+turns);
         Node start=this.getNodeById(idStart),end=this.getNodeById(idEnd);
         for (Edge e:this.edges){
             if ((e.getStart().equals(start) && e.getEnd().equals(end)) || (e.getStart().equals(end) && e.getEnd().equals(start) && !e.isTrapped())){
@@ -210,6 +211,7 @@ public class Board {
      * @return true if you can place the Trap
      */
     public boolean trapNode(int id, int idDestination,int turns){
+        System.out.println("id : "+id+"idDestination:"+idDestination+"turns"+turns);
         Node start=this.getNodeById(id);
         if (start==null)return false;
         Node destination=this.getNodeById(idDestination);
