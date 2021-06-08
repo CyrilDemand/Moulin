@@ -28,7 +28,7 @@ public class Jeu {
      * @param jeu the game to copy
      */
     public Jeu(Jeu jeu){
-        this(new Board(jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
+        this((jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
     }
 
     public void setPlayers(ArrayList<Player> players) {
