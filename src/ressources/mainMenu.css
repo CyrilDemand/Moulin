@@ -8,12 +8,12 @@
     -fx-margin:30;
 }
 
-#mainMenuButtons {
+.button {
     -fx-base:#3c7fb1;
    /* -fx-color: -fx-focused-base;*/
 }
 
-#mainMenuButtons: hover {
+.button: hover {
     /*-fx-border-radius:4;*/
     -fx-border-color:green;
     -fx-scale-y:1.2;

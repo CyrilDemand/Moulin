@@ -1,4 +1,4 @@
-package moulin;
+package ihm2;
 
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
