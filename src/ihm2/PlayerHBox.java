@@ -15,7 +15,7 @@ import java.util.Collections;
 
 public class PlayerHBox extends HBox {
     private static final int CANVAS_WIDTH=100;
-
+    private static Button bDelete=new Button("\uD83D\uDDD1");
     public PlayerHBox(){
         Button bUp=new Button("\uD83E\uDC09");
         bUp.addEventHandler(ActionEvent.ACTION, e->{
@@ -25,7 +25,7 @@ public class PlayerHBox extends HBox {
         bDown.addEventHandler(ActionEvent.ACTION, e->{
             this.moveDown();
         });
-        Button bDelete=new Button("\uD83D\uDDD1");
+
         bDelete.addEventHandler(ActionEvent.ACTION, e->{
             delete();
         });
@@ -41,7 +41,7 @@ public class PlayerHBox extends HBox {
         ComboBox<String> player = new ComboBox<String>();
         player.getItems().addAll("Player","AI");
         player.setValue("Player");
-        this.getChildren().addAll(bDown,bUp,bDelete,player,playerName,AIName,difficulties,colors);
+        this.getChildren().addAll(bDown,bUp,bDelete,player,playerName,colors);
         player.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -88,5 +88,9 @@ public class PlayerHBox extends HBox {
         //System.out.println(i);
         SceneChoixJoueurs.players.getFocusModel().focus(i);
         SceneChoixJoueurs.players.getSelectionModel().select(i);
+    }
+
+    public Button getbDelete() {
+        return bDelete;
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import moulin.Jeu;
 import moulin.Save;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,8 @@ public class SceneAskFile {
                         a.show();
                     }
                     if (type.get(0).equals("game")){
-                        SceneNewGame.setJeu(Save.loadJeu(file.getAbsolutePath()));
+                        Jeu jeu = new Jeu(Save.loadJeu(file.getAbsolutePath()));
+                        SceneNewGame.setJeu(jeu);
                         next.setDisable(false);
                         CanvasRenderer.render(canvas,SceneNewGame.getJeu());
                     }else{
