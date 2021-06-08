@@ -18,15 +18,14 @@ public class SceneSidesMap {
 
         VBox root=new VBox();
         HBox buttonBar=new HBox();
-        Canvas canvas = new Canvas(100,100);
+        Canvas canvas = new Canvas(400,300);
         Spinner<Integer> spinner = new Spinner<>(3,10,3,1);
-        spinner.valueProperty().addListener((obs, oldValue, newValue) ->
-                {
+        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             Jeu jeu = new Jeu(null,null);
             int side = spinner.getValue();
             jeu.setBoard(Board.generateBoard(side));
             SceneNewGame.setJeu(jeu);
-            SceneNewGame.getJeu().getBoard().render();
+            CanvasRenderer.render(canvas,jeu);
         });
         Button goBack =new Button("Go back");
         goBack.setOnAction(e->{
