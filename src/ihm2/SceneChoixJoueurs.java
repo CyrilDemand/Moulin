@@ -9,7 +9,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import moulin.ColorEnum;
 import moulin.Config;
+import moulin.Player;
+
+import java.util.ArrayList;
 
 public class SceneChoixJoueurs {
 
@@ -42,8 +46,22 @@ public class SceneChoixJoueurs {
             Main.changeScene(SceneNewGame.getScene());
         });
         Button next=new Button("Next");
-        next.setDisable(true);
+        next.setOnAction(e->{
+            ArrayList<Player> players = new ArrayList<>();
+            for (PlayerHBox pb:SceneChoixJoueurs.players.getItems()) {
+                if (pb!=null){
+                    System.out.println(pb);
+                    if (pb.isHuman()){
+                        players.add(pb.getPlayer());
+                    }else{
+                        players.add(pb.getAI());
+                    }
+                }
+            }
+            System.out.println(players);
+        });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
+
         root.getChildren().addAll(addButton,players,buttonBar);
         scene=new Scene(root,1000,500);
     }
@@ -65,20 +83,4 @@ public class SceneChoixJoueurs {
         }
     }
 
-    public void setColor(ComboBox<String> c){
-        for (PlayerHBox pb : players.getItems()){
-            for (ComboBox<String> cb : pb.getColors()){
-
-            }
-        }
-        colors.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (!colors.getItems().contains(s)){
-                    colors.getItems().add(s);
-                }
-                colors.getItems().
-            }
-        });
-    }
 }
