@@ -2,9 +2,11 @@ package ihm2;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import moulin.ColorEnum;
 import moulin.Config;
 import moulin.Player;
 
@@ -13,10 +15,12 @@ import java.util.ArrayList;
 public class SceneChoixJoueurs {
 
     private static Scene scene;
-
+    private static Label nextLabel = new Label();
     public static ListView<PlayerHBox> players = new ListView<>();
 
     private static Button addButton = new Button("+");
+
+    private static Button next;
     public static void create(){
         VBox root=new VBox();
 
@@ -30,6 +34,7 @@ public class SceneChoixJoueurs {
                 addButton.setDisable(true);
             }
             SceneChoixJoueurs.delButton();
+            SceneChoixJoueurs.switchTo();
         });
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
@@ -40,7 +45,7 @@ public class SceneChoixJoueurs {
         goBack.setOnAction(e->{
             SceneNewGame.switchTo();
         });
-        Button next=new Button("Next");
+        next=new Button("Next");
         next.setOnAction(e->{
             ArrayList<Player> players = new ArrayList<>();
             for (PlayerHBox pb:SceneChoixJoueurs.players.getItems()) {
@@ -58,7 +63,7 @@ public class SceneChoixJoueurs {
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
-        root.getChildren().addAll(addButton,players,buttonBar);
+        root.getChildren().addAll(addButton,players,nextLabel,buttonBar);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
@@ -67,6 +72,13 @@ public class SceneChoixJoueurs {
     }
 
     public static void switchTo(){
+        if (SceneChoixJoueurs.differentColor()!=SceneChoixJoueurs.players.getItems().size()){
+            nextLabel.setText("All players must have a different color !");
+            SceneChoixJoueurs.next.setDisable(true);
+        }else{
+            nextLabel.setText("");
+            SceneChoixJoueurs.next.setDisable(false);
+        }
         Main.changeScene(scene);
     }
 
@@ -80,7 +92,18 @@ public class SceneChoixJoueurs {
         }
         if (players.getItems().size()==Config.playerMax){
             addButton.setDisable(true);
+        }else {
+            addButton.setDisable(false);
         }
     }
 
+    private static int differentColor(){
+        ArrayList<ColorEnum> list = new ArrayList<>();
+        for (PlayerHBox pb:SceneChoixJoueurs.players.getItems()) {
+            if (!list.contains(pb.getColor())){
+                list.add(pb.getColor());
+            }
+        }
+        return list.size();
+    }
 }

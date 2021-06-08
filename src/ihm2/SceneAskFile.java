@@ -64,6 +64,7 @@ public class SceneAskFile {
                         SceneNewGame.setJeu(jeu);
                         next.setDisable(false);
                         canvas.render(SceneNewGame.getJeu());
+                        SceneNewGame.getJeu().getBoard().render();
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a game file");
                         a.setTitle("Error");

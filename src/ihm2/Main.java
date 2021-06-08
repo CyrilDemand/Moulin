@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import moulin.Config;
+import moulin.Jeu;
+import moulin.Save;
 
 public class Main extends Application {
 

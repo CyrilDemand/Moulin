@@ -32,6 +32,7 @@ public class PlayerHBox extends HBox {
 
         bDelete.addEventHandler(ActionEvent.ACTION, e->{
             delete();
+            SceneChoixJoueurs.switchTo();
         });
         difficulties = new ComboBox<>();
         playerName = new TextField("Player name");
@@ -47,6 +48,12 @@ public class PlayerHBox extends HBox {
         player.getItems().addAll("Player","AI");
         player.setValue("Player");
         this.getChildren().addAll(bDown,bUp,bDelete,colors,player,playerName);
+        colors.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                SceneChoixJoueurs.switchTo();
+            }
+        });
         player.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
