@@ -51,7 +51,7 @@ public class SceneMainMenu{
         root.getChildren().addAll(new Label("The Mill Game"),labelSpacer,playButton,playButtonSpacer,optionButton,optionButtonSpacer,rulesButton,rulesButtonSpacer,quitButton);
 
         root.setAlignment(Pos.CENTER);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
         scene.getStylesheets().add("ressources/mainMenu.css");
     }
 

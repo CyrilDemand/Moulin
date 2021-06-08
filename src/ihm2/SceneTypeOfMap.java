@@ -27,7 +27,7 @@ public class SceneTypeOfMap {
             Main.changeScene(SceneMainMenu.getScene());
         });
         root.getChildren().addAll(generate,load,goBack,goBackToMainMenu);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

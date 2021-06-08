@@ -59,7 +59,7 @@ public class SceneChoixJoueurs {
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
         root.getChildren().addAll(addButton,players,buttonBar);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){

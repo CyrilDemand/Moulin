@@ -33,7 +33,7 @@ public class SceneNewGame {
             Main.changeScene(SceneMainMenu.getScene());
         });
         root.getChildren().addAll(title,newGame,loadGame,returnButton);
-        scene=new Scene(root,1000,500);
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Jeu getJeu() {
