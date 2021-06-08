@@ -21,16 +21,16 @@ public class SceneNewGame {
         Label title = new Label("New/Load a game");
         Button newGame = new Button("New game");
         newGame.setOnAction(e->{
-            Main.changeScene(SceneTypeOfMap.getScene());
+            SceneTypeOfMap.switchTo();
         });
         Button loadGame = new Button("Load a game file");
         loadGame.setOnAction(e->{
             jeu=null;
-            Main.changeScene(SceneAskFile.getScene());
+            SceneAskFile.switchTo();
         });
         Button returnButton =new Button("Go back");
         returnButton.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         root.getChildren().addAll(title,newGame,loadGame,returnButton);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
@@ -38,6 +38,10 @@ public class SceneNewGame {
 
     public static Jeu getJeu() {
         return jeu;
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static void setPlayers(ArrayList<Player> players){

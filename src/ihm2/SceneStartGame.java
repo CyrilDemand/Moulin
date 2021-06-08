@@ -19,4 +19,8 @@ public class SceneStartGame {
     public static Scene getScene(){
         return scene;
     }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
+    }
 }

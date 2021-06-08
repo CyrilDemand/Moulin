@@ -24,10 +24,14 @@ public class SceneRules {
 
         Button returnButton =new Button("Go back");
         returnButton.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         root.getChildren().add(returnButton);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){
