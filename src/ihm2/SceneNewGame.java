@@ -5,6 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import moulin.Jeu;
+import moulin.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SceneNewGame {
 
@@ -33,6 +37,10 @@ public class SceneNewGame {
 
     public static Jeu getJeu() {
         return jeu;
+    }
+
+    public static void setPlayers(ArrayList<Player> players){
+        jeu.setPlayers(players);
     }
 
     public static void setJeu(Jeu jeu) {
