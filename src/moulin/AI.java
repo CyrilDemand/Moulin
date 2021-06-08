@@ -6,10 +6,10 @@ public abstract class AI extends Player{
      * @param name Name of the AI
      * @param color color of the AI
      */
-    public AI(String name, Color color) {
+    public AI(String name, ColorEnum color) {
         super(name, color);
     }
-    public AI(String name, Color color,int nbTrap) { super(name, color,nbTrap); }
+    public AI(String name, ColorEnum color, int nbTrap) { super(name, color,nbTrap); }
 
     /**
      * starts the Game

@@ -1,13 +1,5 @@
 package moulin;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Board {
@@ -569,7 +561,7 @@ public class Board {
             }
             if (node.getPiece()!=null) {
                 try {
-                    pixels[centerX][centerY] = node.getPiece().getColor().getString() + node.getPiece().getId() + Color.ANSI_RESET;
+                    pixels[centerX][centerY] = node.getPiece().getColor().getString() + node.getPiece().getId() + ColorEnum.ANSI_RESET;
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //System.out.printf("ATTENTION : Certains caractères n'ont pas pu être affichés lors du rendu (id trop long)");
                 }

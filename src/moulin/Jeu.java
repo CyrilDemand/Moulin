@@ -115,9 +115,9 @@ public class Jeu {
                 players.add(new Player(Player.chooseName(),Player.chooseColor()));
                 chooseAtLeastOnePlayer=true;
             }else if (choix==2){
-                players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+                players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), ColorEnum.values()[(int) (Math.random() * ColorEnum.values().length)]));
             }else if (choix==3){
-                players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),Color.values()[(int) (Math.random() * Color.values().length)]));
+                players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), ColorEnum.values()[(int) (Math.random() * ColorEnum.values().length)]));
             }
         }
 
@@ -213,7 +213,7 @@ public class Jeu {
 
     private boolean menuPlayer(Player player){
         int choix;
-        System.out.println("Player's turn "+player.getColor().getString()+player.getName()+Color.ANSI_RESET);
+        System.out.println("Player's turn "+player.getColor().getString()+player.getName()+ ColorEnum.ANSI_RESET);
         if (player.getNbTrap()>0){
             choix = menuWithTrap(player);
         }else{

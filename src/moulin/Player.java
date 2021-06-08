@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Player {
     private final String name;
 
-    private final Color color;
+    private final ColorEnum color;
 
     private final ArrayList<Piece> pieces;
 
@@ -18,7 +18,7 @@ public class Player {
      * @param name String for the player's name
      * @param color the color that the player will be associated with
      */
-    public Player(String name, Color color){
+    public Player(String name, ColorEnum color){
         this(name,color,Config.numberOfTraps);
     }
 
@@ -33,7 +33,7 @@ public class Player {
         }
     }
 
-    public Player(String name, Color color,int nbTrap){
+    public Player(String name, ColorEnum color, int nbTrap){
         if(name.equals("")){
             throw new Error("Pas de nom de joueurs");
         }
@@ -82,7 +82,7 @@ public class Player {
      * returns the player's color
      * @return the player's color
      */
-    public Color getColor(){
+    public ColorEnum getColor(){
         return this.color;
     }
 
@@ -133,17 +133,17 @@ public class Player {
      *  Allows the user to choose his color
      * @return the chosen color
      */
-    public static Color chooseColor(){
+    public static ColorEnum chooseColor(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Here are the colors you can choose :");
-        Color.diplayColor();
+        ColorEnum.diplayColor();
         String user = "";
         user = scan.nextLine();
-        while (!Color.isColor(user.toLowerCase())){
+        while (!ColorEnum.isColor(user.toLowerCase())){
             System.out.println("Choose a real color");
             user = scan.nextLine();
         }
-        return Color.valueOf(user.toUpperCase());
+        return ColorEnum.valueOf(user.toUpperCase());
     }
 
     /**

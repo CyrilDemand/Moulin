@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import moulin.Color;
+import moulin.ColorEnum;
 import moulin.Config;
 
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class PlayerHBox extends HBox {
         ComboBox<String> AIName = new ComboBox<>();
         AIName.getItems().addAll("Random","Normal");
         ComboBox<String> colors = new ComboBox<>();;
-        for (Color c:Color.List()){
+        for (ColorEnum c: ColorEnum.List()){
             colors.getItems().add(""+c);
         }
         difficulties.getItems().addAll(Config.aiRandomNames);

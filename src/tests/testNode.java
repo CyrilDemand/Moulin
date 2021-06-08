@@ -91,7 +91,7 @@ public class testNode {
         Node n1 = new Node(0,0,0);
         Node n2 = new Node(0,1,1);
         TrapTeleport trap = new TrapTeleport(3, n2);
-        Piece p = new Piece(Color.ROUGE,0);
+        Piece p = new Piece(ColorEnum.ROUGE,0);
         p.put(n1);
 
         n1.setTrap(trap);
