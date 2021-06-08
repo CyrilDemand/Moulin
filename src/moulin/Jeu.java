@@ -31,6 +31,10 @@ public class Jeu {
         this((jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
     }
 
+    /**
+     * set the class players to a given player list
+      * @param players new list
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
@@ -59,6 +63,10 @@ public class Jeu {
         return this.board;
     }
 
+    /**
+     * sets the current board to a given board
+     * @param board the new board
+     */
     public void SetBoard(Board board){
         this.board = board;
     }
@@ -83,6 +91,10 @@ public class Jeu {
 
     }
 
+    /**
+     * gets the current turn
+     * @return the current turn
+     */
     public static int getTurn() {
         return turn;
     }
@@ -95,7 +107,11 @@ public class Jeu {
         this.board = board;
     }
 
-
+    /**
+     * Creates a new player list that contains nbPlayer players
+     * @param nbPlayer the amount of players
+     * @return the list created
+     */
     public static ArrayList<Player> initPlayer(int nbPlayer){
         ArrayList<Player> players = new ArrayList<>();
         boolean chooseAtLeastOnePlayer=false;
@@ -218,6 +234,11 @@ public class Jeu {
         return this.isFinished();
     }
 
+    /**
+     * Prints the turn interface
+     * @param player player of the current turn
+     * @return true if a choice is picked
+     */
     private boolean menuPlayer(Player player){
         int choix;
         System.out.println("Player's turn "+player.getColor().getString()+player.getName()+ ColorEnum.ANSI_RESET);
@@ -239,6 +260,11 @@ public class Jeu {
         return true;
     }
 
+    /**
+     * prints a menu with the option of placing a trap
+     * @param player player of the current turn
+     * @return the choice
+     */
     private int menuWithTrap(Player player){
         int choix;
         Scanner scanner = new Scanner(System.in);
@@ -255,6 +281,10 @@ public class Jeu {
         return choix;
     }
 
+    /**
+     * prints a menu
+     * @return the choice
+     */
     private int menuWithoutTrap(){
         int choix;
         Scanner scanner = new Scanner(System.in);
@@ -267,6 +297,10 @@ public class Jeu {
         return choix;
     }
 
+    /**
+     * prints a menu with the option of moving a piece
+     * @param player current player
+     */
     private void menuMovePiece(Player player){
         Scanner scanner = new Scanner(System.in);
         int piece;
@@ -291,6 +325,10 @@ public class Jeu {
         }while (!(piece<player.getPieces().size() && piece>=0 && player.getPieces().get(piece).move(board,endroit)));
     }
 
+    /**
+     *  prints a menu with the option of placing a blocking trap
+     * @param player the current player
+     */
     private void menuPlaceTrapEdge(Player player){
         int idStart;
         int idEnd;
@@ -320,6 +358,10 @@ public class Jeu {
         player.placedATrap();
     }
 
+    /**
+     * prints a menu with the option of placing a teleporter
+     * @param player the current player
+     */
     private void menuPlaceTrap(Player player){
         Scanner scanner = new Scanner(System.in);
         int idNode;
@@ -348,6 +390,10 @@ public class Jeu {
         player.placedATrap();
     }
 
+    /**
+     * prints a menu to control the save
+     * @param player current player
+     */
     private void menuSave(Player player){
         Scanner scanner = new Scanner(System.in);
         System.out.println("How do you want to name your save ?");
