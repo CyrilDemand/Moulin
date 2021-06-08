@@ -37,7 +37,10 @@ public class SceneSidesMap {
             Main.changeScene(SceneMainMenu.getScene());
         });
         Button next=new Button("Next");
-        next.setDisable(true);
+        next.setOnAction(e->{
+            Main.changeScene(SceneChoixJoueurs.getScene());
+        });
+        //next.setDisable(true);
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
         root.getChildren().addAll(canvas,spinner,buttonBar);
         scene=new Scene(root,1000,500);
