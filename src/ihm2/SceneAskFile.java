@@ -56,7 +56,7 @@ public class SceneAskFile {
                         type = o.getJSONArray("type");
                     }catch (Exception error){
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not correct");
-                        a.setTitle("KARL");
+                        a.setTitle("Error");
                         a.show();
                     }
                     if (type.get(0).equals("game")){
@@ -66,7 +66,7 @@ public class SceneAskFile {
                         canvas.render(SceneNewGame.getJeu());
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a game file");
-                        a.setTitle("KARL");
+                        a.setTitle("Error");
                         a.show();
                     }
                 } catch (JSONException | IOException jsonException) {

@@ -34,6 +34,7 @@ public enum ColorEnum {
     ColorEnum(char i, String s, Color c){
         this(i);
         this.string=s;
+        this.color=c;
     }
 
     /**
