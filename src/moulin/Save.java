@@ -32,12 +32,20 @@ public class Save {
         name = s.get(s.size()-1);
     }
 
+    /**
+     * creates a new save
+     * @param file the save file
+     */
     public Save(File file){
         this.path = file.getAbsolutePath();
         ArrayList<String> s = new ArrayList<>(Arrays.asList(this.path.split(File.pathSeparator)));
         name = s.get(s.size()-1);
     }
 
+    /**
+     * gets the save name
+     * @return the name
+     */
     public String getName() {
         return this.name;
     }
@@ -351,6 +359,13 @@ public class Save {
         return res;
     }
 
+    /**
+     * loads the current board
+     * @param chemin path of the save
+     * @return the board
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static Board loadBoard(String chemin) throws JSONException, IOException {
         Board board = new Board();
         try {
@@ -424,6 +439,13 @@ public class Save {
         }
     }
 
+    /**
+     * Loads the game
+     * @param name name of the game
+     * @return the game
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static Jeu loadJeu(String name) throws JSONException, IOException {
         Save save = new Save(name);
         Board board = Save.loadBoard(save.path);
@@ -433,6 +455,12 @@ public class Save {
         return jeu;
     }
 
+    /**
+     * main fonction
+     * @param args args
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static void main(String[] args) throws JSONException, IOException {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
