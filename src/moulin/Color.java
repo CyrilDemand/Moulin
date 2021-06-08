@@ -48,6 +48,7 @@ public enum Color {
      */
 
     public String getString() {
+        if (!Config.useColorCodesInTerminal)return "";
         return string;
     }
 

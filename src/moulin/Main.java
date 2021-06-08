@@ -62,9 +62,9 @@ public class Main {
 
             Board board=null;
             if (choix==1){
-                System.out.println("Choose the amount of sides for your map (between 3 and 10)");
+                System.out.println("Choose the amount of sides for your map (between 3 and "+Config.boardMaxSides+")");
                 System.out.print("Your choice : ");
-                choix = Config.nextInt(3,10);
+                choix = Config.nextInt(3,Config.boardMaxSides);
 
                 board=Board.generateBoard(choix);
             }else if (choix==2){
@@ -87,9 +87,9 @@ public class Main {
                 board=Save.loadBoard(System.getProperty("user.dir")+ File.separator+"customMaps"+File.separator+map+".json");
             }
 
-            System.out.println("How many players do you want ? (2 to 4 players)");
+            System.out.println("How many players do you want ? (2 to "+Config.playerMax+" players)");
             System.out.print("Your choice : ");
-            choix=Config.nextInt(2,4);
+            choix=Config.nextInt(2,Config.playerMax);
 
             ArrayList<Player> players = new ArrayList<>(Jeu.initPlayer(choix));
 
