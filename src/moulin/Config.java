@@ -17,6 +17,9 @@ public class Config {
     public static int numberOfTraps;
     public static int numberOfPieces;
     public static ArrayList<String> aiRandomNames;
+    public static int boardMaxSides;
+    public static int playerMax;
+    public static boolean useColorCodesInTerminal;
 
     public static void main(String[] args) {
         Config.resetConfig();
@@ -37,6 +40,11 @@ public class Config {
             try{Config.margeSize=Integer.parseInt(properties.getProperty("margeSize"));}catch(Exception ignored){};
             try{Config.numberOfTraps=Integer.parseInt(properties.getProperty("numberOfTraps"));}catch(Exception ignored){};
             try{Config.numberOfPieces=Integer.parseInt(properties.getProperty("numberOfPieces"));}catch(Exception ignored){};
+
+            try{Config.boardMaxSides=Integer.parseInt(properties.getProperty("boardMaxSides"));}catch(Exception ignored){};
+            try{Config.playerMax=Integer.parseInt(properties.getProperty("playerMax"));}catch(Exception ignored){};
+            Config.useColorCodesInTerminal=properties.getProperty("playerMax").equals("true");
+
 
             String list=properties.getProperty("aiRandomNames");
             String[] tab=list.substring(1,list.length()-1).split(",");
@@ -59,6 +67,10 @@ public class Config {
         properties.put("nodeSize","3");
         properties.put("margeSize","1");
         properties.put("aiRandomNames","[Armstrong,Bandit,Beast,Boomer,Buzz,C-Block,Casper,Caveman,Centice,Chipper,Cougar,Dude,Foamer,Fury,Gerwin,Goose,Heater,Hollywood,Hound,Iceman,Imp,Jester,Junker,Khan,Marley,Maverick,Merlin,Middy,Mountain,Myrtle,Outlaw,Poncho,Rainmaker,Raja,Rex,Roundhouse,Sabretooth,Saltie,Samara,Scout,Shepard,Slider,Squall,Sticks,Stinger,Storm,Sultan,Sundown,Swabbie,Tex,Tusk,Viper,Wolfman,Yuri]");
+        properties.put("boardMaxSides","10");
+        properties.put("playerMax","4");
+        properties.put("useColorCodesInTerminal","true");
+
 
         String path=System.getProperty("user.dir")+File.separator+"game.properties";
         System.out.println("Reset config at : "+path);

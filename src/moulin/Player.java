@@ -119,11 +119,11 @@ public class Player {
 
     public static String chooseName(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Quel est votre nom ?");
+        System.out.println("What is your name ?");
         String user = "";
         user = scan.nextLine();
         while (user.equals("") || user.length()<3){
-            System.out.println("Choisissez un vrai nom (+ de 2 lettres)");
+            System.out.println("Please choose a valid name (more than 2 letters)");
             user = scan.nextLine();
         }
         return user;
