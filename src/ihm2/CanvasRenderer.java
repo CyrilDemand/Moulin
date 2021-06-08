@@ -15,6 +15,7 @@ public class CanvasRenderer {
     private static final Color strokeColor=new Color(0,0,0,1);
     private static final Color nodeColor=new Color(0.5,0.5,0.5,1);
     private static final double nodeSize=30;
+    private static final double pieceSize=0.75;
 
     public static void render(Canvas canvas, Jeu jeu){
         GraphicsContext gc=canvas.getGraphicsContext2D();
@@ -42,6 +43,11 @@ public class CanvasRenderer {
 
             gc.fillOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);
             gc.strokeOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);
+
+            if (n.getPiece()!=null){
+                gc.setFill(n.getPiece().getColor().getColor());
+                gc.fillOval(x-nodeSize*pieceSize/2,y-nodeSize*pieceSize/2,nodeSize*pieceSize,nodeSize*pieceSize);
+            }
         }
 
 
