@@ -2,6 +2,7 @@ package ihm2;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -56,7 +57,9 @@ public class SceneCustomMap {
                         JSONObject o = new JSONObject(content);
                         type = o.getJSONArray("type");
                     }catch (Exception error){
-                        System.out.println("Fichier pas bon");
+                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not correct");
+                        a.setTitle("KARL");
+                        a.show();
                     }
                     if (type.get(0).equals("board")){
                         Jeu jeu = new Jeu(null,null);
@@ -65,8 +68,9 @@ public class SceneCustomMap {
                         CanvasRenderer.render(canvas,jeu);
                         next.setDisable(false);
                     }else{
-                        next.setDisable(true);
-                        System.out.println("Vous essayez de générer un fichier ayant des joueurs !");
+                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a map file");
+                        a.setTitle("KARL");
+                        a.show();
                     }
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();

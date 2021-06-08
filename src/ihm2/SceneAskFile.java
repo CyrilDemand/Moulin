@@ -2,6 +2,7 @@ package ihm2;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,20 +48,29 @@ public class SceneAskFile {
             File file = fileChooser.showOpenDialog(Main.getStage());
             if (file!=null){
                 try {
-                    String content = new String((Files.readAllBytes(Paths.get(file.getAbsolutePath()))));
-                    JSONObject o = new JSONObject(content);
-                    JSONArray type = o.getJSONArray("type");
-                    if (type.get(0).equals("jeu")){
+                    JSONArray type = new JSONArray();
+                    try{
+                        String content = new String((Files.readAllBytes(Paths.get(file.getAbsolutePath()))));
+                        JSONObject o = new JSONObject(content);
+                        type = o.getJSONArray("type");
+                    }catch (Exception error){
+                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not correct");
+                        a.setTitle("KARL");
+                        a.show();
+                    }
+                    if (type.get(0).equals("game")){
                         SceneNewGame.setJeu(Save.loadJeu(file.getAbsolutePath()));
                         next.setDisable(false);
+                        CanvasRenderer.render(canvas,SceneNewGame.getJeu());
                     }else{
-                        next.setDisable(true);
-                        System.out.println("Vous essayez de générer un fichier n'ayant qu'un board !");
+                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a game file");
+                        a.setTitle("KARL");
+                        a.show();
                     }
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }
-                CanvasRenderer.render(canvas,SceneNewGame.getJeu());
+
             }
         });
 
