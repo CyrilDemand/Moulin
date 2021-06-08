@@ -1,9 +1,11 @@
 package ihm2;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Spinner;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import moulin.Board;
@@ -19,15 +21,24 @@ public class SceneSidesMap {
 
         VBox root=new VBox();
         HBox buttonBar=new HBox();
-        Canvas canvas = new Canvas(800,600);
+        CustomCanvas canvas = new CustomCanvas(800,600);
+
         Spinner<Integer> spinner = new Spinner<>(3, Config.boardMaxSides,3,1);
+
         spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             Jeu jeu = new Jeu(null,null);
             int side = spinner.getValue();
             jeu.setBoard(Board.generateBoard(side));
             SceneNewGame.setJeu(jeu);
-            CanvasRenderer.render(canvas,jeu);
+            canvas.render(jeu);
         });
+
+        Jeu jeu = new Jeu(null,null);
+        int side = spinner.getValue();
+        jeu.setBoard(Board.generateBoard(side));
+        SceneNewGame.setJeu(jeu);
+        canvas.render(SceneNewGame.getJeu());
+
         Button goBack =new Button("Go back");
         goBack.setOnAction(e->{
             Main.changeScene(SceneTypeOfMap.getScene());

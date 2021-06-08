@@ -1,13 +1,16 @@
 package ihm2;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import moulin.Config;
 
 public class Main extends Application {
 
     private static Stage stage;
+    private static double mouseX,mouseY;
 
 
     @Override
@@ -29,7 +32,7 @@ public class Main extends Application {
 
         //Stage Settings
         stage.setTitle("The Mill Game");
-        stage.setScene(SceneMainMenu.getScene());
+        changeScene(SceneMainMenu.getScene());
         stage.setResizable(true);
         stage.show();
     }
@@ -45,5 +48,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
+
 
 }
