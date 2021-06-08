@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.media.*;
 import javafx.stage.Stage;
-import moulin.MainMenuSpacer;
+import ihm2.MainMenuSpacer;
 import java.net.URISyntaxException;
 
 public class Render extends Application {
