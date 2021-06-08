@@ -22,6 +22,9 @@ import java.nio.file.Paths;
 public class SceneCustomMap {
     private static Scene scene;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
         CustomCanvas canvas = new CustomCanvas(800,600);
@@ -82,12 +85,18 @@ public class SceneCustomMap {
         root.getChildren().addAll(label,canvas,loadGame,buttonBar);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
-
+/**
+ * switches to the scene
+ */
     public static void switchTo(){
         SceneNewGame.setJeu(null);
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }
