@@ -15,7 +15,8 @@ import java.util.Collections;
 
 public class PlayerHBox extends HBox {
     private static final int CANVAS_WIDTH=100;
-    private static Button bDelete=new Button("\uD83D\uDDD1");
+    private static ComboBox<String> colors;
+    private Button bDelete=new Button("\uD83D\uDDD1");
     public PlayerHBox(){
         Button bUp=new Button("\uD83E\uDC09");
         bUp.addEventHandler(ActionEvent.ACTION, e->{
@@ -37,11 +38,12 @@ public class PlayerHBox extends HBox {
         for (ColorEnum c: ColorEnum.List()){
             colors.getItems().add(""+c);
         }
+        colors.setValue(colors.getItems().get(0));
         difficulties.getItems().addAll(Config.aiRandomNames);
         ComboBox<String> player = new ComboBox<String>();
         player.getItems().addAll("Player","AI");
         player.setValue("Player");
-        this.getChildren().addAll(bDown,bUp,bDelete,player,playerName,colors);
+        this.getChildren().addAll(bDown,bUp,bDelete,colors,player,playerName);
         player.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -52,8 +54,16 @@ public class PlayerHBox extends HBox {
                 }else{
                     PlayerHBox.super.getChildren().remove(playerName);
                     PlayerHBox.super.getChildren().add(AIName);
+                    AIName.setValue(AIName.getItems().get(0));
                     PlayerHBox.super.getChildren().add(difficulties);
+                    difficulties.setValue(difficulties.getItems().get(0));
                 }
+            }
+        });
+        colors.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                SceneChoixJoueurs.refreshColor();
             }
         });
     }
@@ -77,6 +87,7 @@ public class PlayerHBox extends HBox {
     public void delete(){
         System.out.println(this);
         SceneChoixJoueurs.players.getItems().remove(this);
+        SceneChoixJoueurs.delButton();
     }
 
     public int getPlayerListIndex(){
@@ -88,6 +99,10 @@ public class PlayerHBox extends HBox {
         //System.out.println(i);
         SceneChoixJoueurs.players.getFocusModel().focus(i);
         SceneChoixJoueurs.players.getSelectionModel().select(i);
+    }
+
+    public static ComboBox<String> getColors() {
+        return colors;
     }
 
     public Button getbDelete() {

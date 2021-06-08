@@ -1,5 +1,6 @@
 package ihm2;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,17 +14,21 @@ public class SceneChoixJoueurs {
     private static Scene scene;
 
     public static ListView<PlayerHBox> players = new ListView<>();
+
+    private static Button addButton = new Button("+");
     public static void create(){
-        VBox root=new VBox();;
-        Button addButton = new Button("+");
+        VBox root=new VBox();
+
         for (int i = 0;i<2;i++){
             players.getItems().add(new PlayerHBox());
         }
+        SceneChoixJoueurs.delButton();
         addButton.setOnAction(e->{
             players.getItems().add(new PlayerHBox());
             if (players.getItems().size()==Config.playerMax){
                 addButton.setDisable(true);
             }
+            SceneChoixJoueurs.delButton();
         });
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
@@ -51,6 +56,19 @@ public class SceneChoixJoueurs {
                 p.getbDelete().setDisable(true);
             }else{
                 p.getbDelete().setDisable(false);
+            }
+        }
+        if (players.getItems().size()==Config.playerMax){
+            addButton.setDisable(true);
+        }
+    }
+
+    public static void refreshColor(){
+        for (String s :PlayerHBox.getColors().getItems()){
+            for (Node n1:players.getItems().get(3).getChildren()) {
+                System.out.println(s);
+                System.out.println(n1);
+               if (n1.toString().equals(s)) System.out.println("la meme couleur");
             }
         }
     }
