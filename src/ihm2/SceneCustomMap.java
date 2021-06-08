@@ -24,7 +24,7 @@ public class SceneCustomMap {
 
     public static void create(){
         VBox root=new VBox();
-        Canvas canvas = new Canvas(400,300);
+        CustomCanvas canvas = new CustomCanvas(400,300);
         Label label = new Label("Custom Map");
         Button loadGame = new Button("Load a map file");
 
@@ -58,18 +58,18 @@ public class SceneCustomMap {
                         type = o.getJSONArray("type");
                     }catch (Exception error){
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not correct");
-                        a.setTitle("KARL");
+                        a.setTitle("Error");
                         a.show();
                     }
                     if (type.get(0).equals("board")){
                         Jeu jeu = new Jeu(null,null);
                         jeu.setBoard(Save.loadBoard(file.getAbsolutePath()));
                         next.setDisable(false);
-                        CanvasRenderer.render(canvas,jeu);
+                        canvas.render(jeu);
                         next.setDisable(false);
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a map file");
-                        a.setTitle("KARL");
+                        a.setTitle("Error");
                         a.show();
                     }
                 } catch (JSONException | IOException jsonException) {

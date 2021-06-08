@@ -23,7 +23,7 @@ public class SceneAskFile {
 
     public static void create() throws JSONException, IOException {
         VBox root=new VBox();
-        Canvas canvas = new Canvas(600,400);
+        CustomCanvas canvas = new CustomCanvas(600,400);
 
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
@@ -63,7 +63,7 @@ public class SceneAskFile {
                         Jeu jeu = new Jeu(Save.loadJeu(file.getAbsolutePath()));
                         SceneNewGame.setJeu(jeu);
                         next.setDisable(false);
-                        CanvasRenderer.render(canvas,SceneNewGame.getJeu());
+                        canvas.render(SceneNewGame.getJeu());
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a game file");
                         a.setTitle("KARL");
