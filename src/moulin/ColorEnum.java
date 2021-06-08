@@ -7,19 +7,20 @@ import java.util.Arrays;
  * Class used to represent the piece's colors
  */
 
-public enum Color {
+public enum ColorEnum {
     NOIR('N',"\u001B[30m"),ROUGE('R',"\u001B[31m"),VERT('V',"\u001B[32m"),
     JAUNE('J',"\u001B[33m"), MAGENTA('M',"\u001B[35m"),BLEU('B',"\u001B[34m"),CYAN('C',"\u001B[36m");
 
     public static final String ANSI_RESET = "\u001B[0m";
     private char letter;
     private String string;
+    private ColorEnum color;
 
     /**
      * Local constructor used to create a color
      * @param i first letter of the color
      */
-    Color(char i){
+    ColorEnum(char i){
         this.letter = i;
     }
 
@@ -28,7 +29,7 @@ public enum Color {
      * @param i first letter of the color
      * @param s string used by the terminal to set the color of the characters
      */
-    Color(char i,String s){
+    ColorEnum(char i, String s){
         this(i);
         this.string=s;
     }
@@ -56,8 +57,8 @@ public enum Color {
      * Gets the list of possible colors
      * @return list of possible colors
      */
-    public static ArrayList<Color> List(){
-        return new ArrayList<>(Arrays.asList(Color.values()));
+    public static ArrayList<ColorEnum> List(){
+        return new ArrayList<>(Arrays.asList(ColorEnum.values()));
     }
 
     /**
@@ -67,7 +68,7 @@ public enum Color {
      */
 
     public static boolean isColor(String string){
-        for (Color color : Color.values()){
+        for (ColorEnum color : ColorEnum.values()){
             if (color.toString().equals(string.toUpperCase())){
                 return true;
             }
@@ -87,8 +88,8 @@ public enum Color {
      * Display the color's name with the correct color using the corresponding ANSI color code
      */
     public static void diplayColor(){
-        for (Color c: Color.List()) {
-            System.out.print('['+c.getString()+c.toString()+Color.ANSI_RESET+']');
+        for (ColorEnum c: ColorEnum.List()) {
+            System.out.print('['+c.getString()+c.toString()+ ColorEnum.ANSI_RESET+']');
         }
         System.out.println();
     }

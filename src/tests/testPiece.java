@@ -1,7 +1,7 @@
 package tests;
 
 import moulin.Board;
-import moulin.Color;
+import moulin.ColorEnum;
 import moulin.Piece;
 import moulin.Save;
 import org.json.JSONException;
@@ -14,7 +14,7 @@ public class testPiece {
     @Test
     public static boolean gettersAndBooleans() throws JSONException, IOException {
         System.out.println("Getters And Booleans");
-        Color c = Color.BLEU;
+        ColorEnum c = ColorEnum.BLEU;
         int id = 0;
         int idNode=1;
 

@@ -1,6 +1,6 @@
 package tests;
 
-import moulin.Color;
+import moulin.ColorEnum;
 import moulin.Piece;
 import moulin.Player;
 import org.junit.Test;
@@ -11,7 +11,7 @@ public class testPlayer {
         System.out.println("Getters and Booleans");
 
         String nomValid = "testNom";
-        Color colorValid = Color.ROUGE;
+        ColorEnum colorValid = ColorEnum.ROUGE;
         Piece pieceValid = new Piece(colorValid,0);
         Player newTestP = new Player(nomValid,colorValid);
 
@@ -40,7 +40,7 @@ public class testPlayer {
         System.out.println("Pour valider ce test, il est nécessaire d'avoir une saisie utilisateur");
 
         String name = Player.chooseName();
-        Color color = Player.chooseColor();
+        ColorEnum color = Player.chooseColor();
         System.out.println("A vous d'en juger !\nNom : "+name+"\nCouleur : "+color.toString());
         return true;
     }

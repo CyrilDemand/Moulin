@@ -332,11 +332,11 @@ public class Save {
             JSONArray players = o.getJSONArray("players");
             for (int i = 0; i< players.length();i++){
                 if (players.getJSONArray(i).get(0).toString().equals("Player")){
-                    res.add(new Player(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    res.add(new Player(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
                 }else if(players.getJSONArray(i).get(0).toString().equals("RandomAI")){
-                    res.add(new RandomAI(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    res.add(new RandomAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
                 }else{
-                    res.add(new NormalAI(players.getJSONArray(i).get(1).toString(),Color.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    res.add(new NormalAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
                 }
                 for (int idx = 0; idx<players.getJSONArray(i).getJSONArray(3).length();idx++){
                     Piece p = new Piece(res.get(i).getColor(),idx);
@@ -441,8 +441,8 @@ public class Save {
     public static void main(String[] args) throws JSONException, IOException {
         Board board = Board.generateBoard(4);
         ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("Patrick",Color.ROUGE));
-        players.add(new RandomAI("Intelligence Artificielle",Color.BLEU));
+        players.add(new Player("Patrick", ColorEnum.ROUGE));
+        players.add(new RandomAI("Intelligence Artificielle", ColorEnum.BLEU));
 
         for (int i=0;i<3;i++){
             for (Player p:players) {

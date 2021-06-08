@@ -15,7 +15,7 @@ public class testJeu {
             System.out.println("Getters and Setters");
             Board b = Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
 
-            Player p = new Player("Test", Color.ROUGE);
+            Player p = new Player("Test", ColorEnum.ROUGE);
             ArrayList pl = new ArrayList<Player>();
             pl.add(p);
 
@@ -42,18 +42,18 @@ public class testJeu {
             System.out.println("Finish");
             Board b = Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
 
-            Player p = new Player("Test", Color.ROUGE);
-            p.addPiece(new Piece(Color.ROUGE,0));
-            p.addPiece(new Piece(Color.ROUGE,1));
-            p.addPiece(new Piece(Color.ROUGE,2));
-            p.addPiece(new Piece(Color.ROUGE,3));
+            Player p = new Player("Test", ColorEnum.ROUGE);
+            p.addPiece(new Piece(ColorEnum.ROUGE,0));
+            p.addPiece(new Piece(ColorEnum.ROUGE,1));
+            p.addPiece(new Piece(ColorEnum.ROUGE,2));
+            p.addPiece(new Piece(ColorEnum.ROUGE,3));
             System.out.println("\taddPiecesP ok");
 
-            Player p2 = new Player("Test", Color.BLEU);
-            p2.addPiece(new Piece(Color.BLEU,0));
-            p2.addPiece(new Piece(Color.BLEU,1));
-            p2.addPiece(new Piece(Color.BLEU,2));
-            p2.addPiece(new Piece(Color.BLEU,3));
+            Player p2 = new Player("Test", ColorEnum.BLEU);
+            p2.addPiece(new Piece(ColorEnum.BLEU,0));
+            p2.addPiece(new Piece(ColorEnum.BLEU,1));
+            p2.addPiece(new Piece(ColorEnum.BLEU,2));
+            p2.addPiece(new Piece(ColorEnum.BLEU,3));
             System.out.println("\tequalsP2 ok");
 
             ArrayList pl = new ArrayList<Player>();

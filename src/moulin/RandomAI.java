@@ -8,10 +8,10 @@ public class RandomAI extends AI{
      * @param name Name of the AI
      * @param color color of the AI
      */
-    public RandomAI(String name, Color color) {
+    public RandomAI(String name, ColorEnum color) {
         super(name, color);
     }
-    public RandomAI(String name, Color color,int nbTrap) {
+    public RandomAI(String name, ColorEnum color, int nbTrap) {
         super(name, color,nbTrap);
     }
 

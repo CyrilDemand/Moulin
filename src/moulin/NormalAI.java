@@ -9,11 +9,11 @@ public class NormalAI extends RandomAI{
      * @param name name of the AI
      * @param color color of the AI
      */
-    public NormalAI(String name, Color color) {
+    public NormalAI(String name, ColorEnum color) {
         super(name, color);
     }
 
-    public NormalAI(String name, Color color,int nbTrap) { super(name, color,nbTrap); }
+    public NormalAI(String name, ColorEnum color, int nbTrap) { super(name, color,nbTrap); }
 
 
     /**

@@ -44,6 +44,8 @@ public class CanvasRenderer {
             gc.strokeOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);
         }
 
+
+
     }
 
     private static double map(double x, double a, double b, double c,double d){

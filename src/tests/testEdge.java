@@ -63,7 +63,7 @@ public class testEdge {
         Node n1 = new Node(0,0,0);
         Node n2 = new Node(0,1,1);
 
-        Piece p = new Piece(Color.ROUGE,0);
+        Piece p = new Piece(ColorEnum.ROUGE,0);
         p.put(n1);
 
         Edge e = new Edge(n1,n2);

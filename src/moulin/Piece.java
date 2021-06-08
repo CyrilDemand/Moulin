@@ -1,14 +1,11 @@
 package moulin;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
  * Class used to represent the pieces of the players on the board
  */
 
 public class Piece{
-    private final Color color;
+    private final ColorEnum color;
     private Node node;
     private int id;
 
@@ -18,7 +15,7 @@ public class Piece{
      * @param color the color of the piece
      * @param id the id of the piece
      */
-    public Piece(Color color, int id){
+    public Piece(ColorEnum color, int id){
         this.color = color;
         this.id = id;
     }
@@ -42,7 +39,7 @@ public class Piece{
      * gets the color of the piece
      * @return the color of the piece
      */
-    public Color getColor() {
+    public ColorEnum getColor() {
         return color;
     }
 
