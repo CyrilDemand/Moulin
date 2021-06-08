@@ -9,6 +9,9 @@ import moulin.Jeu;
 public class SceneChoiceStartGame {
     private static Scene scene;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
         Button randomStart=new Button("Random Start");
@@ -39,10 +42,17 @@ public class SceneChoiceStartGame {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }
