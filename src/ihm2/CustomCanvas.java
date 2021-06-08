@@ -55,7 +55,7 @@ public class CustomCanvas extends Canvas {
         gc.setFill(bgColor);
         gc.fillRect(0,0,this.getWidth(),this.getHeight());
 
-        gc.setStroke(strokeColor);
+
         for (Edge e : board.getEdges()){
             double x1=CustomCanvas.map(e.getStart().getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
             double y1=CustomCanvas.map(e.getStart().getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
@@ -63,6 +63,18 @@ public class CustomCanvas extends Canvas {
             double x2=CustomCanvas.map(e.getEnd().getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
             double y2=CustomCanvas.map(e.getEnd().getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
 
+            if (this.mouseOverEdge(jeu)==e){
+                gc.setStroke(new Color(1,1,1,1));
+            }else{
+                gc.setStroke(strokeColor);
+            }
+
+            if (e.isTrapped()){
+
+                gc.setStroke(new Color(1,0,0,1));
+            }else{
+
+            }
             gc.strokeLine(x1,y1,x2,y2);
         }
 
@@ -94,6 +106,49 @@ public class CustomCanvas extends Canvas {
 
             if (CustomCanvas.distance(this.getMouseX(),this.getMouseY(),x,y)<nodeSize/2){
                 return n;
+            }
+        }
+        return null;
+    }
+
+    public Edge mouseOverEdge(Jeu jeu){
+
+
+
+        Board board=jeu.getBoard();
+
+        for (Edge e:jeu.getBoard().getEdges()){
+            double x1=CustomCanvas.map(e.getStart().getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
+            double y1=CustomCanvas.map(e.getStart().getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
+            double x2=CustomCanvas.map(e.getEnd().getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
+            double y2=CustomCanvas.map(e.getEnd().getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
+
+            double a=mouseX-x1,b=mouseY-y1,c=x2-x1,d=y2-y1;
+            double dot=a*c+b*d;
+            double len_sq = c*c+d*d;
+
+            double param = -1;
+            if (len_sq != 0) //in case of 0 length line
+                param = dot / len_sq;
+
+            double xx, yy;
+
+            if (param < 0) {
+                xx = x1;
+                yy = y1;
+            } else if (param > 1) {
+                xx = x2;
+                yy = y2;
+            } else {
+                xx = x1 + param * c;
+                yy = y1 + param * d;
+            }
+
+            double dx = mouseX - xx;
+            double dy = mouseY - yy;
+            double dist=Math.sqrt(dx * dx + dy * dy);
+            if (dist<10){
+                return e;
             }
         }
         return null;

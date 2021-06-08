@@ -36,6 +36,7 @@ public class Board {
 
     public Board(Board board){
         this();
+        Node.resetCounter();
         for (Node n:board.getNodes()) {
             this.nodes.add(new Node(n));
         }
