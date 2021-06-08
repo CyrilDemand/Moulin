@@ -52,6 +52,10 @@ public class Jeu {
         return this.board;
     }
 
+    public void SetBoard(Board board){
+        this.board = board;
+    }
+
     /**
      * gets the list of players
      * @return the list of players
