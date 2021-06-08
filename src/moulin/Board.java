@@ -591,7 +591,6 @@ public class Board {
         //===================Lined render===============================
 
         for (Edge edge:this.edges){
-            System.out.println("test 2");
             Node n1=edge.getStart();
 
             Node n2=edge.getEnd();
@@ -629,12 +628,9 @@ public class Board {
             do{
                 //System.out.println("x="+x+" y="+y);
                 if (x>=0 && y>=0 && x<width && y<height && pixels[(int)x][(int)y].equals(" ")){
-                    System.out.println("test 2");
                     if (edge.isTrapped()) {
-                        System.out.println("test 1");
                         pixels[(int)x][(int)y]=".";
                     }else{
-                        System.out.println("test 3");
                         pixels[(int)x][(int)y]="*";
                     }
 
@@ -650,16 +646,13 @@ public class Board {
                     }*/
                 }
                 if (xDist!=0)x+=xStep;
-                System.out.println("test 4");
                 if (yDist!=0)y+=yStep;
-                System.out.println("test 5");
             }
 
             while ( !(x>n2CenterX-(float)nodeSize/2 && x<n2CenterX+(float)nodeSize/2 && y>n2CenterY-(float)nodeSize/2 && y<n2CenterY+(float)nodeSize/2) );
 
             //System.out.println("Final Pos : x="+x+" y="+y);
         }
-        System.out.println("test 2");
         //===================Final display===============================
 
         for (int y = 0; y < height; y++) {
@@ -668,6 +661,5 @@ public class Board {
             }
             System.out.println("");
         }
-        System.out.println("test 2");
     }
 }

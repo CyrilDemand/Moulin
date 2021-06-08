@@ -49,9 +49,6 @@ public class CanvasRenderer {
                 gc.fillOval(x-nodeSize*pieceSize/2,y-nodeSize*pieceSize/2,nodeSize*pieceSize,nodeSize*pieceSize);
             }
         }
-
-
-
     }
 
     private static double map(double x, double a, double b, double c,double d){
