@@ -18,25 +18,29 @@ public class SceneChoiceStartGame {
         });
         Button start=new Button("Start");
         start.setOnAction(e->{
-            Main.changeScene(SceneStartGame.getScene());
+            SceneStartGame.switchTo();
         });
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
         goBackToMainMenu.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         Button goBack=new Button("Go Back");
         goBack.setOnAction(e->{
-            Main.changeScene(SceneTypeOfMap.getScene());
+            SceneTypeOfMap.switchTo();
         });
         Button next=new Button("Next");
         next.setDisable(true);
         next.setOnAction(e->{
-            Main.changeScene(SceneChoixJoueurs.getScene());
+            SceneChoixJoueurs.switchTo();
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
         root.getChildren().addAll(start,randomStart,buttonBar);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){

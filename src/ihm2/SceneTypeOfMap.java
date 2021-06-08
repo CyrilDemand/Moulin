@@ -12,22 +12,26 @@ public class SceneTypeOfMap {
 
         Button generate =new Button("Use a pre-generated map");
         generate.setOnAction(e->{
-            Main.changeScene(SceneSidesMap.getScene());
+            SceneSidesMap.switchTo();
         });
         Button load =new Button("Load a custom map");
         load.setOnAction(e->{
-            Main.changeScene(SceneCustomMap.getScene());
+            SceneCustomMap.switchTo();
         });
         Button goBack =new Button("Go back");
         goBack.setOnAction(e->{
-            Main.changeScene(SceneNewGame.getScene());
+            SceneNewGame.switchTo();
         });
         Button goBackToMainMenu =new Button("Go back to main menu");
         goBackToMainMenu.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         root.getChildren().addAll(generate,load,goBack,goBackToMainMenu);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){

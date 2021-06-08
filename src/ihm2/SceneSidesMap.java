@@ -16,6 +16,7 @@ import java.awt.*;
 
 public class SceneSidesMap {
     private static Scene scene;
+    private static Spinner<Integer> spinner;
 
     public static void create(){
 
@@ -23,7 +24,7 @@ public class SceneSidesMap {
         HBox buttonBar=new HBox();
         CustomCanvas canvas = new CustomCanvas(800,600);
 
-        Spinner<Integer> spinner = new Spinner<>(3, Config.boardMaxSides,3,1);
+        spinner = new Spinner<>(3, Config.boardMaxSides,3,1);
 
         spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             Jeu jeu = new Jeu(null,null);
@@ -33,28 +34,32 @@ public class SceneSidesMap {
             canvas.render(jeu);
         });
 
-        Jeu jeu = new Jeu(null,null);
-        int side = spinner.getValue();
-        jeu.setBoard(Board.generateBoard(side));
-        SceneNewGame.setJeu(jeu);
-        canvas.render(SceneNewGame.getJeu());
+
 
         Button goBack =new Button("Go back");
         goBack.setOnAction(e->{
-            Main.changeScene(SceneTypeOfMap.getScene());
+            SceneTypeOfMap.switchTo();
         });
         Button goBackToMainMenu=new Button("Go Back to main menu");
         goBackToMainMenu.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         Button next=new Button("Next");
         next.setOnAction(e->{
-            Main.changeScene(SceneChoixJoueurs.getScene());
+            SceneChoixJoueurs.switchTo();
         });
         //next.setDisable(true);
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
         root.getChildren().addAll(canvas,spinner,buttonBar);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+    }
+
+    public static void switchTo(){
+        Jeu jeu = new Jeu(null,null);
+        int side = spinner.getValue();
+        jeu.setBoard(Board.generateBoard(side));
+        SceneNewGame.setJeu(jeu);
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){

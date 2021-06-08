@@ -17,17 +17,17 @@ public class SceneMainMenu{
         MainMenuSpacer labelSpacer = new MainMenuSpacer(Main.getStage(), 0.1);
         Button playButton=new Button("Play");
         playButton.setOnAction(e->{
-            Main.changeScene(SceneNewGame.getScene());
+            SceneNewGame.switchTo();
         });
         MainMenuSpacer playButtonSpacer = new MainMenuSpacer(Main.getStage());
         Button optionButton=new Button("Options");
         optionButton.setOnAction(e->{
-            Main.changeScene(SceneOptions.getScene());
+            SceneOptions.switchTo();
         });
         MainMenuSpacer optionButtonSpacer = new MainMenuSpacer(Main.getStage());
         Button rulesButton=new Button("Rules");
         rulesButton.setOnAction(e->{
-            Main.changeScene(SceneRules.getScene());
+            SceneRules.switchTo();
         });
         MainMenuSpacer rulesButtonSpacer = new MainMenuSpacer(Main.getStage());
         Button quitButton=new Button("Quit");
@@ -53,6 +53,10 @@ public class SceneMainMenu{
         root.setAlignment(Pos.CENTER);
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
         scene.getStylesheets().add("ressources/mainMenu.css");
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){

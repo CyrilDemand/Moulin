@@ -34,11 +34,11 @@ public class SceneChoixJoueurs {
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
         goBackToMainMenu.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         Button goBack=new Button("Go Back");
         goBack.setOnAction(e->{
-            Main.changeScene(SceneNewGame.getScene());
+            SceneNewGame.switchTo();
         });
         Button next=new Button("Next");
         next.setOnAction(e->{
@@ -54,7 +54,7 @@ public class SceneChoixJoueurs {
                 }
             }
             SceneNewGame.setPlayers(players);
-            Main.changeScene(SceneChoiceStartGame.getScene());
+            SceneChoiceStartGame.switchTo();
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
@@ -64,6 +64,10 @@ public class SceneChoixJoueurs {
 
     public static Scene getScene(){
         return scene;
+    }
+
+    public static void switchTo(){
+        Main.changeScene(scene);
     }
 
     public static void delButton(){

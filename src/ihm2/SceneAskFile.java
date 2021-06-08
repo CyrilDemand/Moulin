@@ -28,16 +28,16 @@ public class SceneAskFile {
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
         goBackToMainMenu.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
+            SceneMainMenu.switchTo();
         });
         Button goBack=new Button("Go Back");
         goBack.setOnAction(e->{
-            Main.changeScene(SceneNewGame.getScene());
+            SceneNewGame.switchTo();
         });
         Button next=new Button("Next");
         next.setDisable(true);
         next.setOnAction(e->{
-            Main.changeScene(SceneChoixJoueurs.getScene());
+            SceneChoixJoueurs.switchTo();
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
@@ -80,6 +80,11 @@ public class SceneAskFile {
         root.getChildren().addAll(canvas,loadGame,buttonBar);
 
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+    }
+
+    public static void switchTo(){
+        SceneNewGame.setJeu(null);
+        Main.changeScene(scene);
     }
 
     public static Scene getScene(){
