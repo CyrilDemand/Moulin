@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Jeu {
     private static int turn = 0;
     private Board board;
-    private final ArrayList<Player> players;
+    private ArrayList<Player> players;
 
 
     /**
@@ -31,11 +31,18 @@ public class Jeu {
         this(new Board(jeu.getBoard()),jeu.copyPlayers(jeu.getPlayers()));
     }
 
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
     /**
      * creates a copy of all the players
      * @param p1 the list to copy
      * @return a copy of the list
      */
+
+
+
     public ArrayList<Player> copyPlayers(ArrayList<Player> p1){
         ArrayList<Player> p = new ArrayList<>();
         for (Player p2: p1) {

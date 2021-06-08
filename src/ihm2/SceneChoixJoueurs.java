@@ -1,15 +1,10 @@
 package ihm2;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import moulin.ColorEnum;
 import moulin.Config;
 import moulin.Player;
 
@@ -58,7 +53,8 @@ public class SceneChoixJoueurs {
                     }
                 }
             }
-            System.out.println(players);
+            SceneNewGame.setPlayers(players);
+            Main.changeScene(SceneChoiceStartGame.getScene());
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
