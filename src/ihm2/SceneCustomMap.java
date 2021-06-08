@@ -24,7 +24,7 @@ public class SceneCustomMap {
 
     public static void create(){
         VBox root=new VBox();
-        CustomCanvas canvas = new CustomCanvas(400,300);
+        CustomCanvas canvas = new CustomCanvas(800,600);
         Label label = new Label("Custom Map");
         Button loadGame = new Button("Load a map file");
 
