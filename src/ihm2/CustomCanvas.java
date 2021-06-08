@@ -16,7 +16,7 @@ public class CustomCanvas extends Canvas {
     private static final Color strokeColor=new Color(0,0,0,1);
     private static final Color nodeColor=new Color(0.5,0.5,0.5,1);
     private static final double nodeSize=30;
-    private static final double pieceSize=0.75;
+    private static final double pieceSize=0.6;
 
     private double mouseX,mouseY;
 
@@ -27,20 +27,28 @@ public class CustomCanvas extends Canvas {
             public void handle(MouseEvent mouseEvent) {
                 mouseX=mouseEvent.getX();
                 mouseY=mouseEvent.getY();
-                System.out.println("x="+mouseX+" y="+mouseY);
+                render(SceneNewGame.getJeu());
+                //System.out.println("x="+mouseX+" y="+mouseY);
             }
         });
     }
 
-    public void render(Jeu jeu){
+    public double getMouseX(){
+        return this.mouseX;
+    }
 
-        System.out.println("rendered");
+    public double getMouseY(){
+        return this.mouseY;
+    }
+
+    public void render(Jeu jeu){
+        GraphicsContext gc=this.getGraphicsContext2D();
+
         if (jeu==null){
-            System.out.println("null");
+            gc.setFill(new Color(1,0,0,1));
+            gc.fillRect(0,0,this.getWidth(),this.getHeight());
             return;
         }
-
-        GraphicsContext gc=this.getGraphicsContext2D();
 
         Board board=jeu.getBoard();
 
@@ -58,13 +66,12 @@ public class CustomCanvas extends Canvas {
             gc.strokeLine(x1,y1,x2,y2);
         }
 
-
         for (Node n : board.getNodes()){
             double x=CustomCanvas.map(n.getX(), board.getMinX(),board.getMaxX(),0+marge,this.getWidth()-marge);
             double y=CustomCanvas.map(n.getY(), board.getMinY(),board.getMaxY(),0+marge,this.getHeight()-marge);
 
             if (this.mouseOverNode(jeu)==n){
-                gc.setFill(new Color(1,1,1,0));
+                gc.setFill(new Color(1,1,1,1));
             }else{
                 gc.setFill(nodeColor);
             }
@@ -84,6 +91,10 @@ public class CustomCanvas extends Canvas {
         for (Node n:jeu.getBoard().getNodes()){
             double x=CustomCanvas.map(n.getX(), jeu.getBoard().getMinX(),jeu.getBoard().getMaxX(),0+marge,this.getWidth()-marge);
             double y=CustomCanvas.map(n.getY(), jeu.getBoard().getMinY(),jeu.getBoard().getMaxY(),0+marge,this.getHeight()-marge);
+
+            if (CustomCanvas.distance(this.getMouseX(),this.getMouseY(),x,y)<nodeSize/2){
+                return n;
+            }
         }
         return null;
     }

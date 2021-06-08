@@ -25,6 +25,7 @@ public class SceneNewGame {
         });
         Button loadGame = new Button("Load a game file");
         loadGame.setOnAction(e->{
+            jeu=null;
             Main.changeScene(SceneAskFile.getScene());
         });
         Button returnButton =new Button("Go back");
