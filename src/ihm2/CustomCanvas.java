@@ -48,6 +48,12 @@ public class CustomCanvas extends Canvas {
 
     }
 
+    public void unselect(Jeu jeu){
+        selectedNode=null;
+        selectedEdge=null;
+        this.render(jeu);
+    }
+
     public void select(Jeu jeu){
         selectedNode=null;
         selectedEdge=null;
