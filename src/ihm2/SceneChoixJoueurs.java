@@ -21,6 +21,10 @@ public class SceneChoixJoueurs {
     private static Button addButton = new Button("+");
 
     private static Button next;
+
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
 
@@ -67,10 +71,17 @@ public class SceneChoixJoueurs {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }
 
+    /**
+     * switched to the scene
+     */
     public static void switchTo(){
         if (SceneChoixJoueurs.differentColor()!=SceneChoixJoueurs.players.getItems().size()){
             nextLabel.setText("All players must have a different color !");
@@ -82,6 +93,9 @@ public class SceneChoixJoueurs {
         Main.changeScene(scene);
     }
 
+    /**
+     * checks if the button can be deleted
+     */
     public static void delButton(){
         for (PlayerHBox p:SceneChoixJoueurs.players.getItems()){
             if (players.getItems().size()==2){
@@ -97,6 +111,10 @@ public class SceneChoixJoueurs {
         }
     }
 
+    /**
+     * checks if the color exists before adding it
+     * @return the list size
+     */
     private static int differentColor(){
         ArrayList<ColorEnum> list = new ArrayList<>();
         for (PlayerHBox pb:SceneChoixJoueurs.players.getItems()) {
