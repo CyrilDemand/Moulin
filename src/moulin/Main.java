@@ -31,6 +31,11 @@ public class Main {
         }
     }
 
+    /**
+     * prints the main menu
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static void mainConsole() throws JSONException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Mill game !\n");
@@ -121,6 +126,12 @@ public class Main {
         }
     }
 
+    /**
+     * loads a save
+     * @return the loaded game
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static Jeu loadJeu() throws JSONException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter the name of the save you want to load : ");
@@ -150,6 +161,11 @@ public class Main {
         }
     }
 
+    /**
+     * checks if the file is an existing json
+     * @param s the file name
+     * @return true if it exists, false otherwise
+     */
     private static boolean isJson(String s){
         try{
             return s.substring(s.length()-5,s.length()).equals(".json");
