@@ -18,6 +18,9 @@ public class SceneSidesMap {
     private static Scene scene;
     private static Spinner<Integer> spinner;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
 
         VBox root=new VBox();
@@ -54,6 +57,9 @@ public class SceneSidesMap {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Jeu jeu = new Jeu(null,null);
         int side = spinner.getValue();
@@ -62,6 +68,10 @@ public class SceneSidesMap {
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }

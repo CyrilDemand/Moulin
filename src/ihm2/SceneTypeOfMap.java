@@ -7,6 +7,9 @@ import javafx.scene.layout.VBox;
 public class SceneTypeOfMap {
     private static Scene scene;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
 
@@ -30,10 +33,17 @@ public class SceneTypeOfMap {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }
