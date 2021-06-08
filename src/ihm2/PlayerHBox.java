@@ -20,6 +20,10 @@ public class PlayerHBox extends HBox {
     private final TextField playerName;
     private final ComboBox<String> AIName;
     private final Button bDelete=new Button("\uD83D\uDDD1");
+
+    /**
+     * creates a PlayerHBox class
+     */
     public PlayerHBox(){
         Button bUp=new Button("\uD83E\uDC09");
         bUp.addEventHandler(ActionEvent.ACTION, e->{
@@ -73,6 +77,10 @@ public class PlayerHBox extends HBox {
             }
         });
     }
+
+    /**
+     * Moves up
+     */
     public void moveUp(){
         try {
             Collections.swap(SceneChoixJoueurs.players.getItems(), getPlayerListIndex(), getPlayerListIndex() - 1);
@@ -82,6 +90,9 @@ public class PlayerHBox extends HBox {
         }
     }
 
+    /**
+     * moves down
+     */
     public void moveDown(){
         try {
             Collections.swap(SceneChoixJoueurs.players.getItems(), getPlayerListIndex(), getPlayerListIndex() + 1);
@@ -90,16 +101,27 @@ public class PlayerHBox extends HBox {
             //System.out.println("already at the bottom");
         }
     }
+
+    /**
+     * deletes the current class
+     */
     public void delete(){
         System.out.println(this);
         SceneChoixJoueurs.players.getItems().remove(this);
         SceneChoixJoueurs.delButton();
     }
 
+    /**
+     * gets Player List Index
+     * @return Player List Index
+     */
     public int getPlayerListIndex(){
         return SceneChoixJoueurs.players.getItems().indexOf(this);
     }
 
+    /**
+     * select corresponding List View Item
+     */
     public void selectCorrespondingListViewItem(){
         int i=SceneChoixJoueurs.players.getItems().indexOf(this);
         //System.out.println(i);
@@ -107,25 +129,58 @@ public class PlayerHBox extends HBox {
         SceneChoixJoueurs.players.getSelectionModel().select(i);
     }
 
+    /**
+     * get colors
+     * @return the colors
+     */
     public ComboBox<String> getColors() {
         return this.colors;
     }
 
+    /**
+     * gets the delete Button
+     * @return the delete Button
+     */
     public Button getbDelete() {
         return bDelete;
     }
+
+    /**
+     * checks if the player is human
+     * @return true if the player is human, false otherwise
+     */
     public boolean isHuman(){
         return player.getValue().equals("Player");
     }
+
+    /**
+     * gets the color
+     * @return the color enum
+     */
     public ColorEnum getColor(){
         return ColorEnum.valueOf(colors.getValue());
     }
+
+    /**
+     * gets the player
+     * @return the player
+     */
     public Player getPlayer(){
         return new Player(this.getName(),this.getColor());
     }
+
+    /**
+     * gets the player name
+     * @return the player name
+     */
     public String getName(){
         return playerName.getText();
     }
+
+    /**
+     * gets the AI
+     * @return returns the AI
+     */
     public AI getAI(){
         System.out.println(difficulties.getValue());
         if (difficulties.getValue().equals("Random")){
@@ -135,6 +190,10 @@ public class PlayerHBox extends HBox {
         }
     }
 
+    /**
+     * gets the AI's Name
+     * @return the AI's name
+     */
     public String getAIName(){
         return AIName.getValue();
     }
