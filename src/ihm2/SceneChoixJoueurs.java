@@ -1,5 +1,7 @@
 package ihm2;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -63,13 +65,20 @@ public class SceneChoixJoueurs {
         }
     }
 
-    public static void refreshColor(){
-        for (String s :PlayerHBox.getColors().getItems()){
-            for (Node n1:players.getItems().get(3).getChildren()) {
-                System.out.println(s);
-                System.out.println(n1);
-               if (n1.toString().equals(s)) System.out.println("la meme couleur");
+    public void setColor(ComboBox<String> c){
+        for (PlayerHBox pb : players.getItems()){
+            for (ComboBox<String> cb : pb.getColors()){
+
             }
         }
+        colors.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!colors.getItems().contains(s)){
+                    colors.getItems().add(s);
+                }
+                colors.getItems().
+            }
+        });
     }
 }

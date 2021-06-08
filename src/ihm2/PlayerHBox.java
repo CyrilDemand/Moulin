@@ -15,7 +15,7 @@ import java.util.Collections;
 
 public class PlayerHBox extends HBox {
     private static final int CANVAS_WIDTH=100;
-    private static ComboBox<String> colors;
+    private ComboBox<String> colors;
     private Button bDelete=new Button("\uD83D\uDDD1");
     public PlayerHBox(){
         Button bUp=new Button("\uD83E\uDC09");
@@ -60,12 +60,6 @@ public class PlayerHBox extends HBox {
                 }
             }
         });
-        colors.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                SceneChoixJoueurs.refreshColor();
-            }
-        });
     }
     public void moveUp(){
         try {
@@ -101,11 +95,15 @@ public class PlayerHBox extends HBox {
         SceneChoixJoueurs.players.getSelectionModel().select(i);
     }
 
-    public static ComboBox<String> getColors() {
-        return colors;
+    public ComboBox<String> getColors() {
+        return this.colors;
     }
 
     public Button getbDelete() {
         return bDelete;
+    }
+
+    public void setColors(ComboBox<String> colors) {
+        this.colors = colors;
     }
 }
