@@ -29,7 +29,10 @@ public class Config {
      * Loads the config
      */
     public static void loadConfig(){
+
+
         String path=System.getProperty("user.dir")+File.separator+"game.properties";
+        System.out.println("Loaded config from : "+path);
         try (InputStream input = new FileInputStream(path)) {
 
             Properties properties = new Properties();
@@ -43,8 +46,7 @@ public class Config {
 
             try{Config.boardMaxSides=Integer.parseInt(properties.getProperty("boardMaxSides"));}catch(Exception ignored){};
             try{Config.playerMax=Integer.parseInt(properties.getProperty("playerMax"));}catch(Exception ignored){};
-            Config.useColorCodesInTerminal=properties.getProperty("playerMax").equals("true");
-
+            Config.useColorCodesInTerminal=properties.getProperty("useColorCodesInTerminal").equals("true");
 
             String list=properties.getProperty("aiRandomNames");
             String[] tab=list.substring(1,list.length()-1).split(",");
