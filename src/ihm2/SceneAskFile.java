@@ -22,6 +22,11 @@ import java.nio.file.Paths;
 public class SceneAskFile {
     private static Scene scene;
 
+    /**
+     * creates a scene
+     * @throws JSONException JSONException
+     * @throws IOException IOException
+     */
     public static void create() throws JSONException, IOException {
         VBox root=new VBox();
         CustomCanvas canvas = new CustomCanvas(800,600);
@@ -85,11 +90,18 @@ public class SceneAskFile {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         SceneNewGame.setJeu(null);
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }
