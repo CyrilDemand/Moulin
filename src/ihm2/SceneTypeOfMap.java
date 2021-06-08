@@ -10,7 +10,7 @@ public class SceneTypeOfMap {
     public static void create(){
         VBox root=new VBox();
 
-        Button generate =new Button("Generate a map with x side");
+        Button generate =new Button("Use a pre-generated map");
         generate.setOnAction(e->{
             Main.changeScene(SceneSidesMap.getScene());
         });
@@ -22,8 +22,8 @@ public class SceneTypeOfMap {
         goBack.setOnAction(e->{
             Main.changeScene(SceneNewGame.getScene());
         });
-        Button goBackToMainMenu =new Button("go back to main menu");
-        goBack.setOnAction(e->{
+        Button goBackToMainMenu =new Button("Go back to main menu");
+        goBackToMainMenu.setOnAction(e->{
             Main.changeScene(SceneMainMenu.getScene());
         });
         root.getChildren().addAll(generate,load,goBack,goBackToMainMenu);
