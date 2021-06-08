@@ -416,22 +416,17 @@ public class Save {
     private static void loadTraps(JSONArray traps,Board board) throws JSONException {
         for (int i = 0;i<traps.length();i++){
             if (traps.getJSONArray(i).get(0).equals("edge")){
-                Trap trap = new Trap(traps.getJSONArray(i).getInt(1));
-                for (Edge e:board.getEdges()) {
-                    if (e.equals(new Edge(board.getNodeById(traps.getJSONArray(i).getInt(2)),board.getNodeById(traps.getJSONArray(i).getInt(3))))){
-                        e.setTrap(trap);
-                    }
-                }
+                board.trapEdge(traps.getJSONArray(i).getInt(2),traps.getJSONArray(i).getInt(3),traps.getJSONArray(i).getInt(1));
+
             }else{
-                TrapTeleport trapTeleport = new TrapTeleport(traps.getJSONArray(i).getInt(1), board.getNodeById(traps.getJSONArray(i).getInt(3)));
-                board.getNodeById(traps.getJSONArray(i).getInt(2)).setTrap(trapTeleport);
+                board.trapNode(traps.getJSONArray(i).getInt(2),traps.getJSONArray(i).getInt(3),traps.getJSONArray(i).getInt(1));
             }
         }
     }
 
     public static Jeu loadJeu(String name) throws JSONException, IOException {
         Save save = new Save(name);
-        Board board = save.loadBoard(save.path);
+        Board board = Save.loadBoard(save.path);
         ArrayList<Player> players = new ArrayList<>(save.loadPlayers(board,save.path));
         Jeu jeu = new Jeu(board,players);
         Save.loadTurn(jeu, save.path);
