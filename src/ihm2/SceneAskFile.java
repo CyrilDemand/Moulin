@@ -7,10 +7,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import moulin.Save;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SceneAskFile {
     private static Scene scene;
@@ -30,6 +34,9 @@ public class SceneAskFile {
         });
         Button next=new Button("Next");
         next.setDisable(true);
+        next.setOnAction(e->{
+            Main.changeScene(SceneChoixJoueurs.getScene());
+        });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
         Button loadGame = new Button("Load a game file");
@@ -40,8 +47,16 @@ public class SceneAskFile {
             File file = fileChooser.showOpenDialog(Main.getStage());
             if (file!=null){
                 try {
-                    SceneNewGame.setJeu(Save.loadJeu(file.getAbsolutePath()));
-                    next.setDisable(false);
+                    String content = new String((Files.readAllBytes(Paths.get(file.getAbsolutePath()))));
+                    JSONObject o = new JSONObject(content);
+                    JSONArray type = o.getJSONArray("type");
+                    if (type.get(0).equals("jeu")){
+                        SceneNewGame.setJeu(Save.loadJeu(file.getAbsolutePath()));
+                        next.setDisable(false);
+                    }else{
+                        next.setDisable(true);
+                        System.out.println("Vous essayez de générer un fichier n'ayant qu'un board !");
+                    }
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }

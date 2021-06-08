@@ -51,6 +51,7 @@ public class Save {
     public boolean generateSave(Jeu jeu){
         ArrayList<Character> save = new ArrayList<>();
         save.add('{');
+        save.addAll(this.StringToList(" \n\t \"type\":[\"game\"],\n"));
         save.addAll(this.saveTurn(jeu));
         save.addAll(this.SaveBoard(jeu.getBoard()));
         save.addAll(this.SavePlayers(jeu.getPlayers()));

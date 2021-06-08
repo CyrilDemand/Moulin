@@ -9,10 +9,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import moulin.Jeu;
 import moulin.Save;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SceneCustomMap {
     private static Scene scene;
@@ -34,6 +38,9 @@ public class SceneCustomMap {
         });
         Button next=new Button("Next");
         next.setDisable(true);
+        next.setOnAction(e->{
+            Main.changeScene(SceneChoixJoueurs.getScene());
+        });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
         loadGame.setOnAction(e->{
@@ -43,11 +50,24 @@ public class SceneCustomMap {
             File file = fileChooser.showOpenDialog(Main.getStage());
             if (file!=null){
                 try {
-                    Jeu jeu = new Jeu(null,null);
-                    jeu.setBoard(Save.loadBoard(file.getAbsolutePath()));
-                    SceneNewGame.setJeu(jeu);
-                    CanvasRenderer.render(canvas,jeu);
-                    next.setDisable(false);
+                    JSONArray type = new JSONArray();
+                    try{
+                        String content = new String((Files.readAllBytes(Paths.get(file.getAbsolutePath()))));
+                        JSONObject o = new JSONObject(content);
+                        type = o.getJSONArray("type");
+                    }catch (Exception error){
+                        System.out.println("Fichier pas bon");
+                    }
+                    if (type.get(0).equals("board")){
+                        Jeu jeu = new Jeu(null,null);
+                        jeu.setBoard(Save.loadBoard(file.getAbsolutePath()));
+                        next.setDisable(false);
+                        CanvasRenderer.render(canvas,jeu);
+                        next.setDisable(false);
+                    }else{
+                        next.setDisable(true);
+                        System.out.println("Vous essayez de générer un fichier ayant des joueurs !");
+                    }
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }
