@@ -1,8 +1,10 @@
 package ihm2;
 
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import moulin.Jeu;
@@ -17,12 +19,26 @@ public class SceneCustomMap {
 
     public static void create(){
         VBox root=new VBox();
-        CustomCanvas canvas = new CustomCanvas(100,100,SceneNewGame.getJeu());
+        Canvas canvas = new Canvas(400,300);
         Label label = new Label("Custom Map");
-        Button loadGame = new Button("Load a game file");
+        Button loadGame = new Button("Load a map file");
+
+        HBox buttonBar=new HBox();
+        Button goBackToMainMenu=new Button("Go Back to main menu");
+        goBackToMainMenu.setOnAction(e->{
+            Main.changeScene(SceneMainMenu.getScene());
+        });
+        Button goBack=new Button("Go Back");
+        goBack.setOnAction(e->{
+            Main.changeScene(SceneTypeOfMap.getScene());
+        });
+        Button next=new Button("Next");
+        next.setDisable(true);
+        buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
+
         loadGame.setOnAction(e->{
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Game save file (.json)",".json");
+            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Game save file (*.json)","*.json");
             fileChooser.getExtensionFilters().add(extensionFilter);
             File file = fileChooser.showOpenDialog(Main.getStage());
             if (file!=null){
@@ -30,22 +46,16 @@ public class SceneCustomMap {
                     Jeu jeu = new Jeu(null,null);
                     jeu.setBoard(Save.loadBoard(file.getAbsolutePath()));
                     SceneNewGame.setJeu(jeu);
-                    SceneNewGame.getJeu().getBoard().render();
+                    CanvasRenderer.render(canvas,jeu);
+                    next.setDisable(false);
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }
             }
         });
 
-        Button goBack =new Button("Go back");
-        goBack.setOnAction(e->{
-            Main.changeScene(SceneTypeOfMap.getScene());
-        });
-        Button goBackToMainMenu =new Button("go back to main menu");
-        goBack.setOnAction(e->{
-            Main.changeScene(SceneMainMenu.getScene());
-        });
-        root.getChildren().addAll(label,canvas,loadGame,goBack,goBackToMainMenu);
+
+        root.getChildren().addAll(label,canvas,loadGame,buttonBar);
         scene=new Scene(root,1000,500);
     }
 
