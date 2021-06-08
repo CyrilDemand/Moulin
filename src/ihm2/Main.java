@@ -15,6 +15,7 @@ public class Main extends Application {
         Main.stage=stage;
         Config.loadConfig();
         //Creation of all the scenes
+        SceneChoixJoueurs.create();
         SceneSidesMap.create();
         SceneCustomMap.create();
         SceneAskFile.create();
