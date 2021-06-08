@@ -6,10 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import moulin.Config;
-import moulin.Node;
-import moulin.Player;
-import moulin.RandomAI;
+import moulin.*;
 
 public class SceneStartGame {
     private static Scene scene;
@@ -31,7 +28,14 @@ public class SceneStartGame {
         });
         root.getChildren().addAll(customCanvas,nextTurn);
 
-        Scene scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
+        nextTurn.setOnAction(e->{
+            Jeu jeu=SceneNewGame.getJeu();
+            //ICI
+            nextTurn.setDisable(true);
+            customCanvas.unselect(jeu);
+        });
+
+        scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
     public static Scene getScene(){
