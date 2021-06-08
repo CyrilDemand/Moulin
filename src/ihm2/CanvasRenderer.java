@@ -6,13 +6,15 @@ import javafx.scene.paint.Color;
 import moulin.Board;
 import moulin.Edge;
 import moulin.Jeu;
+import moulin.Node;
 
 public class CanvasRenderer {
 
     private static final double marge=30;
     private static final Color bgColor=new Color(0.9,0.9,0.9,1);
     private static final Color strokeColor=new Color(0,0,0,1);
-    private static final Color nodeColor=new Color(0,0,0,1);
+    private static final Color nodeColor=new Color(0.5,0.5,0.5,1);
+    private static final double nodeSize=30;
 
     public static void render(Canvas canvas, Jeu jeu){
         GraphicsContext gc=canvas.getGraphicsContext2D();
@@ -33,7 +35,14 @@ public class CanvasRenderer {
             gc.strokeLine(x1,y1,x2,y2);
         }
 
+        gc.setFill(nodeColor);
+        for (Node n : board.getNodes()){
+            double x=CanvasRenderer.map(n.getX(), board.getMinX(),board.getMaxX(),0+marge,canvas.getWidth()-marge);
+            double y=CanvasRenderer.map(n.getY(), board.getMinY(),board.getMaxY(),0+marge,canvas.getHeight()-marge);
 
+            gc.fillOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);
+            gc.strokeOval(x-nodeSize/2,y-nodeSize/2,nodeSize,nodeSize);
+        }
 
     }
 

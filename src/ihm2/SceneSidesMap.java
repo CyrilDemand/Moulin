@@ -7,6 +7,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import moulin.Board;
+import moulin.Config;
 import moulin.Jeu;
 
 import java.awt.*;
@@ -18,8 +19,8 @@ public class SceneSidesMap {
 
         VBox root=new VBox();
         HBox buttonBar=new HBox();
-        Canvas canvas = new Canvas(400,300);
-        Spinner<Integer> spinner = new Spinner<>(3,10,3,1);
+        Canvas canvas = new Canvas(800,600);
+        Spinner<Integer> spinner = new Spinner<>(3, Config.boardMaxSides,3,1);
         spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             Jeu jeu = new Jeu(null,null);
             int side = spinner.getValue();
