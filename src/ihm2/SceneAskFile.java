@@ -17,7 +17,7 @@ public class SceneAskFile {
 
     public static void create() throws JSONException, IOException {
         VBox root=new VBox();
-        Canvas canvas = new Canvas(100,100);
+        CustomCanvas canvas = new CustomCanvas(100,100,SceneNewGame.getJeu());
 
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
@@ -45,6 +45,7 @@ public class SceneAskFile {
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }
+                canvas.render();
                 SceneNewGame.getJeu().getBoard().render();
             }
         });
