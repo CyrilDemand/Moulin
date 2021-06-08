@@ -1,5 +1,7 @@
 package moulin;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,13 +10,13 @@ import java.util.Arrays;
  */
 
 public enum ColorEnum {
-    NOIR('N',"\u001B[30m"),ROUGE('R',"\u001B[31m"),VERT('V',"\u001B[32m"),
-    JAUNE('J',"\u001B[33m"), MAGENTA('M',"\u001B[35m"),BLEU('B',"\u001B[34m"),CYAN('C',"\u001B[36m");
+    NOIR('N',"\u001B[30m",new Color(0,0,0,1)),ROUGE('R',"\u001B[31m",new Color(1,0,0,1)),VERT('V',"\u001B[32m",new Color(0,1,0,1)),
+    JAUNE('J',"\u001B[33m",new Color(1,1,0,1)), MAGENTA('M',"\u001B[35m",new Color(1,0,1,1)),BLEU('B',"\u001B[34m",new Color(0,0,1,1)),CYAN('C',"\u001B[36m",new Color(0,1,1,1));
 
     public static final String ANSI_RESET = "\u001B[0m";
     private char letter;
     private String string;
-    private ColorEnum color;
+    private Color color;
 
     /**
      * Local constructor used to create a color
@@ -29,7 +31,7 @@ public enum ColorEnum {
      * @param i first letter of the color
      * @param s string used by the terminal to set the color of the characters
      */
-    ColorEnum(char i, String s){
+    ColorEnum(char i, String s, Color c){
         this(i);
         this.string=s;
     }
@@ -51,6 +53,15 @@ public enum ColorEnum {
     public String getString() {
         if (!Config.useColorCodesInTerminal)return "";
         return string;
+    }
+
+    /**
+     * return the equivalent javafx color
+     * @return the color
+     */
+
+    public Color getColor(){
+        return color;
     }
 
     /**
