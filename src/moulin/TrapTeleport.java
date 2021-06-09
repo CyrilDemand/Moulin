@@ -1,5 +1,8 @@
 package moulin;
 
+/**
+ * creates a teleport trap
+ */
 public class TrapTeleport extends Trap{
     private Node destination;
 

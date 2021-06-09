@@ -1,5 +1,8 @@
 package moulin;
 
+/**
+ * Creates a Trap
+ */
 public class Trap {
     private int turnsLeft;
 

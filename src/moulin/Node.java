@@ -2,6 +2,9 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * Creates a node
+ */
 public class Node{
     private int x;
     private int y;

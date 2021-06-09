@@ -3,6 +3,9 @@ package moulin;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Creates a player
+ */
 public class Player {
     private final String name;
 

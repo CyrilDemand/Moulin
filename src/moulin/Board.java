@@ -2,6 +2,9 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * Creates the game Board
+ */
 public class Board {
     private ArrayList<Edge> edges;
     private ArrayList<Node> nodes;

@@ -2,6 +2,9 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * creates an AI that plays randomly
+ */
 public class RandomAI extends AI{
     /**
      * Creates a RandomAI class

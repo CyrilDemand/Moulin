@@ -2,6 +2,9 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * creates a normalAI that tries to play like a real player
+ */
 public class NormalAI extends RandomAI{
 
     /**
