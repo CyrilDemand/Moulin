@@ -1,13 +1,13 @@
 package ihm;
-/**
- * Main class of the javaFX project
- */
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import moulin.Config;
 
+/**
+ * Main class of the graphic project
+ */
 public class Main extends Application {
 
     private static Stage stage;

@@ -36,6 +36,12 @@ public class Player {
         }
     }
 
+    /**
+     * creates a player class
+     * @param name player name
+     * @param color player color
+     * @param nbTrap amount of traps the player own
+     */
     public Player(String name, ColorEnum color, int nbTrap){
         if(name.equals("")){
             throw new Error("Pas de nom de joueurs");
@@ -133,8 +139,9 @@ public class Player {
     }
 
     /**
-     *  Allows the user to choose his color
-     * @return the chosen color
+     * Allows the user to choose his color
+     * @param list color list
+     * @return the color
      */
     public static ColorEnum chooseColor(ArrayList<ColorEnum> list){
         Scanner scan = new Scanner(System.in);
