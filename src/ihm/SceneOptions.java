@@ -1,4 +1,4 @@
-package ihm2;
+package ihm;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;

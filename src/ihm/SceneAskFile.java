@@ -1,10 +1,8 @@
-package ihm2;
+package ihm;
 
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -19,17 +17,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class SceneCustomMap {
+public class SceneAskFile {
     private static Scene scene;
 
     /**
      * creates a scene
+     * @throws JSONException JSONException
+     * @throws IOException IOException
      */
-    public static void create(){
+    public static void create() throws JSONException, IOException {
         VBox root=new VBox();
         CustomCanvas canvas = new CustomCanvas(800,600);
-        Label label = new Label("Custom Map");
-        Button loadGame = new Button("Load a map file");
 
         HBox buttonBar=new HBox();
         Button goBackToMainMenu=new Button("Go Back to main menu");
@@ -38,7 +36,7 @@ public class SceneCustomMap {
         });
         Button goBack=new Button("Go Back");
         goBack.setOnAction(e->{
-            SceneTypeOfMap.switchTo();
+            SceneNewGame.switchTo();
         });
         Button next=new Button("Next");
         next.setDisable(true);
@@ -47,6 +45,7 @@ public class SceneCustomMap {
         });
         buttonBar.getChildren().addAll(goBackToMainMenu,goBack,next);
 
+        Button loadGame = new Button("Load a game file");
         loadGame.setOnAction(e->{
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Game save file (*.json)","*.json");
@@ -64,30 +63,34 @@ public class SceneCustomMap {
                         a.setTitle("Error");
                         a.show();
                     }
-                    if (type.get(0).equals("board")){
-                        Jeu jeu = new Jeu(null,null);
-                        jeu.setBoard(Save.loadBoard(file.getAbsolutePath()));
+                    if (type.get(0).equals("game")){
+                        Jeu jeu = new Jeu(Save.loadJeu(file.getAbsolutePath()));
+                        SceneNewGame.setJeu(jeu);
                         next.setDisable(false);
-                        canvas.render(jeu);
-                        next.setDisable(false);
+                        jeu.getBoard().render();
+                        canvas.render(SceneNewGame.getJeu());
+                        SceneNewGame.getJeu().getBoard().render();
                     }else{
-                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a map file");
+                        Alert a = new Alert(Alert.AlertType.ERROR,"The file is not a game file");
                         a.setTitle("Error");
                         a.show();
                     }
                 } catch (JSONException | IOException jsonException) {
                     jsonException.printStackTrace();
                 }
+
             }
         });
 
 
-        root.getChildren().addAll(label,canvas,loadGame,buttonBar);
+        root.getChildren().addAll(canvas,loadGame,buttonBar);
+
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
-/**
- * switches to the scene
- */
+
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         SceneNewGame.setJeu(null);
         Main.changeScene(scene);

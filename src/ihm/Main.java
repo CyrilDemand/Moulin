@@ -1,11 +1,9 @@
-package ihm2;
+package ihm;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import moulin.Config;
-import moulin.Jeu;
-import moulin.Save;
 
 public class Main extends Application {
 
@@ -36,10 +34,10 @@ public class Main extends Application {
         SceneRules.create();
 
         SceneMainMenu.create();
-
+        SceneChoixMain.create();
         //Stage Settings
         stage.setTitle("The Mill Game");
-        changeScene(SceneMainMenu.getScene());
+        changeScene(SceneChoixMain.getScene());
         stage.setResizable(true);
         stage.show();
     }
