@@ -97,6 +97,7 @@ public class Jeu {
 
 
     public static ArrayList<Player> initPlayer(int nbPlayer){
+        ArrayList<ColorEnum> colorsLeft=ColorEnum.List();
         ArrayList<Player> players = new ArrayList<>();
         boolean chooseAtLeastOnePlayer=false;
 
@@ -119,12 +120,16 @@ public class Jeu {
 
 
             if (choix==1){
-                players.add(new Player(Player.chooseName(),Player.chooseColor()));
+                players.add(new Player(Player.chooseName(),Player.chooseColor(colorsLeft)));
                 chooseAtLeastOnePlayer=true;
             }else if (choix==2){
-                players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), ColorEnum.values()[(int) (Math.random() * ColorEnum.values().length)]));
+                ColorEnum randomColor=colorsLeft.get((int)(Math.random()*colorsLeft.size()));
+                players.add(new RandomAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())),randomColor));
+                colorsLeft.remove(randomColor);
             }else if (choix==3){
-                players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), ColorEnum.values()[(int) (Math.random() * ColorEnum.values().length)]));
+                ColorEnum randomColor=colorsLeft.get((int)(Math.random()*colorsLeft.size()));
+                players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), randomColor));
+                colorsLeft.remove(randomColor);
             }
         }
 

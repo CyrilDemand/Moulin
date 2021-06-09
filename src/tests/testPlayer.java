@@ -40,7 +40,7 @@ public class testPlayer {
         System.out.println("Pour valider ce test, il est nécessaire d'avoir une saisie utilisateur");
 
         String name = Player.chooseName();
-        ColorEnum color = Player.chooseColor();
+        ColorEnum color = Player.chooseColor(ColorEnum.List());
         System.out.println("A vous d'en juger !\nNom : "+name+"\nCouleur : "+color.toString());
         return true;
     }
