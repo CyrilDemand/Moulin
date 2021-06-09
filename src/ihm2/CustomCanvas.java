@@ -27,10 +27,22 @@ public class CustomCanvas extends Canvas {
 
     private double mouseX,mouseY;
 
+    /**
+     * Creates a CustomCanvas class
+     * @param width width of the canvas
+     * @param height height of the canvas
+     */
     public CustomCanvas(double width,double height){
         this(width,height,false,false);
     }
 
+    /**
+     * Creates a CustomCanvas class
+     * @param width width of the canvas
+     * @param height height of the canvas
+     * @param canSelectNode shows if you can select a node
+     * @param canSelectEdge shows if you can select an edge
+     */
     public CustomCanvas(double width,double height,boolean canSelectNode,boolean canSelectEdge){
         super(width,height);
         super.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -48,12 +60,20 @@ public class CustomCanvas extends Canvas {
 
     }
 
+    /**
+     * unselect every selected elements
+     * @param jeu current game
+     */
     public void unselect(Jeu jeu){
         selectedNode=null;
         selectedEdge=null;
         this.render(jeu);
     }
 
+    /**
+     * selects the elements
+     * @param jeu current game
+     */
     public void select(Jeu jeu){
         selectedNode=null;
         selectedEdge=null;
@@ -67,22 +87,42 @@ public class CustomCanvas extends Canvas {
         this.render(jeu);
     }
 
+    /**
+     * gets the selected node
+     * @return selected node
+     */
     public Node getSelectedNode() {
         return selectedNode;
     }
 
+    /**
+     * gets the selected edge
+     * @return selected edge
+     */
     public Edge getSelectedEdge() {
         return selectedEdge;
     }
 
+    /**
+     * gets the X position of the mouse
+     * @return the X position of the mouse
+     */
     public double getMouseX(){
         return this.mouseX;
     }
 
+    /**
+     * gets the Y position of the mouse
+     * @return the Y position of the mouse
+     */
     public double getMouseY(){
         return this.mouseY;
     }
 
+    /**
+     * render the current game on the canvas
+     * @param jeu current game
+     */
     public void render(Jeu jeu){
         GraphicsContext gc=this.getGraphicsContext2D();
 
@@ -139,6 +179,11 @@ public class CustomCanvas extends Canvas {
         }
     }
 
+    /**
+     * gets the node hovered by the mouse
+     * @param jeu current game
+     * @return the node
+     */
     public Node mouseOverNode(Jeu jeu){
 
         for (Node n:jeu.getBoard().getNodes()){
@@ -152,6 +197,11 @@ public class CustomCanvas extends Canvas {
         return null;
     }
 
+    /**
+     * gets the edge hovered by the mouse
+     * @param jeu current game
+     * @return the edge
+     */
     public Edge mouseOverEdge(Jeu jeu){
 
 
@@ -195,10 +245,27 @@ public class CustomCanvas extends Canvas {
         return null;
     }
 
+    /**
+     * Gives the distance between two spots
+     * @param x1 x of the first spot
+     * @param y1 y of the first spot
+     * @param x2 x of the second spot
+     * @param y2 y of the second spot
+     * @return the distance
+     */
     private static double distance (double x1,double y1, double x2,double y2){
         return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
 
+    /**
+     * takes a point from an interval, and moves it to another one
+     * @param x point
+     * @param a beginning of the first interval
+     * @param b ending of the first interval
+     * @param c beginning of the second interval
+     * @param d ending of the second interval
+     * @return the point
+     */
     private static double map(double x, double a, double b, double c,double d){
         return (x-a)/(b-a) * (d-c) + c;
     }
