@@ -22,10 +22,9 @@ public class RandomAI extends AI{
      */
     public void start(Jeu jeu,Piece piece) {
         int position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
-        while (!jeu.getBoard().getNodeById(position).isEmpty()){
+        while (!this.put(jeu.getBoard().getNodeById(position),piece)){
             position = (int)(Math.random()*jeu.getBoard().getNodes().size())+1;
         }
-        this.put(jeu.getBoard().getNodeById(position),piece);
     }
 
     /**
