@@ -13,6 +13,12 @@ public class NormalAI extends RandomAI{
         super(name, color);
     }
 
+    /**
+     * creates a Normal AI class
+     * @param name name of the AI
+     * @param color color of the AI
+     * @param nbTrap amount of traps owned by the AI
+     */
     public NormalAI(String name, ColorEnum color, int nbTrap) { super(name, color,nbTrap); }
 
 
@@ -96,6 +102,12 @@ public class NormalAI extends RandomAI{
         }
     }
 
+    /**
+     * returns a piece that is blocking a line
+     * @param jeu current game
+     * @return the piece
+     * @throws Exception Exception
+     */
     private Piece aPieceWhichAlreadyBlockALoose(Jeu jeu) throws Exception {
         for (Piece piece: this.getPieces()) {
             if(this.getLoosingLine(jeu.getBoard(),jeu.getPlayers()).getNodes().contains(piece.getNode()))return piece;
@@ -106,6 +118,12 @@ public class NormalAI extends RandomAI{
         return null;
     }
 
+    /**
+     * returns a piece that will block a line
+     * @param jeu current game
+     * @return the piece
+     * @throws Exception Exception
+     */
     private Piece aPieceWhichwillBlockALoose(Jeu jeu) throws Exception {
         for (Piece piece: this.getPieces()) {
             for (Node n:piece.getNode().isLinkedWith(jeu.getBoard())) {
@@ -118,7 +136,13 @@ public class NormalAI extends RandomAI{
         return null;
     }
 
-
+    /**
+     * gets a loosing Line
+     * @param board current board
+     * @param players current players
+     * @return the loosing line
+     * @throws Exception Exception
+     */
     private Line getLoosingLine(Board board,ArrayList<Player> players) throws Exception {
         int i = 0;
         try {

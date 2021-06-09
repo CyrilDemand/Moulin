@@ -9,6 +9,9 @@ public class SceneRules {
 
     private static Scene scene;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
         root.getChildren().add(new Label("Rules"));
@@ -30,10 +33,17 @@ public class SceneRules {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }

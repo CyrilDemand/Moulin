@@ -30,6 +30,9 @@ public class TrapTeleport extends Trap{
     }
 
     @Override
+    /**
+     * Creates a string version of the trap
+     */
     public String toString() {
         return "TrapTeleport{" +
                 "destination=" + destination +

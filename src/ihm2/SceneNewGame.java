@@ -15,7 +15,9 @@ public class SceneNewGame {
     private static Scene scene;
     private static Jeu jeu;
 
-
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
         Label title = new Label("New/Load a game");
@@ -36,22 +38,41 @@ public class SceneNewGame {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * gets the current game
+     * @return the game
+     */
     public static Jeu getJeu() {
         return jeu;
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Main.changeScene(scene);
     }
 
+    /**
+     * sets the players arraylist
+     * @param players current player list
+     */
     public static void setPlayers(ArrayList<Player> players){
         jeu.setPlayers(players);
     }
 
+    /**
+     * sets the game
+     * @param jeu game to set
+     */
     public static void setJeu(Jeu jeu) {
         SceneNewGame.jeu = jeu;
     }
 
+    /**
+     * gets the scene
+     * @return the scene
+     */
     public static Scene getScene(){
         return scene;
     }

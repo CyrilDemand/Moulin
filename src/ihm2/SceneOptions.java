@@ -9,6 +9,9 @@ public class SceneOptions {
 
     private static Scene scene;
 
+    /**
+     * creates a scene
+     */
     public static void create(){
         VBox root=new VBox();
 
@@ -42,10 +45,17 @@ public class SceneOptions {
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
     }
 
+    /**
+     * switches to the scene
+     */
     public static void switchTo(){
         Main.changeScene(scene);
     }
 
+    /**
+     * gets the scene
+     * @return
+     */
     public static Scene getScene(){
         return scene;
     }

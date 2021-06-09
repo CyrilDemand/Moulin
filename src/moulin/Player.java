@@ -58,6 +58,10 @@ public class Player {
         return nbTrap;
     }
 
+    /**
+     * get the traps
+     * @return the trap list
+     */
     public ArrayList<Trap> getTraps() {
         return traps;
     }

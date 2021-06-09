@@ -13,6 +13,11 @@ public class Main extends Application {
 
     private static final int defaultSceneWidth=1200,defaultSceneHeight=800;
 
+    /**
+     * Starts the interface
+     * @param stage used Stage
+     * @throws Exception Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Main.stage=stage;
@@ -39,22 +44,42 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * changes the used scene
+     * @param newScene new used scene
+     */
     public static void changeScene(Scene newScene){
         stage.setScene(newScene);
     }
 
+    /**
+     * gets the current stage
+     * @return the current stage
+     */
     public static Stage getStage(){
         return stage;
     }
 
+    /**
+     * gets the default scene height
+     * @return the default scene height
+     */
     public static int getDefaultSceneHeight() {
         return defaultSceneHeight;
     }
 
+    /**
+     * gets the default scene width
+     * @return the default scene width
+     */
     public static int getDefaultSceneWidth() {
         return defaultSceneWidth;
     }
 
+    /**
+     * main fonction
+     * @param args args
+     */
     public static void main(String[] args) {
         Application.launch(args);
     }

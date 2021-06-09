@@ -11,6 +11,13 @@ public class RandomAI extends AI{
     public RandomAI(String name, ColorEnum color) {
         super(name, color);
     }
+
+    /**
+     * Creates a RandomAI class
+     * @param name name of the AI
+     * @param color color of  the AI
+     * @param nbTrap amount of traps owned by the AI
+     */
     public RandomAI(String name, ColorEnum color, int nbTrap) {
         super(name, color,nbTrap);
     }
