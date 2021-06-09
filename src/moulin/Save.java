@@ -339,18 +339,20 @@ public class Save {
             JSONObject o = new JSONObject(content);
             JSONArray players = o.getJSONArray("players");
             for (int i = 0; i< players.length();i++){
+                Player player = new Player("tmp",ColorEnum.NOIR);
                 if (players.getJSONArray(i).get(0).toString().equals("Player")){
-                    res.add(new Player(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    player = new Player(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4));
                 }else if(players.getJSONArray(i).get(0).toString().equals("RandomAI")){
-                    res.add(new RandomAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    player = new RandomAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4));
                 }else{
-                    res.add(new NormalAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4)));
+                    player = new NormalAI(players.getJSONArray(i).get(1).toString(), ColorEnum.valueOf(players.getJSONArray(i).get(2).toString()),players.getJSONArray(i).getInt(4));
                 }
                 for (int idx = 0; idx<players.getJSONArray(i).getJSONArray(3).length();idx++){
-                    Piece p = new Piece(res.get(i).getColor(),idx);
+                    Piece p = new Piece(player.getColor(),idx);
                     p.put(board.getNodeById(players.getJSONArray(i).getJSONArray(3).getInt(idx)));
-                    res.get(i).addPiece(p);
+                    player.addPiece(p);
                 }
+                res.add(player);
             }
         }
         catch (IOException | JSONException e) {

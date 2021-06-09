@@ -116,7 +116,6 @@ public class Jeu {
         ArrayList<ColorEnum> colorsLeft=ColorEnum.List();
         ArrayList<Player> players = new ArrayList<>();
         boolean chooseAtLeastOnePlayer=false;
-
         Scanner scanner = new Scanner(System.in);
         int choix;
 
@@ -146,6 +145,9 @@ public class Jeu {
                 ColorEnum randomColor=colorsLeft.get((int)(Math.random()*colorsLeft.size()));
                 players.add(new NormalAI(Config.aiRandomNames.get((int)(Math.random()*Config.aiRandomNames.size())), randomColor));
                 colorsLeft.remove(randomColor);
+            }
+            for (int idx=0;i<Config.numberOfPieces;idx++){
+                players.get(i).addPiece(new Piece(players.get(i).getColor(),idx));
             }
         }
 

@@ -39,16 +39,12 @@ public class Player {
         }
         this.name = name;
         this.color = color;
-        this.pieces = new ArrayList<Piece>();
-        for (int i=0;i<Config.numberOfPieces;i++){
-            this.pieces.add(new Piece(this.color,i));
-        }
+        this.pieces = new ArrayList<>();
         traps = new ArrayList<>();
         for(int i =0;i<nbTrap;i++){
             traps.add(new Trap(3));
         }
         this.nbTrap=nbTrap;
-
     }
     /**
      *  returns the amount of traps that the Player can place
