@@ -1,6 +1,10 @@
-#mainOptionsLabel{
+#mainLabels{
     -fx-text-fill: rgba(0,0,0,0.6);
     -fx-font-size: 50;
+}
+
+.label{
+    -fx-font-size: 15;
 }
 
 .button {

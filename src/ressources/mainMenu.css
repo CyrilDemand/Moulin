@@ -1,8 +1,4 @@
-/*.label {
-    -fx-
-}
-*/
-.label{
+#mainLabels{
     -fx-text-fill: rgba(0,0,0,0.6);
     -fx-font-size: 50;
     -fx-margin:30;
@@ -10,12 +6,9 @@
 
 .button {
     -fx-base:#3c7fb1;
-   /* -fx-color: -fx-focused-base;*/
 }
 
 .button: hover {
-    /*-fx-border-radius:4;*/
-    -fx-border-color:green;
     -fx-scale-y:1.2;
     -fx-scale-x:1.05;
 }

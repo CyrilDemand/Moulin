@@ -62,16 +62,26 @@ public class SceneOptions {
             }
         });
 
+        ResizingSpacer returnButtonSpacer = new ResizingSpacer(Main.getStage(), 0.05);
+
         Button returnButton=new Button("Go back");
         returnButton.setOnAction(e->{
                 Main.changeScene(SceneMainMenu.getScene());
         });
+        Main.getStage().widthProperty().addListener(e->{
+            returnButton.setPrefWidth((Main.getStage().getWidth()*0.50));
 
-        root.getChildren().addAll(spacerAboveLabel,mainOptionsLabel,spacerUnderLabel,sliders,musicSpacer,musicSelect,fullScreenSpacer,fullscreen,returnButton);
+        });
+        Main.getStage().heightProperty().addListener(e->{
+            returnButton.setPrefHeight((Main.getStage().getHeight()*0.1));
+        });
+
+        root.getChildren().addAll(spacerAboveLabel,mainOptionsLabel,spacerUnderLabel,sliders,musicSpacer,musicSelect,fullScreenSpacer,fullscreen,returnButtonSpacer,returnButton);
 
         root.setAlignment(Pos.BASELINE_CENTER);
         scene=new Scene(root,1000,500);
-        scene.getStylesheets().add("ressources/optionMenu.css");
+        mainOptionsLabel.setId("mainLabels");
+        scene.getStylesheets().add("ressources/mainMenu.css");
     }
 
     public static Scene getScene(){

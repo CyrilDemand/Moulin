@@ -13,6 +13,8 @@ public class SceneMainMenu{
     public static void create(){
         VBox root=new VBox();
 
+        Label mainLabelMain = new Label("The Mill Game");
+        mainLabelMain.setId("mainLabels");
         ResizingSpacer labelSpacer = new ResizingSpacer(Main.getStage(), 0.1);
         Button playButton=new Button("Play");
         playButton.setOnAction(e->{
@@ -47,7 +49,7 @@ public class SceneMainMenu{
             quitButton.setPrefHeight(Main.getStage().getHeight()*0.1);
         });
 
-        root.getChildren().addAll(new Label("The Mill Game"),labelSpacer,playButton,playButtonSpacer,optionButton,optionButtonSpacer,rulesButton,rulesButtonSpacer,quitButton);
+        root.getChildren().addAll(mainLabelMain,labelSpacer,playButton,playButtonSpacer,optionButton,optionButtonSpacer,rulesButton,rulesButtonSpacer,quitButton);
 
         root.setAlignment(Pos.CENTER);
         scene=new Scene(root,1000,500);
