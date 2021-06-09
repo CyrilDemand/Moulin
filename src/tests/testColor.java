@@ -1,6 +1,7 @@
 package tests;
 
 import moulin.ColorEnum;
+import moulin.Config;
 import org.junit.Test;
 
 public class testColor {
@@ -10,7 +11,10 @@ public class testColor {
         ColorEnum noir = ColorEnum.NOIR;
         if(noir.getValue()!='N')return false;
         System.out.println("\tgetValue ok");
-        if(!noir.getString().equals("\u001B[30m"))return false;
+        if(Config.useColorCodesInTerminal) {
+            System.out.println("" + noir.getString());
+            if (!noir.getString().equals("\u001B[30m")) return false;
+        }
         System.out.println("\tgetString ok");
         if(!ColorEnum.isColor(noir.toString()))return false;
         if(!ColorEnum.isColor("Noir"))return false;
