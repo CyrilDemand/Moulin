@@ -8,6 +8,7 @@ import moulin.Config;
 public class Main extends Application {
 
     private static Stage stage;
+    private static boolean fsHint;
 
 
     @Override
@@ -15,6 +16,7 @@ public class Main extends Application {
         Main.stage=stage;
         Config.loadConfig();
         //Creation of all the scenes
+        SceneChoixJoueurs.create();
         SceneSidesMap.create();
         SceneCustomMap.create();
         SceneAskFile.create();
@@ -35,6 +37,13 @@ public class Main extends Application {
 
     public static void changeScene(Scene newScene){
         stage.setScene(newScene);
+        if(fsHint){
+            stage.setFullScreen(true);
+        }
+    }
+
+    public static void setFsHint(boolean b){
+        fsHint=b;
     }
 
     public static Stage getStage(){

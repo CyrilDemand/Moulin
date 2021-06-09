@@ -1,6 +1,5 @@
 package ihm2;
 
-import ihm.MainMenuButton;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,22 +13,22 @@ public class SceneMainMenu{
     public static void create(){
         VBox root=new VBox();
 
-        MainMenuSpacer labelSpacer = new MainMenuSpacer(Main.getStage(), 0.1);
+        ResizingSpacer labelSpacer = new ResizingSpacer(Main.getStage(), 0.1);
         Button playButton=new Button("Play");
         playButton.setOnAction(e->{
             Main.changeScene(SceneNewGame.getScene());
         });
-        MainMenuSpacer playButtonSpacer = new MainMenuSpacer(Main.getStage());
+        ResizingSpacer playButtonSpacer = new ResizingSpacer(Main.getStage());
         Button optionButton=new Button("Options");
         optionButton.setOnAction(e->{
             Main.changeScene(SceneOptions.getScene());
         });
-        MainMenuSpacer optionButtonSpacer = new MainMenuSpacer(Main.getStage());
+        ResizingSpacer optionButtonSpacer = new ResizingSpacer(Main.getStage());
         Button rulesButton=new Button("Rules");
         rulesButton.setOnAction(e->{
             Main.changeScene(SceneRules.getScene());
         });
-        MainMenuSpacer rulesButtonSpacer = new MainMenuSpacer(Main.getStage());
+        ResizingSpacer rulesButtonSpacer = new ResizingSpacer(Main.getStage());
         Button quitButton=new Button("Quit");
         quitButton.setOnAction(e->{
             Main.getStage().close();

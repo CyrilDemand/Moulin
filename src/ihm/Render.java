@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.media.*;
 import javafx.stage.Stage;
-import ihm2.MainMenuSpacer;
+import ihm2.ResizingSpacer;
 import java.net.URISyntaxException;
 
 public class Render extends Application {
@@ -73,19 +73,19 @@ public class Render extends Application {
         scenePlay = new Scene(play, 1000, 500);
 
         Label labTitle = new Label("C tré le titre du projé");
-        Region spacerLabTitle = new MainMenuSpacer(stage,0.1);
+        Region spacerLabTitle = new ResizingSpacer(stage,0.1);
         MainMenuButton playButton = new MainMenuButton(" Jouer ",scenePlay,stage);
         playButton.setOnAction(e->{
 
         });
         //playButton.setId("mainMenuButtons");
-        MainMenuSpacer spacerPlayButton = new MainMenuSpacer(stage);
+        ResizingSpacer spacerPlayButton = new ResizingSpacer(stage);
         MainMenuButton settingsButton = new MainMenuButton(" Options ",sceneOptions,stage);
         //settingsButton.setId("mainMenuButtons");
-        MainMenuSpacer spacerSettingsButton = new MainMenuSpacer(stage);
+        ResizingSpacer spacerSettingsButton = new ResizingSpacer(stage);
         MainMenuButton rulesButton = new MainMenuButton(" Règles ",sceneRules,stage);
         //rulesButton.setId("mainMenuButtons");
-        MainMenuSpacer spacerRulesButton = new MainMenuSpacer(stage);
+        ResizingSpacer spacerRulesButton = new ResizingSpacer(stage);
         MainMenuButton exitButton = new MainMenuButton(" Quitter ",null,stage);
        // exitButton.setId("mainMenuButtons");
         mainMenu.getChildren().addAll(labTitle,spacerLabTitle,playButton,spacerPlayButton,settingsButton,spacerSettingsButton,rulesButton,spacerRulesButton,exitButton);
@@ -97,8 +97,8 @@ public class Render extends Application {
         VBox labVBox = new VBox();
         labVBox.setAlignment(Pos.CENTER);
 
-        MainMenuSpacer spacerBotLabel = new MainMenuSpacer(stage, 0.2);
-        MainMenuSpacer spacerTopLabel = new MainMenuSpacer(stage, 0.1);
+        ResizingSpacer spacerTopLabel = new ResizingSpacer(stage, 0.1);
+        ResizingSpacer spacerBotLabel = new ResizingSpacer(stage, 0.2);
         Label labelOptions = new Label("Options");
         labelOptions.setId("mainSettingsLabel");
         labVBox.getChildren().addAll(spacerTopLabel,labelOptions);

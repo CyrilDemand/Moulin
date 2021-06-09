@@ -1,26 +1,4 @@
-#mainSettingsLabel{
+#mainOptionsLabel{
     -fx-text-fill: rgba(0,0,0,0.6);
     -fx-font-size: 50;
-}
-/*
-#settingsSliders .track {
-        -fx-pref-height:20;
-}
-
-.slider .thumb {
-    -fx-pref-height: 30;
-    -fx-pref-width: 30;
-}*/
-.slider {
-
-    -fx-control-inner-background: #1354cb;
-    /* This works in changing the track */
-
-}
-
-.slider:thumb {
-
-    -fx-background-color: #1354cb!important;
-    /* This doesn't work in changing the thumb */
-
 }
