@@ -137,16 +137,17 @@ public class Player {
      *  Allows the user to choose his color
      * @return the chosen color
      */
-    public static ColorEnum chooseColor(){
+    public static ColorEnum chooseColor(ArrayList<ColorEnum> list){
         Scanner scan = new Scanner(System.in);
         System.out.println("Here are the colors you can choose :");
-        ColorEnum.diplayColor();
+        ColorEnum.diplayColor(list);
         String user = "";
         user = scan.nextLine();
-        while (!ColorEnum.isColor(user.toLowerCase())){
+        while (!ColorEnum.isColor(user.toLowerCase(),list)){
             System.out.println("Choose a real color");
             user = scan.nextLine();
         }
+        list.remove(ColorEnum.valueOf(user.toUpperCase()));
         return ColorEnum.valueOf(user.toUpperCase());
     }
 
