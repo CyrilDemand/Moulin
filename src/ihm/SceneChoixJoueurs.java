@@ -19,6 +19,9 @@ public class SceneChoixJoueurs {
 
     private static Scene scene;
     private static Label nextLabel = new Label();
+    /**
+     * players hbox
+     */
     public static ListView<PlayerHBox> players = new ListView<>();
 
     private static Button addButton = new Button("+");

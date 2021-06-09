@@ -2,6 +2,9 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * creates a normalAI that tries to play like a real player
+ */
 public class NormalAI extends RandomAI{
 
     /**
@@ -46,7 +49,8 @@ public class NormalAI extends RandomAI{
 
     /**
      * ends the game
-     * @param jeu board used by the game
+     * @param jeu current game
+     * @throws Exception exception
      */
     public void endGame(Jeu jeu) throws Exception {
         if (willBeLoose(jeu.getBoard(),jeu.getPlayers())!=null){

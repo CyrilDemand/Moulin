@@ -10,6 +10,7 @@ import java.util.Arrays;
  */
 
 public enum ColorEnum {
+
     NOIR('N',"\u001B[30m",new Color(0,0,0,1)),ROUGE('R',"\u001B[31m",new Color(1,0,0,1)),VERT('V',"\u001B[32m",new Color(0,1,0,1)),
     JAUNE('J',"\u001B[33m",new Color(1,1,0,1)), MAGENTA('M',"\u001B[35m",new Color(1,0,1,1)),BLEU('B',"\u001B[34m",new Color(0,0,1,1)),CYAN('C',"\u001B[36m",new Color(0,1,1,1));
 

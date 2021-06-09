@@ -2,11 +2,18 @@ package moulin;
 
 import java.util.ArrayList;
 
+/**
+ * Creates the game Board
+ */
 public class Board {
     private ArrayList<Edge> edges;
     private ArrayList<Node> nodes;
     private ArrayList<Line> lines;
 
+    /**
+     * main method
+     * @param args args
+     */
     public static void main(String[] args) {
         Board board=Board.generateBoard(4);
         board.trapNode(1,2,3);

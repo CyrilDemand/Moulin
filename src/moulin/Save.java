@@ -26,6 +26,11 @@ public class Save {
 
     String path;
     String name;
+
+    /**
+     * saves from a path
+     * @param path path
+     */
     public Save(String path){
         this.path = path;
         ArrayList<String> s = new ArrayList<>(Arrays.asList(this.path.split("/")));

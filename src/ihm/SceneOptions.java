@@ -57,7 +57,7 @@ public class SceneOptions {
 
     /**
      * gets the scene
-     * @return
+     * @return the scene
      */
     public static Scene getScene(){
         return scene;

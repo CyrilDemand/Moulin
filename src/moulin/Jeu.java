@@ -189,9 +189,10 @@ public class Jeu {
 
     /**
      * starts the game but everyone places their pieces randomly
-     * @return the player who won, null if no one won
+     * @param board current board
+     * @param players players list
+     * @return the game
      */
-
     public static Jeu randomStart(Board board,ArrayList<Player> players){
         Jeu jeu;
         do {

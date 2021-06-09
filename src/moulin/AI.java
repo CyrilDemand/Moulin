@@ -1,5 +1,8 @@
 package moulin;
 
+/**
+ * Creates a default AI
+ */
 public abstract class AI extends Player{
     /**
      * creates an AI class
