@@ -1,4 +1,4 @@
-package ihm2;
+package ihm;
 
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;

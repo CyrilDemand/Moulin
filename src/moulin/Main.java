@@ -1,6 +1,5 @@
 package moulin;
 
-import ihm.Render;
 import org.json.JSONException;
 
 import java.io.File;
@@ -9,27 +8,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
-
-    /**
-     * Allows you to launch the game
-     * @param args arguments
-     * @throws Exception exception
-     */
-    public static void main(String[] args) throws Exception {
-        Config.loadConfig();
-        System.out.println("In which mode do you want to start the game ?\n");
-
-        System.out.println("[1] Console Mode");
-        System.out.println("[2] Graphic Mode");
-        System.out.print("Your choice : ");
-
-        int mode=Config.nextInt(1,2);
-        if (mode==1){
-            Main.mainConsole();
-        }else{
-            Render.main(new String[0]);
-        }
-    }
 
     /**
      * prints the main menu

@@ -1,4 +1,4 @@
-package ihm2;
+package ihm;
 
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;

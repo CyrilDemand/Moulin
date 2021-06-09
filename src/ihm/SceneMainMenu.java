@@ -1,6 +1,5 @@
-package ihm2;
+package ihm;
 
-import ihm.MainMenuButton;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
