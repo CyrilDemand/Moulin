@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Creates a scene used to ask for the game file
+ */
 public class SceneAskFile {
     private static Scene scene;
 

@@ -6,6 +6,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import moulin.Jeu;
 
+/**
+ * creates a scene to start the game
+ */
+
 public class SceneChoiceStartGame {
     private static Scene scene;
 

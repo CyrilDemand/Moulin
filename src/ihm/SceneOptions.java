@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * creates a scene to show the game options
+ */
 public class SceneOptions {
 
     private static Scene scene;

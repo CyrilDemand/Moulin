@@ -12,6 +12,9 @@ import moulin.Player;
 
 import java.util.ArrayList;
 
+/**
+ * creates a scene to show the Player choice screen
+ */
 public class SceneChoixJoueurs {
 
     private static Scene scene;

@@ -4,6 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+/**
+ * creates a scene to choose between a custom or a pre-generated map
+ */
 public class SceneTypeOfMap {
     private static Scene scene;
 

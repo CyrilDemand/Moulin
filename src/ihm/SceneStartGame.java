@@ -7,6 +7,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import moulin.*;
 
+/**
+ * Creates a scene to start the game
+ */
 public class SceneStartGame {
     private static Scene scene;
     private static Button nextTurn;
@@ -59,6 +62,9 @@ public class SceneStartGame {
         Main.changeScene(scene);
     }
 
+    /**
+     * switches to the next turn
+     */
     public static void tour(){
         Jeu jeu=SceneNewGame.getJeu();
         System.out.println(jeu.getPlayers().get(Jeu.getTurn()));

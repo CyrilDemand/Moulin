@@ -9,6 +9,13 @@ public abstract class AI extends Player{
     public AI(String name, ColorEnum color) {
         super(name, color);
     }
+
+    /**
+     * creates an AI class
+     * @param name name of the AI
+     * @param color color of the AI
+     * @param nbTrap amount of traps the AI own
+     */
     public AI(String name, ColorEnum color, int nbTrap) { super(name, color,nbTrap); }
 
     /**

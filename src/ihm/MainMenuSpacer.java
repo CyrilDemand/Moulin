@@ -3,6 +3,9 @@ package ihm;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+/**
+ * Creates an organized menu
+ */
 public class MainMenuSpacer extends Region {
 
     private double prefHeightRatio;

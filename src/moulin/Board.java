@@ -28,7 +28,6 @@ public class Board {
     }
 
     /**
-     *
      * Use the board given to copy it's attributes into the main Board
      *
      * @param board board used to copy it into the main board
@@ -180,7 +179,6 @@ public class Board {
     }
 
     /**
-     *
      * Creates a Trap on an Edge
      *
      * @param idStart Start of the Trap

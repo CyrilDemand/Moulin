@@ -88,6 +88,12 @@ public enum ColorEnum {
         return false;
     }
 
+    /**
+     * checks if the String is a color
+     * @param string string to test
+     * @param list color list
+     * @return true if it's a color, false otherwise
+     */
     public static boolean isColor(String string, ArrayList<ColorEnum> list){
         for (ColorEnum color : list){
             if (color.toString().equals(string.toUpperCase())){
@@ -115,7 +121,10 @@ public enum ColorEnum {
         System.out.println();
     }
 
-
+    /**
+     * displays the color
+     * @param list color list
+     */
     public static void diplayColor(ArrayList<ColorEnum> list){
         for (ColorEnum c: list) {
             System.out.print('['+c.getString()+c.toString()+ ColorEnum.ANSI_RESET+']');

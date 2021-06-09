@@ -5,6 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * creates a scene for the game rules
+ */
 public class SceneRules {
 
     private static Scene scene;

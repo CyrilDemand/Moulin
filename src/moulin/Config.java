@@ -21,6 +21,10 @@ public class Config {
     public static int playerMax;
     public static boolean useColorCodesInTerminal;
 
+    /**
+     * main method
+     * @param args args
+     */
     public static void main(String[] args) {
         Config.resetConfig();
     }

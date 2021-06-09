@@ -8,6 +8,9 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
+/**
+ * Creates a scene to choose an execution mode for the game between the console or the graphic mode
+ */
 public class SceneChoixMain {
     private static Scene scene;
 
