@@ -24,7 +24,7 @@ public class SceneOptions {
             sliders.setSpacing(Main.getStage().getWidth()*0.05);
         });
 
-        ResizingSpacer spacerAboveLabel = new ResizingSpacer(Main.getStage(), 0.1);
+        ResizingSpacer spacerAboveLabel = new ResizingSpacer(Main.getStage(), 0.05);
         ResizingSpacer spacerUnderLabel = new ResizingSpacer(Main.getStage(), 0.2);
 
         HBox slider1=new HBox();
@@ -62,21 +62,24 @@ public class SceneOptions {
             }
         });
 
-        ResizingSpacer returnButtonSpacer = new ResizingSpacer(Main.getStage(), 0.05);
+        ResizingSpacer returnButtonSpacer = new ResizingSpacer(Main.getStage(), 0.1);
 
+        HBox returnH = new HBox();
         Button returnButton=new Button("Go back");
         returnButton.setOnAction(e->{
                 Main.changeScene(SceneMainMenu.getScene());
         });
         Main.getStage().widthProperty().addListener(e->{
-            returnButton.setPrefWidth((Main.getStage().getWidth()*0.50));
+            returnButton.setPrefWidth((Main.getStage().getWidth()*0.5));
 
         });
         Main.getStage().heightProperty().addListener(e->{
             returnButton.setPrefHeight((Main.getStage().getHeight()*0.1));
         });
+        returnH.getChildren().add(returnButton);
+        returnH.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(spacerAboveLabel,mainOptionsLabel,spacerUnderLabel,sliders,musicSpacer,musicSelect,fullScreenSpacer,fullscreen,returnButtonSpacer,returnButton);
+        root.getChildren().addAll(spacerAboveLabel,mainOptionsLabel,spacerUnderLabel,sliders,musicSpacer,musicSelect,fullScreenSpacer,fullscreen,returnButtonSpacer,returnH);
 
         root.setAlignment(Pos.BASELINE_CENTER);
         scene=new Scene(root,1000,500);

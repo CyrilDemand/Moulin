@@ -1,0 +1,14 @@
+.label{
+    -fx-text-fill: rgba(0,0,0,0.6);
+    -fx-font-size: 45;
+    -fx-margin:30;
+}
+
+#returnButton {
+    -fx-base:#3c7fb1;
+}
+
+#returnButton: hover {
+    -fx-scale-y:1.2;
+    -fx-scale-x:1.05;
+}
