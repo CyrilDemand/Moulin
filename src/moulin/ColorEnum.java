@@ -88,6 +88,15 @@ public enum ColorEnum {
         return false;
     }
 
+    public static boolean isColor(String string, ArrayList<ColorEnum> list){
+        for (ColorEnum color : list){
+            if (color.toString().equals(string.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * generates the text version of the color's name
      * @return the name of the color
@@ -101,6 +110,14 @@ public enum ColorEnum {
      */
     public static void diplayColor(){
         for (ColorEnum c: ColorEnum.List()) {
+            System.out.print('['+c.getString()+c.toString()+ ColorEnum.ANSI_RESET+']');
+        }
+        System.out.println();
+    }
+
+
+    public static void diplayColor(ArrayList<ColorEnum> list){
+        for (ColorEnum c: list) {
             System.out.print('['+c.getString()+c.toString()+ ColorEnum.ANSI_RESET+']');
         }
         System.out.println();

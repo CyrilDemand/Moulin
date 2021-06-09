@@ -1,18 +1,13 @@
-package ihm2;
+package ihm;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Spinner;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import moulin.Board;
 import moulin.Config;
 import moulin.Jeu;
-
-import java.awt.*;
 
 public class SceneSidesMap {
     private static Scene scene;

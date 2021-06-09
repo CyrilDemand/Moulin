@@ -1,4 +1,4 @@
-package ihm2;
+package ihm;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,7 +8,6 @@ import moulin.Jeu;
 import moulin.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SceneNewGame {
 

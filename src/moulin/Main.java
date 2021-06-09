@@ -1,6 +1,5 @@
 package moulin;
 
-import ihm.Render;
 import org.json.JSONException;
 
 import java.io.File;
@@ -9,27 +8,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
-
-    /**
-     * Allows you to launch the game
-     * @param args arguments
-     * @throws Exception exception
-     */
-    public static void main(String[] args) throws Exception {
-        Config.loadConfig();
-        System.out.println("In which mode do you want to start the game ?\n");
-
-        System.out.println("[1] Console Mode");
-        System.out.println("[2] Graphic Mode");
-        System.out.print("Your choice : ");
-
-        int mode=Config.nextInt(1,2);
-        if (mode==1){
-            Main.mainConsole();
-        }else{
-            Render.main(new String[0]);
-        }
-    }
 
     /**
      * prints the main menu
@@ -139,11 +117,11 @@ public class Main {
         File file;
         do{
             map=scanner.nextLine();
-            file = new File(map);
             if (map.equals("IWANTTOGOBACK")){
                 Main.mainConsole();
                 break;
             }
+            file = new File(map);
             if(!file.exists()) System.out.println("wrong file");
             try {
                 final String substring = map.substring(map.length() - 5);

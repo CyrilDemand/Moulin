@@ -39,16 +39,12 @@ public class Player {
         }
         this.name = name;
         this.color = color;
-        this.pieces = new ArrayList<Piece>();
-        for (int i=0;i<Config.numberOfPieces;i++){
-            this.pieces.add(new Piece(this.color,i));
-        }
+        this.pieces = new ArrayList<>();
         traps = new ArrayList<>();
         for(int i =0;i<nbTrap;i++){
             traps.add(new Trap(3));
         }
         this.nbTrap=nbTrap;
-
     }
     /**
      *  returns the amount of traps that the Player can place
@@ -137,16 +133,17 @@ public class Player {
      *  Allows the user to choose his color
      * @return the chosen color
      */
-    public static ColorEnum chooseColor(){
+    public static ColorEnum chooseColor(ArrayList<ColorEnum> list){
         Scanner scan = new Scanner(System.in);
         System.out.println("Here are the colors you can choose :");
-        ColorEnum.diplayColor();
+        ColorEnum.diplayColor(list);
         String user = "";
         user = scan.nextLine();
-        while (!ColorEnum.isColor(user.toLowerCase())){
+        while (!ColorEnum.isColor(user.toLowerCase(),list)){
             System.out.println("Choose a real color");
             user = scan.nextLine();
         }
+        list.remove(ColorEnum.valueOf(user.toUpperCase()));
         return ColorEnum.valueOf(user.toUpperCase());
     }
 
