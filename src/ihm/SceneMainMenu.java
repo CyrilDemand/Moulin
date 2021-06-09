@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * creates a scene for the main menu
+ */
 public class SceneMainMenu{
 
     private static Scene scene;

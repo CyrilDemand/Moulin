@@ -3,6 +3,9 @@ package ihm;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
+/**
+ * creates a scene for the game ending
+ */
 public class SceneEndGame {
     private static Scene scene;
 

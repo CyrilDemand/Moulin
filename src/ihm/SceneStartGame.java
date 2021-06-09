@@ -7,6 +7,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import moulin.*;
 
+/**
+ * Creates a scene to start the game
+ */
 public class SceneStartGame {
     private static Scene scene;
     private static Button nextTurn;

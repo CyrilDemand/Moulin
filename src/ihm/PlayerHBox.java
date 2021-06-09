@@ -11,7 +11,9 @@ import moulin.*;
 
 import java.util.Collections;
 
-
+/**
+ * Creates an HBox element containing every Player, and the player's informations
+ */
 public class PlayerHBox extends HBox {
     private static final int CANVAS_WIDTH=100;
     private final ComboBox<String> colors;

@@ -10,6 +10,9 @@ import moulin.Edge;
 import moulin.Jeu;
 import moulin.Node;
 
+/**
+ * Creates a CustomCanvas
+ */
 public class CustomCanvas extends Canvas {
     private static final double marge=30;
     private static final Color bgColor=new Color(0.9,0.9,0.9,1);

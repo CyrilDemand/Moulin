@@ -9,6 +9,9 @@ import moulin.Board;
 import moulin.Config;
 import moulin.Jeu;
 
+/**
+ * Creates a scene that allows you to choose your map by the amount of sides
+ */
 public class SceneSidesMap {
     private static Scene scene;
     private static Spinner<Integer> spinner;

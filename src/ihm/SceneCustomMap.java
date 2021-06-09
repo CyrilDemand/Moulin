@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * creates a scene that allows to choose a custom map to play on
+ */
 public class SceneCustomMap {
     private static Scene scene;
 

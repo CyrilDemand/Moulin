@@ -9,6 +9,9 @@ import moulin.Player;
 
 import java.util.ArrayList;
 
+/**
+ * creates a scene that allows you to create a new game
+ */
 public class SceneNewGame {
 
     private static Scene scene;

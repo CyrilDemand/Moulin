@@ -1,4 +1,7 @@
 package ihm;
+/**
+ * Main class of the javaFX project
+ */
 
 import javafx.application.Application;
 import javafx.scene.Scene;
