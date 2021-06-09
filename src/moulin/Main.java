@@ -139,11 +139,11 @@ public class Main {
         File file;
         do{
             map=scanner.nextLine();
-            file = new File(map);
             if (map.equals("IWANTTOGOBACK")){
                 Main.mainConsole();
                 break;
             }
+            file = new File(map);
             if(!file.exists()) System.out.println("wrong file");
             try {
                 final String substring = map.substring(map.length() - 5);
