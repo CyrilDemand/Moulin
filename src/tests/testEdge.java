@@ -48,7 +48,7 @@ public class testEdge {
         Edge e2 = new Edge(newNode2,newNode1);
 
         if(!(e1.equals(e1bis)))return false;
-        if(e1.equals(e2))return false;
+        if(!e1.equals(e2))return false;
         System.out.println("\tequals ok");
 
         String s1="Edge{start=0, end=1}";

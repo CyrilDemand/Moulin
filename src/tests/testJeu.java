@@ -39,6 +39,7 @@ public class testJeu {
 
         @Test
         public static boolean testFinish() throws JSONException, IOException {
+            Config.loadConfig();
             System.out.println("Finish");
             Board b = Save.loadBoard("src"+ File.separator+"tests"+ File.separator+"ressources"+ File.separator+"mapTest.json");
 
