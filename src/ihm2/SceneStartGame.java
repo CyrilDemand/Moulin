@@ -10,13 +10,13 @@ import moulin.*;
 
 public class SceneStartGame {
     private static Scene scene;
-
+    private static Button nextTurn;
     private static CustomCanvas customCanvas;
 
     public static void create(){
         VBox root=new VBox();
         customCanvas = new CustomCanvas(800,600,true,false);
-        Button nextTurn=new Button("Next Turn");
+        nextTurn=new Button("Next Turn");
         nextTurn.setDisable(true);
 
         customCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -30,9 +30,10 @@ public class SceneStartGame {
 
         nextTurn.setOnAction(e->{
             Jeu jeu=SceneNewGame.getJeu();
-            //ICI
-            nextTurn.setDisable(true);
+            tour();
+            jeu.addTurn();
             customCanvas.unselect(jeu);
+            nextTurn.setDisable(false);
         });
 
         scene=new Scene(root,Main.getDefaultSceneWidth(),Main.getDefaultSceneHeight());
@@ -43,6 +44,47 @@ public class SceneStartGame {
     }
 
     public static void switchTo(){
+        tour();
+        Jeu jeu=SceneNewGame.getJeu();
+        jeu.addTurn();
         Main.changeScene(scene);
+    }
+
+    public static void tour(){
+        Jeu jeu=SceneNewGame.getJeu();
+        System.out.println(jeu.getPlayers().get(Jeu.getTurn()));
+        if (jeu.getPlayers().get(Jeu.getTurn()).getClass().getSimpleName().equals("NormalAI")){
+            Piece piece = null;
+            for (Piece p:jeu.getPlayers().get(Jeu.getTurn()).getPieces()) {
+                if (p.getNode()==null){
+                    piece=p;
+                    break;
+                }
+            }
+            ((NormalAI)jeu.getPlayers().get(Jeu.getTurn())).start(jeu,piece);
+            jeu.addTurn();
+            if (!jeu.getPlayers().get(Jeu.getTurn()).getClass().getSimpleName().equals("Player"))SceneStartGame.tour();
+        }if (jeu.getPlayers().get(Jeu.getTurn()).getClass().getSimpleName().equals("RandomAI")){
+            Piece piece = null;
+            for (Piece p:jeu.getPlayers().get(Jeu.getTurn()).getPieces()) {
+                if (p.getNode()==null){
+                    piece=p;
+                    break;
+                }
+            }
+            ((RandomAI)jeu.getPlayers().get(Jeu.getTurn())).start(jeu,piece);
+            jeu.addTurn();
+            if (!jeu.getPlayers().get(Jeu.getTurn()).getClass().getSimpleName().equals("Player"))SceneStartGame.tour();
+        }if (jeu.getPlayers().get(Jeu.getTurn()).getClass().getSimpleName().equals("Player")){
+            Piece pPlayer = null;
+            for (Piece p:jeu.getPlayers().get(Jeu.getTurn()).getPieces()) {
+                if (p.getNode()==null){
+                    pPlayer=p;
+                    break;
+                }
+            }
+            jeu.getPlayers().get(Jeu.getTurn()).getPieces().get(jeu.getPlayers().get(Jeu.getTurn()).getPieces().indexOf(pPlayer)).put(customCanvas.getSelectedNode());
+            return;
+        }
     }
 }
